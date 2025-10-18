@@ -75,10 +75,74 @@
       .links a:hover {
         color: #61dafb; /* Cor do React */
       }
+
+      /* Soft floating names */
+      .soft-wrapper {
+        position: relative;
+        height: 3rem;
+        margin-bottom: 0.6rem;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 180ms linear;
+      }
+
+      /* visible during initial runs or while playing */
+      .soft-wrapper.initial,
+      .soft-wrapper.playing { opacity: 1; }
+
+      .soft-name {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1rem;
+        font-weight: 600;
+        color: rgba(234, 234, 234, 0.75);
+        opacity: 0;
+        letter-spacing: 0.4px;
+        animation: softIn 3.2s ease-in-out;
+        /* default: no automatic repeats unless parent class sets them */
+        animation-iteration-count: 0;
+      }
+
+      /* initial load: run ~5 times */
+      .soft-wrapper.initial .soft-name { animation-iteration-count: 5; }
+      /* hover-triggered play: single iteration */
+      .soft-wrapper.playing .soft-name { animation-iteration-count: 1; }
+
+      .soft-name.joao { top: 0; animation-delay: 0s; }
+      .soft-name.pedro { top: 1.2rem; animation-delay: 1.1s; }
+
+      @keyframes softIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(6px) scale(0.98);
+          filter: blur(2px);
+        }
+        12% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0) scale(1);
+          filter: blur(0);
+        }
+        70% { opacity: 1; }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(-6px) scale(0.98);
+          filter: blur(2px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .soft-name { animation: none; opacity: 1; transform: translateX(-50%) translateY(0) scale(1); filter: none; }
+        .soft-wrapper { opacity: 1; }
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="soft-wrapper" aria-hidden="true">
+        <span class="soft-name joao">João</span>
+        <span class="soft-name pedro">Pedro</span>
+      </div>
       <h1>Pedro Feitosa</h1>
       <h2>Full Stack Software Engineer</h2>
 
@@ -98,5 +162,38 @@
         <a href="mailto:jppfeitosa@gmail.com">Email</a>
       </div>
     </div>
+    <script>
+      // filepath: c:\Users\Sandra\pedroffeitosa.github.io\index.html
+      (function () {
+        const wrapper = document.querySelector('.soft-wrapper');
+        const nameHeading = document.querySelector('h1');
+        if (!wrapper || !nameHeading) return;
+
+        const ANIM_MS = 3200; // must match CSS animation duration (ms)
+        const MAX_DELAY_MS = 1100; // delay of the later name (ms)
+        const INITIAL_ITER = 5;
+
+        // show initial runs
+        wrapper.classList.add('initial');
+
+        // hide after initial runs complete (duration * iterations + max delay)
+        const initialTotal = ANIM_MS * INITIAL_ITER + MAX_DELAY_MS;
+        const initialTimer = setTimeout(() => {
+          wrapper.classList.remove('initial');
+          wrapper.classList.add('hidden');
+          clearTimeout(initialTimer);
+        }, initialTotal);
+
+        // on pointer enter, play once (unless still in initial phase)
+        nameHeading.addEventListener('pointerenter', () => {
+          if (wrapper.classList.contains('initial')) return;
+          // start single play
+          wrapper.classList.remove('hidden');
+          wrapper.classList.add('playing');
+          // remove playing class after one animation pass (duration + max delay)
+          setTimeout(() => { wrapper.classList.remove('playing'); }, ANIM_MS + MAX_DELAY_MS);
+        });
+      })();
+    </script>
   </body>
 </html>
