@@ -1,198 +1,199 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pedro Feitosa - Portfólio</title>
+    <title>Pedro Feitosa - Info</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
-
+      /* --- Notepad Base Theme --- */
       body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Roboto, Helvetica, Arial, sans-serif;
-        background-color: #0a0a0a;
-        color: #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        text-align: center;
-      }
-
-      .container {
-        padding: 2rem;
+        /* Monospace font is key to the Notepad look */
+        font-family: 'Consolas', 'Courier New', monospace;
+        background-color: #f0f0f0; /* Paper background */
+        color: #000000;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #c0c0c0; /* Page border */
+        line-height: 1.6;
       }
 
       h1 {
-        font-size: 3rem;
-        margin: 0;
-        font-weight: 700;
-        background: -webkit-linear-gradient(
-          45deg,
-          #61dafb,
-          #06b6d4,
-          #38bdf8
-        ); /* Gradiente inspirado em React e Tailwind */
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        margin: 0 0 5px 0;
+        border-bottom: 2px solid #000;
+        display: inline-block;
+        padding-bottom: 2px;
+        text-transform: uppercase;
       }
 
       h2 {
-        font-size: 1.5rem;
-        margin-top: 0.5rem;
-        font-weight: 600;
-        color: #c0c0c0;
+        font-size: 18px;
+        margin: 15px 0 10px 0;
+        color: #333333;
+      }
+      
+      h3 {
+        font-size: 16px;
+        margin: 10px 0 5px 0;
       }
 
-      .stack {
-        margin-top: 1.5rem;
-        font-size: 1.1rem;
-        color: #a0a0a0;
+      .section {
+        margin-top: 25px;
+        padding-top: 5px;
+        border-top: 1px dashed #999;
       }
 
-      .stack span {
+      a {
+        color: #0000cc;
+        text-decoration: underline;
+        font-weight: bold;
+      }
+
+      a:hover {
+        color: #cc0000;
+      }
+
+      .stack-item {
         display: inline-block;
-        background-color: #1f1f1f;
-        padding: 0.4rem 0.8rem;
-        border-radius: 6px;
-        margin: 0.3rem;
-        border: 1px solid #333;
+        margin: 0 10px 5px 0;
+        padding: 2px 5px;
+        border: 1px solid #000;
+        background-color: #e0e0e0;
+        font-size: 14px;
       }
 
-      .links {
-        margin-top: 2.5rem;
+      /* --- Orange Cat Walker (Minimal Box) --- */
+      /* Note: The complex inner HTML structure is kept to preserve original animation reference,
+         but all drawing styles are removed/overridden to show a simple box. */
+      :root { 
+        --cat-w: 60px;
+        --cat-h: 20px;
+        --cat-duration: 22s; 
       }
 
-      .links a {
-        color: #c0c0c0;
-        text-decoration: none;
-        margin: 0 1rem;
-        font-size: 1.1rem;
-        transition: color 0.3s ease;
+      .cat {
+        position: fixed;
+        left: -80px;
+        top: calc(100% - var(--cat-h) - 10px);
+        width: var(--cat-w);
+        height: var(--cat-h);
+        z-index: 1000;
+        pointer-events: auto;
+        transform-origin: center;
+        animation: walkPath var(--cat-duration) linear infinite;
+        
+        /* Minimal Style */
+        border: 2px dashed #000; 
+        background-color: transparent;
+        border-radius: 4px;
+        text-align: center;
+        line-height: var(--cat-h);
+        font-size: 10px;
+        font-family: 'Consolas', 'Courier New', monospace; 
+      }
+      .cat::before {
+          content: "[CAT_WALKER]";
+          color: #000;
+      }
+      
+      /* Hide all the complex nested cat-drawing styles */
+      .cat * { display: none !important; }
+
+      @keyframes walkPath {
+        0%   { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+        12%  { left: 6vw; top: 8vh; transform: scaleX(1) rotate(-6deg); }
+        37%  { left: calc(100% - var(--cat-w) - 6vw); top: 6vh; transform: scaleX(-1) rotate(0deg); }
+        62%  { left: calc(100% - var(--cat-w) - 6vw); top: calc(100% - var(--cat-h) - 8vh); transform: scaleX(-1) rotate(6deg); }
+        88%  { left: 6vw; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+        100% { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
       }
 
-      .links a:hover {
-        color: #61dafb; /* Cor do React */
-      }
-
-      /* Soft floating names */
-      .soft-wrapper {
-        position: relative;
-        height: 3rem;
-        margin-bottom: 0.6rem;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 180ms linear;
-      }
-
-      /* visible during initial runs or while playing */
-      .soft-wrapper.initial,
-      .soft-wrapper.playing { opacity: 1; }
-
-      .soft-name {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1rem;
-        font-weight: 600;
-        color: rgba(234, 234, 234, 0.75);
-        opacity: 0;
-        letter-spacing: 0.4px;
-        animation: softIn 3.2s ease-in-out;
-        /* default: no automatic repeats unless parent class sets them */
-        animation-iteration-count: 0;
-      }
-
-      /* initial load: run ~5 times */
-      .soft-wrapper.initial .soft-name { animation-iteration-count: 5; }
-      /* hover-triggered play: single iteration */
-      .soft-wrapper.playing .soft-name { animation-iteration-count: 1; }
-
-      .soft-name.joao { top: 0; animation-delay: 0s; }
-      .soft-name.pedro { top: 1.2rem; animation-delay: 1.1s; }
-
-      @keyframes softIn {
-        0% {
-          opacity: 0;
-          transform: translateX(-50%) translateY(6px) scale(0.98);
-          filter: blur(2px);
-        }
-        12% {
-          opacity: 1;
-          transform: translateX(-50%) translateY(0) scale(1);
-          filter: blur(0);
-        }
-        70% { opacity: 1; }
-        100% {
-          opacity: 0;
-          transform: translateX(-50%) translateY(-6px) scale(0.98);
-          filter: blur(2px);
-        }
-      }
+      .cat.paused { animation-play-state: paused; }
 
       @media (prefers-reduced-motion: reduce) {
-        .soft-name { animation: none; opacity: 1; transform: translateX(-50%) translateY(0) scale(1); filter: none; }
-        .soft-wrapper { opacity: 1; }
+        .cat { animation: none; left: calc(100% - var(--cat-w) - 10px); top: calc(100% - var(--cat-h) - 10px); }
       }
+      
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="soft-wrapper" aria-hidden="true">
-        <span class="soft-name joao">João</span>
-        <span class="soft-name pedro">Pedro</span>
-      </div>
+      
       <h1>Pedro Feitosa</h1>
-      <h2>Full Stack Software Engineer</h2>
+      <p><strong>Full Stack Software Engineer & LLM Trainer</strong></p>
 
-      <div class="stack">
-        <p>Main Stack:</p>
-        <span>React</span>
-        <span>Preact</span>
-        <span>TailwindCSS</span>
-        <span>TypeScript</span>
+      <div class="section">
+          <h2>// Career </h2>
+          <p>Experienced Full Stack Engineer focused on high-performance commerce and immersive digital experiences (AR/VR/XR). Proven ability to lead complex projects, from architecting scalable e-commerce storefronts (Deco, Preact) to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently leveraging expertise in AI/LLMs at Turing.</p>
       </div>
 
-      <div class="links">
-        <a href="https://github.com/pedroffeitosa" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank"
-          >LinkedIn</a
-        >
-        <a href="mailto:jppfeitosa@gmail.com">Email</a>
+      <div class="section">
+        <h2>// Main Stack & Expertise</h2>
+        <div>
+          <span class="stack-item">React</span>
+          <span class="stack-item">Preact/Deno</span>
+          <span class="stack-item">TypeScript</span>
+          <span class="stack-item">TailwindCSS</span>
+          <span class="stack-item">Node.js/Express</span>
+          <span class="stack-item">PostgreSQL/MongoDB</span>
+          <span class="stack-item">AWS</span>
+          <span class="stack-item">LLMs / AI Training</span>
+          <span class="stack-item">E-commerce Architecture (Deco)</span>
+          <span class="stack-item">Scrum Master</span>
+        </div>
       </div>
+
+      <div class="section">
+          <h2>// Featured Projects</h2>
+          
+          <h3>1. AmeoPet - Pet Care Management</h3>
+          <p>Full-stack web application with React, TypeScript, and MongoDB. Features real-time state management (React Query) and robust form validation (React Hook Form/Zod).</p>
+          
+          <h3>2. MCPWeather - Custom Data Protocol</h3>
+          <p>Client-server application implementing a custom protocol for weather data services. Built with TypeScript/Node.js using clean architecture, intelligent caching, and external API integration.</p>
+          
+          <h3>3. Chess Game Engine (Ruby)</h3>
+          <p>A robust engine demonstrating advanced object-oriented design, supporting all standard chess rules (castling, en passant, check/mate detection) with a modular architecture.</p>
+      </div>
+
+      <div class="section">
+          <h2>// Connect & Status</h2>
+          <p><strong>Currently at:</strong> Turing (Business Analyst & LLM Trainer)</p>
+          <p><strong>Location:</strong> Campina Grande, PB, Brazil (Remote)</p>
+          <p>
+              GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a><br>
+              LinkedIn: <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank">in/pedroffeitosa</a><br>
+              Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
+          </p>
+      </div>
+
     </div>
+
+    <div class="cat" id="cat-walker" aria-hidden="true" title="Cat Walker (Click to pause)">
+      <div class="tail" aria-hidden="true"><div class="tail-shape"></div><div class="stripe s1"></div><div class="stripe s2"></div></div>
+      <div class="body" aria-hidden="true"><div class="stripe s1"></div><div class="stripe s2"></div></div>
+      <div class="head" aria-hidden="true">
+        <div class="ear left"><div class="inner"></div></div>
+        <div class="ear right"><div class="inner"></div></div>
+        <div class="eye left"><div class="pupil"></div></div>
+        <div class="eye right"><div class="pupil"></div></div>
+        <div class="muzzle"><div class="nose"></div><div class="mouth"></div><div class="whiskers left"><span></span><span></span><span></span></div><div class="whiskers right"><span></span><span></span><span></span></div></div>
+      </div>
+      <div class="leg front left"></div>
+      <div class="leg front right"></div>
+      <div class="leg back left"></div>
+      <div class="leg back right"></div>
+    </div>
+    
     <script>
-      // filepath: c:\Users\Sandra\pedroffeitosa.github.io\index.html
       (function () {
-        const wrapper = document.querySelector('.soft-wrapper');
-        const nameHeading = document.querySelector('h1');
-        if (!wrapper || !nameHeading) return;
-
-        const ANIM_MS = 3200; // must match CSS animation duration (ms)
-        const MAX_DELAY_MS = 1100; // delay of the later name (ms)
-        const INITIAL_ITER = 5;
-
-        // show initial runs
-        wrapper.classList.add('initial');
-
-        // hide after initial runs complete (duration * iterations + max delay)
-        const initialTotal = ANIM_MS * INITIAL_ITER + MAX_DELAY_MS;
-        const initialTimer = setTimeout(() => {
-          wrapper.classList.remove('initial');
-          wrapper.classList.add('hidden');
-          clearTimeout(initialTimer);
-        }, initialTotal);
-
-        // on pointer enter, play once (unless still in initial phase)
-        nameHeading.addEventListener('pointerenter', () => {
-          if (wrapper.classList.contains('initial')) return;
-          // start single play
-          wrapper.classList.remove('hidden');
-          wrapper.classList.add('playing');
-          // remove playing class after one animation pass (duration + max delay)
-          setTimeout(() => { wrapper.classList.remove('playing'); }, ANIM_MS + MAX_DELAY_MS);
-        });
+        const cat = document.getElementById('cat-walker');
+        if (cat) {
+          cat.addEventListener('pointerenter', () => cat.classList.add('paused'));
+          cat.addEventListener('pointerleave', () => cat.classList.remove('paused'));
+          cat.addEventListener('click', () => cat.classList.toggle('paused'));
+        }
       })();
     </script>
   </body>
