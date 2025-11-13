@@ -8,7 +8,7 @@
       /* --- Notepad Base Theme --- */
       body {
         /* Monospace font is key to the Notepad look */
-        font-family: 'Consolas', 'Courier New', monospace;
+        font-family: "Consolas", "Courier New", monospace;
         background-color: #f0f0f0; /* Paper background */
         color: #000000;
         max-width: 800px;
@@ -32,7 +32,7 @@
         margin: 15px 0 10px 0;
         color: #333333;
       }
-      
+
       h3 {
         font-size: 16px;
         margin: 10px 0 5px 0;
@@ -66,10 +66,10 @@
       /* --- Orange Cat Walker (Minimal Box) --- */
       /* Note: The complex inner HTML structure is kept to preserve original animation reference,
          but all drawing styles are removed/overridden to show a simple box. */
-      :root { 
+      :root {
         --cat-w: 60px;
         --cat-h: 20px;
-        --cat-duration: 22s; 
+        --cat-duration: 22s;
       }
 
       .cat {
@@ -82,50 +82,86 @@
         pointer-events: auto;
         transform-origin: center;
         animation: walkPath var(--cat-duration) linear infinite;
-        
+
         /* Minimal Style */
-        border: 2px dashed #000; 
+        border: 2px dashed #000;
         background-color: transparent;
         border-radius: 4px;
         text-align: center;
         line-height: var(--cat-h);
         font-size: 10px;
-        font-family: 'Consolas', 'Courier New', monospace; 
+        font-family: "Consolas", "Courier New", monospace;
       }
       .cat::before {
-          content: "[CAT_WALKER]";
-          color: #000;
+        content: "[CAT_WALKER]";
+        color: #000;
       }
-      
+
       /* Hide all the complex nested cat-drawing styles */
-      .cat * { display: none !important; }
+      .cat * {
+        display: none !important;
+      }
 
       @keyframes walkPath {
-        0%   { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
-        12%  { left: 6vw; top: 8vh; transform: scaleX(1) rotate(-6deg); }
-        37%  { left: calc(100% - var(--cat-w) - 6vw); top: 6vh; transform: scaleX(-1) rotate(0deg); }
-        62%  { left: calc(100% - var(--cat-w) - 6vw); top: calc(100% - var(--cat-h) - 8vh); transform: scaleX(-1) rotate(6deg); }
-        88%  { left: 6vw; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
-        100% { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+        0%   {
+          left: -80px;
+          top: calc(100% - var(--cat-h) - 10px);
+          transform: scaleX(1) rotate(0deg);
+        }
+        12%   {
+          left: 6vw;
+          top: 8vh;
+          transform: scaleX(1) rotate(-6deg);
+        }
+        37%   {
+          left: calc(100% - var(--cat-w) - 6vw);
+          top: 6vh;
+          transform: scaleX(-1) rotate(0deg);
+        }
+        62%   {
+          left: calc(100% - var(--cat-w) - 6vw);
+          top: calc(100% - var(--cat-h) - 8vh);
+          transform: scaleX(-1) rotate(6deg);
+        }
+        88%   {
+          left: 6vw;
+          top: calc(100% - var(--cat-h) - 10px);
+          transform: scaleX(1) rotate(0deg);
+        }
+        100% {
+          left: -80px;
+          top: calc(100% - var(--cat-h) - 10px);
+          transform: scaleX(1) rotate(0deg);
+        }
       }
 
-      .cat.paused { animation-play-state: paused; }
+      .cat.paused {
+        animation-play-state: paused;
+      }
 
       @media (prefers-reduced-motion: reduce) {
-        .cat { animation: none; left: calc(100% - var(--cat-w) - 10px); top: calc(100% - var(--cat-h) - 10px); }
+        .cat {
+          animation: none;
+          left: calc(100% - var(--cat-w) - 10px);
+          top: calc(100% - var(--cat-h) - 10px);
+        }
       }
-      
     </style>
   </head>
   <body>
     <div class="container">
-      
       <h1>Pedro Feitosa</h1>
       <p><strong>Full Stack Software Engineer & LLM Trainer</strong></p>
 
       <div class="section">
-          <h2>// Career </h2>
-          <p>Full Stack Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.</p>
+        <h2>// Career</h2>
+        <p>
+          Full Stack Engineer with extensive experience in high-performance
+          commerce and enterprise software. Adept at leading complex projects,
+          from architecting scalable storefronts to integrating custom AWS
+          backends and enterprise systems (ERP/CRM). Currently focused on
+          applying AI/LLMs expertise at Turing.
+        </p>
       </div>
 
       <div class="section">
@@ -142,60 +178,102 @@
           <span class="stack-item">E-commerce</span>
           <span class="stack-item">Deco</span>
           <span class="stack-item">Scrum Master</span>
-          <span class="stack-item">C</span>
-          <span class="stack-item">C++</span>
         </div>
       </div>
 
       <div class="section">
-          <h2>// Featured Projects</h2>
-          
-          <h3>1. AmeoPet - Pet Care Management</h3>
-          <p>Full-stack web application with React, TypeScript, and MongoDB. Features real-time state management (React Query) and robust form validation (React Hook Form/Zod).</p>
-          
-          <h3>2. MCPWeather - Custom Data Protocol</h3>
-          <p>Client-server application implementing a custom protocol for weather data services. Built with TypeScript/Node.js using clean architecture, intelligent caching, and external API integration.</p>
-          
-          <h3>3. Chess Game Engine (Ruby)</h3>
-          <p>A robust engine demonstrating advanced object-oriented design, supporting all standard chess rules (castling, en passant, check/mate detection) with a modular architecture.</p>
+        <h2>// Featured Projects</h2>
+
+        <h3>1. AmeoPet - Pet Care Management</h3>
+        <p>
+          Full-stack web application with React, TypeScript, and MongoDB.
+          Features real-time state management (React Query) and robust form
+          validation (React Hook Form/Zod).
+        </p>
+
+        <h3>2. MCPWeather - Custom Data Protocol</h3>
+        <p>
+          Client-server application implementing a custom protocol for weather
+          data services. Built with TypeScript/Node.js using clean architecture,
+          intelligent caching, and external API integration.
+        </p>
+
+        <h3>3. Chess Game Engine (Ruby)</h3>
+        <p>
+          A robust engine demonstrating advanced object-oriented design,
+          supporting all standard chess rules (castling, en passant, check/mate
+          detection) with a modular architecture.
+        </p>
       </div>
 
       <div class="section">
-          <h2>// Connect & Status</h2>
-          <p><strong>Currently at:</strong> Turing (Business Analyst & LLM Trainer)</p>
-          <p><strong>Location:</strong> Campina Grande, PB, Brazil (Remote)</p>
-          <p>
-              GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a><br>
-              LinkedIn: <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank">in/pedroffeitosa</a><br>
-              Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
-          </p>
+        <h2>// Connect & Status</h2>
+        <p>
+          <strong>Currently at:</strong> Turing (Business Analyst & LLM Trainer)
+        </p>
+        <p><strong>Location:</strong> Campina Grande, PB, Brazil (Remote)</p>
+        <p>
+          GitHub:
+          <a href="https://github.com/pedroffeitosa" target="_blank"
+            >pedroffeitosa</a
+          ><br />
+          LinkedIn:
+          <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank"
+            >in/pedroffeitosa</a
+          ><br />
+          Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
+        </p>
       </div>
-
     </div>
 
-    <div class="cat" id="cat-walker" aria-hidden="true" title="Cat Walker (Click to pause)">
-      <div class="tail" aria-hidden="true"><div class="tail-shape"></div><div class="stripe s1"></div><div class="stripe s2"></div></div>
-      <div class="body" aria-hidden="true"><div class="stripe s1"></div><div class="stripe s2"></div></div>
+    <div
+      class="cat"
+      id="cat-walker"
+      aria-hidden="true"
+      title="Cat Walker (Click to pause)"
+    >
+      <div class="tail" aria-hidden="true">
+        <div class="tail-shape"></div>
+        <div class="stripe s1"></div>
+        <div class="stripe s2"></div>
+      </div>
+      <div class="body" aria-hidden="true">
+        <div class="stripe s1"></div>
+        <div class="stripe s2"></div>
+      </div>
       <div class="head" aria-hidden="true">
         <div class="ear left"><div class="inner"></div></div>
         <div class="ear right"><div class="inner"></div></div>
         <div class="eye left"><div class="pupil"></div></div>
         <div class="eye right"><div class="pupil"></div></div>
-        <div class="muzzle"><div class="nose"></div><div class="mouth"></div><div class="whiskers left"><span></span><span></span><span></span></div><div class="whiskers right"><span></span><span></span><span></span></div></div>
+        <div class="muzzle">
+          <div class="nose"></div>
+          <div class="mouth"></div>
+          <div class="whiskers left">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="whiskers right">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
       </div>
       <div class="leg front left"></div>
       <div class="leg front right"></div>
       <div class="leg back left"></div>
       <div class="leg back right"></div>
     </div>
-    
+
     <script>
       (function () {
-        const cat = document.getElementById('cat-walker');
+        const cat = document.getElementById("cat-walker");
         if (cat) {
-          cat.addEventListener('pointerenter', () => cat.classList.add('paused'));
-          cat.addEventListener('pointerleave', () => cat.classList.remove('paused'));
-          cat.addEventListener('click', () => cat.classList.toggle('paused'));
+          cat.addEventListener("pointerenter", () =>
+            cat.classList.add("paused")
+          );
+          cat.addEventListener("pointerleave", () =>
+            cat.classList.remove("paused")
+          );
+          cat.addEventListener("click", () => cat.classList.toggle("paused"));
         }
       })();
     </script>
