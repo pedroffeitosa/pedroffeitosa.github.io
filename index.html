@@ -225,57 +225,5 @@
         </p>
       </div>
     </div>
-
-    <div
-      class="cat"
-      id="cat-walker"
-      aria-hidden="true"
-      title="Cat Walker (Click to pause)"
-    >
-      <div class="tail" aria-hidden="true">
-        <div class="tail-shape"></div>
-        <div class="stripe s1"></div>
-        <div class="stripe s2"></div>
-      </div>
-      <div class="body" aria-hidden="true">
-        <div class="stripe s1"></div>
-        <div class="stripe s2"></div>
-      </div>
-      <div class="head" aria-hidden="true">
-        <div class="ear left"><div class="inner"></div></div>
-        <div class="ear right"><div class="inner"></div></div>
-        <div class="eye left"><div class="pupil"></div></div>
-        <div class="eye right"><div class="pupil"></div></div>
-        <div class="muzzle">
-          <div class="nose"></div>
-          <div class="mouth"></div>
-          <div class="whiskers left">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="whiskers right">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
-      <div class="leg front left"></div>
-      <div class="leg front right"></div>
-      <div class="leg back left"></div>
-      <div class="leg back right"></div>
-    </div>
-
-    <script>
-      (function () {
-        const cat = document.getElementById("cat-walker");
-        if (cat) {
-          cat.addEventListener("pointerenter", () =>
-            cat.classList.add("paused")
-          );
-          cat.addEventListener("pointerleave", () =>
-            cat.classList.remove("paused")
-          );
-          cat.addEventListener("click", () => cat.classList.toggle("paused"));
-        }
-      })();
-    </script>
   </body>
 </html>
