@@ -222,8 +222,25 @@
             >in/pedroffeitosa</a
           ><br />
           Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
+          <button id="copy-email-btn" style="margin-left:10px; font-size:12px; padding:2px 6px; border:1px solid #000; background:#e0e0e0; border-radius:3px; cursor:pointer; font-family:inherit;">Copy</button>
+          <span id="copy-status" style="margin-left:6px; font-size:12px; color:#4caf50; display:none;">Copied!</span>
         </p>
       </div>
     </div>
   </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var copyBtn = document.getElementById('copy-email-btn');
+      var copyStatus = document.getElementById('copy-status');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', function() {
+          navigator.clipboard.writeText('jppfeitosa@gmail.com')
+            .then(function() {
+              copyStatus.style.display = 'inline';
+              setTimeout(function() { copyStatus.style.display = 'none'; }, 1400);
+            });
+        });
+      }
+    });
+  </script>
 </html>
