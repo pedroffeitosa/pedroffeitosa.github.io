@@ -167,6 +167,58 @@
         border-color: #90caf9;
         color: #e3f2fd;
       }
+      /* Toggle Switch Styles */
+      .toggle-switch {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        min-width: 48px;
+        box-sizing: border-box;
+      }
+      .toggle-track {
+        position: relative;
+        width: 44px;
+        height: 22px;
+        background: var(--border-main, #bdbdbd);
+        border-radius: 11px;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        padding: 0 3px;
+      }
+      .toggle-thumb {
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--bg-main, #fff);
+        transition: transform 0.24s cubic-bezier(0.44, 0.11, 0.64, 0.96); box-shadow: 0 2px 4px rgba(0,0,0,0.09);
+        z-index: 2;
+      }
+      .toggle-icon {
+        width: 18px;
+        height: 18px;
+        position: relative;
+        z-index: 3;
+        transition: opacity 0.18s;
+      }
+      .toggle-sun { opacity: 1; }
+      .toggle-moon { opacity: 0; }
+      [data-theme="dark"] .toggle-thumb {
+        transform: translateX(20px);
+        background: #232941;
+      }
+      [data-theme="dark"] .toggle-sun { opacity: 0; }
+      [data-theme="dark"] .toggle-moon { opacity: 1; }
+      [data-theme="dark"] .toggle-track {
+        background: #5060a9;
+      }
+      [data-theme="dark"] .toggle-thumb {
+        box-shadow: 0 2px 4px rgba(80,96,169,0.25);
+      }
     </style>
   </head>
   <body>
@@ -178,8 +230,19 @@
           <a href="https://pedroffeitosa.vercel.app/" target="_blank" style="display:inline-block;font-size:13px;font-family:inherit;text-decoration:underline;color:#666;margin-top:2px;margin-bottom:2px;">Check some projects</a>
         </div>
       </div>
-      <button id="theme-toggle" aria-label="Toggle theme" style="margin-top:10px; float:right; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:3px 9px; min-width:36px;">
-        🌙
+      <!-- Modern theme switcher -->
+      <button id="theme-toggle" aria-label="Toggle theme" style="float:right; margin-top:10px; background:none; border:none; padding:0; cursor:pointer; outline:none; display:flex; align-items:center; min-width:44px;">
+        <span class="toggle-switch">
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+            <span class="toggle-icon toggle-sun" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="#ffb300" stroke-width="2" fill="#ffeb3b"></circle><g stroke="#ffb300" stroke-width="2"><line x1="12" y1="1" x2="12" y2="4" /><line x1="12" y1="20" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.86" y2="5.86" /><line x1="18.14" y1="18.14" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="4" y2="12" /><line x1="20" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.86" y2="18.14" /><line x1="18.14" y1="5.86" x2="19.78" y2="4.22" /></g></svg>
+            </span>
+            <span class="toggle-icon toggle-moon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 0112.21 3a7 7 0 108.79 9.79z" stroke="#90caf9" stroke-width="2" fill="#3949ab" /></svg>
+            </span>
+          </span>
+        </span>
       </button>
 
       <div class="section">
@@ -408,7 +471,6 @@
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
-      if (themeToggle) themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
     }
     function initTheme() {
       const saved = localStorage.getItem('theme');
