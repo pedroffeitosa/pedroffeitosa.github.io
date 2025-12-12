@@ -219,6 +219,21 @@
       [data-theme="dark"] .toggle-thumb {
         box-shadow: 0 2px 4px rgba(80,96,169,0.25);
       }
+      #scroll-top-btn {
+        opacity: 0.87;
+        background: var(--border-main,#c0c0c0);
+        color: var(--color-main,#000);
+      }
+      [data-theme="dark"] #scroll-top-btn {
+        background: #3949ab;
+        color: #e3f2fd;
+      }
+      #scroll-top-btn:hover {
+        opacity: 1;
+        background: var(--link,#0000cc);
+        color: #fff;
+        box-shadow: 0 4px 18px #0004;
+      }
     </style>
   </head>
   <body>
@@ -440,6 +455,7 @@
         </p>
       </div>
     </div>
+    <button id="scroll-top-btn" aria-label="Scroll to top" style="position:fixed;right:28px;bottom:36px;display:none;padding:0;border:none;border-radius:50%;background:var(--border-main,#c0c0c0);color:var(--color-main,#000);box-shadow:0 2px 12px #0003;cursor:pointer;width:44px;height:44px;z-index:2000;align-items:center;justify-content:center;transition:background 0.2s, color 0.2s, opacity 0.2s;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 16V8M8.5 11.5 12 8l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </body>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -484,5 +500,21 @@
       });
     }
     initTheme();
+
+    // Scroll-to-Top Button Logic
+    const scrollBtn = document.getElementById('scroll-top-btn');
+    window.addEventListener('scroll', function() {
+      if (!scrollBtn) return;
+      if (window.scrollY > 180) {
+        scrollBtn.style.display = 'flex';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    });
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   </script>
 </html>
