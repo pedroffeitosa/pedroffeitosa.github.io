@@ -79,6 +79,38 @@
         font-size: 14px;
       }
 
+      /* Status Indicator */
+      .status-indicator {
+        font-size: 12px;
+        color: #4caf50; /* Green */
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        background-color: #4caf50;
+        border-radius: 50%;
+        display: inline-block;
+        animation: blink 1.5s infinite;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      [data-theme="dark"] .status-indicator {
+        color: #81c784;
+      }
+
       /* --- Orange Cat Walker (Minimal Box) --- */
       /* Note: The complex inner HTML structure is kept to preserve original animation reference,
          but all drawing styles are removed/overridden to show a simple box. */
@@ -195,8 +227,9 @@
         height: 16px;
         border-radius: 50%;
         background: var(--bg-main, #fff);
-        transition: transform 0.24s cubic-bezier(0.44, 0.11, 0.64, 0.96), background 0.18s;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.09);
+        transition: transform 0.24s cubic-bezier(0.44, 0.11, 0.64, 0.96),
+          background 0.18s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
         z-index: 2;
         display: flex;
         align-items: center;
@@ -213,24 +246,32 @@
         transition: opacity 0.18s;
         pointer-events: none;
       }
-      .toggle-thumb .toggle-sun { opacity: 1; }
-      .toggle-thumb .toggle-moon { opacity: 0; }
+      .toggle-thumb .toggle-sun {
+        opacity: 1;
+      }
+      .toggle-thumb .toggle-moon {
+        opacity: 0;
+      }
       [data-theme="dark"] .toggle-thumb {
         transform: translateX(20px);
         background: #232941;
       }
-      [data-theme="dark"] .toggle-thumb .toggle-sun { opacity: 0; }
-      [data-theme="dark"] .toggle-thumb .toggle-moon { opacity: 1; }
+      [data-theme="dark"] .toggle-thumb .toggle-sun {
+        opacity: 0;
+      }
+      [data-theme="dark"] .toggle-thumb .toggle-moon {
+        opacity: 1;
+      }
       [data-theme="dark"] .toggle-track {
         background: #5060a9;
       }
       [data-theme="dark"] .toggle-thumb {
-        box-shadow: 0 2px 4px rgba(80,96,169,0.25);
+        box-shadow: 0 2px 4px rgba(80, 96, 169, 0.25);
       }
       #scroll-top-btn {
         opacity: 0.87;
-        background: var(--border-main,#c0c0c0);
-        color: var(--color-main,#000);
+        background: var(--border-main, #c0c0c0);
+        color: var(--color-main, #000);
       }
       [data-theme="dark"] #scroll-top-btn {
         background: #3949ab;
@@ -238,7 +279,7 @@
       }
       #scroll-top-btn:hover {
         opacity: 1;
-        background: var(--link,#0000cc);
+        background: var(--link, #0000cc);
         color: #fff;
         box-shadow: 0 4px 18px #0004;
       }
@@ -246,23 +287,87 @@
   </head>
   <body>
     <div class="container">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        "
+      >
         <div>
           <h1>João Feitosa</h1>
+          <div class="status-indicator">
+            <span class="dot"></span>
+            <span>SYSTEM_ACTIVE // AUTO_REFRESH: ENABLED</span>
+          </div>
           <p><strong>Full Stack Software Engineer & LLM Trainer</strong></p>
-          <a href="https://pedroffeitosa.vercel.app/" target="_blank" style="display:inline-block;font-size:13px;font-family:inherit;text-decoration:underline;color:#666;margin-top:2px;margin-bottom:2px;">Check some projects</a>
+          <a
+            href="https://pedroffeitosa.vercel.app/"
+            target="_blank"
+            style="
+              display: inline-block;
+              font-size: 13px;
+              font-family: inherit;
+              text-decoration: underline;
+              color: #666;
+              margin-top: 2px;
+              margin-bottom: 2px;
+            "
+            >Check some projects</a
+          >
         </div>
       </div>
       <!-- Modern theme switcher -->
-      <button id="theme-toggle" aria-label="Toggle theme" style="float:right; margin-top:10px; background:none; border:none; padding:0; cursor:pointer; outline:none; display:flex; align-items:center; min-width:44px;">
+      <button
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        style="
+          float: right;
+          margin-top: 10px;
+          background: none;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          outline: none;
+          display: flex;
+          align-items: center;
+          min-width: 44px;
+        "
+      >
         <span class="toggle-switch">
           <span class="toggle-track">
             <span class="toggle-thumb">
               <span class="toggle-icon toggle-sun" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="#ffb300" stroke-width="2" fill="#ffeb3b"></circle><g stroke="#ffb300" stroke-width="2"><line x1="12" y1="1" x2="12" y2="4" /><line x1="12" y1="20" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.86" y2="5.86" /><line x1="18.14" y1="18.14" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="4" y2="12" /><line x1="20" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.86" y2="18.14" /><line x1="18.14" y1="5.86" x2="19.78" y2="4.22" /></g></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="5"
+                    stroke="#ffb300"
+                    stroke-width="2"
+                    fill="#ffeb3b"
+                  ></circle>
+                  <g stroke="#ffb300" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="4" />
+                    <line x1="12" y1="20" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.86" y2="5.86" />
+                    <line x1="18.14" y1="18.14" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="4" y2="12" />
+                    <line x1="20" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.86" y2="18.14" />
+                    <line x1="18.14" y1="5.86" x2="19.78" y2="4.22" />
+                  </g>
+                </svg>
               </span>
               <span class="toggle-icon toggle-moon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 12.79A9 9 0 0112.21 3a7 7 0 108.79 9.79z" stroke="#90caf9" stroke-width="2" fill="#3949ab" /></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M21 12.79A9 9 0 0112.21 3a7 7 0 108.79 9.79z"
+                    stroke="#90caf9"
+                    stroke-width="2"
+                    fill="#3949ab"
+                  />
+                </svg>
               </span>
             </span>
           </span>
@@ -301,116 +406,450 @@
         <h2>// Experience</h2>
         <div>
           <!-- Turing -->
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">Turing</span>
-              <span style="margin-left:12px;">Business Analyst & LLM Trainer, Palo Alto, CA</span>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">Turing</span>
+              <span style="margin-left: 12px"
+                >Business Analyst & LLM Trainer, Palo Alto, CA</span
+              >
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Sep 2025 - Present</span>
-            <button class="exp-toggle-btn" data-target="exp-turing" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Sep 2025 - Present</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-turing"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-turing" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Developed and executed RLHF frameworks for LLM evaluation and enhancement.</li>
-            <li>Generated/scored 'gold standard' data for technical fine-tuning.</li>
-            <li>Conducted deep error analysis to optimize prompts and data collection.</li>
-            <li>Applied advanced analytics for data quality and structuring.</li>
+          <ul
+            id="exp-turing"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Developed and executed RLHF frameworks for LLM evaluation and
+              enhancement.
+            </li>
+            <li>
+              Generated/scored 'gold standard' data for technical fine-tuning.
+            </li>
+            <li>
+              Conducted deep error analysis to optimize prompts and data
+              collection.
+            </li>
+            <li>
+              Applied advanced analytics for data quality and structuring.
+            </li>
           </ul>
           <!-- Pave -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">Pave (Dilis)</span>
-              <span style="margin-left:12px;">Full Stack Engineer, Remote</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">Pave (Dilis)</span>
+              <span style="margin-left: 12px">Full Stack Engineer, Remote</span>
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Jun 2024 - Sep 2025</span>
-            <button class="exp-toggle-btn" data-target="exp-pave" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Jun 2024 - Sep 2025</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-pave"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-pave" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Integrated frontend with AWS backend, enabling seamless data flow and auth.</li>
-            <li>Designed system: auth, uploads, event creation, data management.</li>
-            <li>Built a full event platform for brand campaign engagement/registration.</li>
-            <li>Collaborated with design for responsive performance across all devices.</li>
+          <ul
+            id="exp-pave"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Integrated frontend with AWS backend, enabling seamless data flow
+              and auth.
+            </li>
+            <li>
+              Designed system: auth, uploads, event creation, data management.
+            </li>
+            <li>
+              Built a full event platform for brand campaign
+              engagement/registration.
+            </li>
+            <li>
+              Collaborated with design for responsive performance across all
+              devices.
+            </li>
             <li>Provided continual UX/UI improvements and bugfixes.</li>
           </ul>
           <!-- InsideHome -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">InsideHome</span>
-              <span style="margin-left:12px;">Full Stack Engineer, Remote</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">InsideHome</span>
+              <span style="margin-left: 12px">Full Stack Engineer, Remote</span>
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Jun 2024 - Present</span>
-            <button class="exp-toggle-btn" data-target="exp-insidehome" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Jun 2024 - Present</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-insidehome"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-insidehome" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Led team to build e-commerce platform using Deco, boosting performance.</li>
-            <li>Integrated ERP, CRM, Ads, cashback with real-time campaign tracking.</li>
-            <li>Delivered a scalable storefront & high-speed feature launches.</li>
-            <li>Drove technical decisions and agile processes for quality and UX.</li>
+          <ul
+            id="exp-insidehome"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Led team to build e-commerce platform using Deco, boosting
+              performance.
+            </li>
+            <li>
+              Integrated ERP, CRM, Ads, cashback with real-time campaign
+              tracking.
+            </li>
+            <li>
+              Delivered a scalable storefront & high-speed feature launches.
+            </li>
+            <li>
+              Drove technical decisions and agile processes for quality and UX.
+            </li>
           </ul>
           <!-- Wave Commerce -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">Wave Commerce</span>
-              <span style="margin-left:12px;">Front-End Dev, Remote</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">Wave Commerce</span>
+              <span style="margin-left: 12px">Front-End Dev, Remote</span>
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Feb 2024 - May 2024</span>
-            <button class="exp-toggle-btn" data-target="exp-wave" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Feb 2024 - May 2024</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-wave"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-wave" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Turned Figma designs into pixel-perfect, accessible Preact components.</li>
+          <ul
+            id="exp-wave"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Turned Figma designs into pixel-perfect, accessible Preact
+              components.
+            </li>
             <li>Owned call center section: navigation, forms, A11y, SEO.</li>
-            <li>Shipped fast, reusable pages with high PageSpeed & CMS integration.</li>
+            <li>
+              Shipped fast, reusable pages with high PageSpeed & CMS
+              integration.
+            </li>
           </ul>
           <!-- Integralys -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">Integralys</span>
-              <span style="margin-left:12px;">Lead SWE, Remote</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">Integralys</span>
+              <span style="margin-left: 12px">Lead SWE, Remote</span>
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Nov 2023 - Jan 2024</span>
-            <button class="exp-toggle-btn" data-target="exp-integralys" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Nov 2023 - Jan 2024</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-integralys"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-integralys" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Delivered all features from high-fi Figma to production React code.</li>
-            <li>Modernized stack: refactored legacy PHP to React+TypeScript.</li>
-            <li>Worked cross-team for accuracy, performance & maintainability.</li>
+          <ul
+            id="exp-integralys"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Delivered all features from high-fi Figma to production React
+              code.
+            </li>
+            <li>
+              Modernized stack: refactored legacy PHP to React+TypeScript.
+            </li>
+            <li>
+              Worked cross-team for accuracy, performance & maintainability.
+            </li>
           </ul>
           <!-- TEC4U -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">TEC4U</span>
-              <span style="margin-left:12px;">Full Stack Eng, Remote</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">TEC4U</span>
+              <span style="margin-left: 12px">Full Stack Eng, Remote</span>
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Aug 2023 - Oct 2023</span>
-            <button class="exp-toggle-btn" data-target="exp-tec4u" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Aug 2023 - Oct 2023</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-tec4u"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-tec4u" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Built key e-commerce modules for Deco : PDP, PLP, landing pages.</li>
+          <ul
+            id="exp-tec4u"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Built key e-commerce modules for Deco : PDP, PLP, landing pages.
+            </li>
             <li>Integrated custom CMS for flexible, editable content.</li>
             <li>Shipped high-quality, reusable and performant code.</li>
           </ul>
           <!-- Triilha -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">Triilha</span>
-              <span style="margin-left:12px;">Full Stack Eng, Campina Grande</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">Triilha</span>
+              <span style="margin-left: 12px"
+                >Full Stack Eng, Campina Grande</span
+              >
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Apr 2022 - Jul 2023</span>
-            <button class="exp-toggle-btn" data-target="exp-triilha" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Apr 2022 - Jul 2023</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-triilha"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-triilha" class="exp-details" style="display:none; margin-top:4px;">
-            <li>Built React/Postgres/Node.js Scrum productivity suite from scratch.</li>
+          <ul
+            id="exp-triilha"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
+            <li>
+              Built React/Postgres/Node.js Scrum productivity suite from
+              scratch.
+            </li>
             <li>Product manager & Scrum Master for improved team delivery.</li>
           </ul>
           <!-- AbInBev -->
-          <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
-            <div style="flex:1;min-width:0;">
-              <span style="font-weight:bold;">AbInBev</span>
-              <span style="margin-left:12px;">Full Stack Eng, Campina Grande</span>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 8px;
+            "
+          >
+            <div style="flex: 1; min-width: 0">
+              <span style="font-weight: bold">AbInBev</span>
+              <span style="margin-left: 12px"
+                >Full Stack Eng, Campina Grande</span
+              >
             </div>
-            <span style="min-width:78px;font-size:12px;color:#444;text-align:right;">Jan 2020 - Apr 2021</span>
-            <button class="exp-toggle-btn" data-target="exp-abinbev" style="margin-left:8px; font-family:inherit; font-size:14px; border:1px solid #888; background:#f0f0f0; border-radius:2px; cursor:pointer; padding:0 8px;">+</button>
+            <span
+              style="
+                min-width: 78px;
+                font-size: 12px;
+                color: #444;
+                text-align: right;
+              "
+              >Jan 2020 - Apr 2021</span
+            >
+            <button
+              class="exp-toggle-btn"
+              data-target="exp-abinbev"
+              style="
+                margin-left: 8px;
+                font-family: inherit;
+                font-size: 14px;
+                border: 1px solid #888;
+                background: #f0f0f0;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0 8px;
+              "
+            >
+              +
+            </button>
           </div>
-          <ul id="exp-abinbev" class="exp-details" style="display:none; margin-top:4px;">
+          <ul
+            id="exp-abinbev"
+            class="exp-details"
+            style="display: none; margin-top: 4px"
+          >
             <li>Built real-time dashboards & charts with JS/Node.</li>
             <li>Streamlined reporting & performance flows.</li>
             <li>Resolved backend/frontend issues & shipped new features.</li>
@@ -459,70 +898,141 @@
             >in/pedroffeitosa</a
           ><br />
           Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
-          <button id="copy-email-btn" style="margin-left:10px; font-size:12px; padding:2px 6px; border:1px solid #000; background:#e0e0e0; border-radius:3px; cursor:pointer; font-family:inherit;">Copy</button>
-          <span id="copy-status" style="margin-left:6px; font-size:12px; color:#4caf50; display:none;">Copied!</span>
+          <button
+            id="copy-email-btn"
+            style="
+              margin-left: 10px;
+              font-size: 12px;
+              padding: 2px 6px;
+              border: 1px solid #000;
+              background: #e0e0e0;
+              border-radius: 3px;
+              cursor: pointer;
+              font-family: inherit;
+            "
+          >
+            Copy
+          </button>
+          <span
+            id="copy-status"
+            style="
+              margin-left: 6px;
+              font-size: 12px;
+              color: #4caf50;
+              display: none;
+            "
+            >Copied!</span
+          >
         </p>
       </div>
     </div>
-    <button id="scroll-top-btn" aria-label="Scroll to top" style="position:fixed;right:28px;bottom:36px;display:none;padding:0;border:none;border-radius:50%;background:var(--border-main,#c0c0c0);color:var(--color-main,#000);box-shadow:0 2px 12px #0003;cursor:pointer;width:44px;height:44px;z-index:2000;align-items:center;justify-content:center;transition:background 0.2s, color 0.2s, opacity 0.2s;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M12 16V8M8.5 11.5 12 8l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button
+      id="scroll-top-btn"
+      aria-label="Scroll to top"
+      style="
+        position: fixed;
+        right: 28px;
+        bottom: 36px;
+        display: none;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: var(--border-main, #c0c0c0);
+        color: var(--color-main, #000);
+        box-shadow: 0 2px 12px #0003;
+        cursor: pointer;
+        width: 44px;
+        height: 44px;
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s, color 0.2s, opacity 0.2s;
+      "
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <circle
+          cx="12"
+          cy="12"
+          r="11"
+          stroke="currentColor"
+          stroke-width="1.5"
+          fill="none"
+        />
+        <path
+          d="M12 16V8M8.5 11.5 12 8l3.5 3.5"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
   </body>
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var copyBtn = document.getElementById('copy-email-btn');
-      var copyStatus = document.getElementById('copy-status');
+    document.addEventListener("DOMContentLoaded", function () {
+      var copyBtn = document.getElementById("copy-email-btn");
+      var copyStatus = document.getElementById("copy-status");
       if (copyBtn) {
-        copyBtn.addEventListener('click', function() {
-          navigator.clipboard.writeText('jppfeitosa@gmail.com')
-            .then(function() {
-              copyStatus.style.display = 'inline';
-              setTimeout(function() { copyStatus.style.display = 'none'; }, 1400);
+        copyBtn.addEventListener("click", function () {
+          navigator.clipboard
+            .writeText("jppfeitosa@gmail.com")
+            .then(function () {
+              copyStatus.style.display = "inline";
+              setTimeout(function () {
+                copyStatus.style.display = "none";
+              }, 1400);
             });
         });
       }
     });
 
     // Experience details toggle
-    document.querySelectorAll('.exp-toggle-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
+    document.querySelectorAll(".exp-toggle-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
         var target = document.getElementById(btn.dataset.target);
-        var isOpen = target.style.display === 'block';
-        target.style.display = isOpen ? 'none' : 'block';
-        btn.textContent = isOpen ? '+' : '-';
+        var isOpen = target.style.display === "block";
+        target.style.display = isOpen ? "none" : "block";
+        btn.textContent = isOpen ? "+" : "-";
       });
     });
 
     // Theme toggle logic
-    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggle = document.getElementById("theme-toggle");
     function setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
     }
     function initTheme() {
-      const saved = localStorage.getItem('theme');
+      const saved = localStorage.getItem("theme");
       if (saved) setTheme(saved);
-      else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+      else if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      )
+        setTheme("dark");
     }
     if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'light';
-        setTheme(current === 'dark' ? 'light' : 'dark');
+      themeToggle.addEventListener("click", () => {
+        const current =
+          document.documentElement.getAttribute("data-theme") || "light";
+        setTheme(current === "dark" ? "light" : "dark");
       });
     }
     initTheme();
 
     // Scroll-to-Top Button Logic
-    const scrollBtn = document.getElementById('scroll-top-btn');
-    window.addEventListener('scroll', function() {
+    const scrollBtn = document.getElementById("scroll-top-btn");
+    window.addEventListener("scroll", function () {
       if (!scrollBtn) return;
       if (window.scrollY > 180) {
-        scrollBtn.style.display = 'flex';
+        scrollBtn.style.display = "flex";
       } else {
-        scrollBtn.style.display = 'none';
+        scrollBtn.style.display = "none";
       }
     });
     if (scrollBtn) {
-      scrollBtn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
   </script>
