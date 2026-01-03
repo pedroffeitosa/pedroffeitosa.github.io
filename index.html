@@ -926,6 +926,24 @@
         </p>
       </div>
     </div>
+
+    <!-- Shortcut Help Modal -->
+    <div id="shortcut-modal" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:5000;background:rgba(20,20,30,0.45);display:none;align-items:center;justify-content:center;">
+      <div style="background:var(--bg-main,#fff);color:var(--color-main,#222);border:2px solid var(--border-main,#c0c0c0);border-radius:7px;padding:26px 28px;min-width:320px;max-width:94vw;box-shadow:0 8px 40px #0007;position:relative;font-family:inherit;">
+        <button id="close-shortcut-modal" aria-label="Close modal" style="position:absolute;top:10px;right:16px;font-size:20px;background:none;border:none;color:inherit;cursor:pointer;">&times;</button>
+        <h2 style="margin-top:0;font-size:20px;text-align:center;">Keyboard Shortcuts & Tips</h2>
+        <ul style="padding-left:0;list-style:none;">
+          <li><b>?</b> — Show this help</li>
+          <li><b>Esc</b> — Close this help</li>
+          <li><b>Tab</b> — Standard web navigation</li>
+          <li><b>Scroll to Top</b> — Use the ⬆️ button or Home key</li>
+          <li><b>Switch Theme</b> — Navigate to Theme Button and hit Enter</li>
+          <li><b>Expand Experience</b> — Tab to Experience [+] and Enter</li>
+          <li><b>Copy Email</b> — Tab to Email Copy and Enter</li>
+        </ul>
+        <div style="font-size:13px;color:#888;margin-top:1em;text-align:center;">For more features, use standard keyboard navigation and screen reader tips.</div>
+      </div>
+    </div>
     <button
       id="scroll-top-btn"
       aria-label="Scroll to top"
@@ -1019,6 +1037,32 @@
       });
     }
     initTheme();
+
+    // Shortcut Modal Keyboard Listener
+    const shortcutModal = document.getElementById('shortcut-modal');
+    const closeShortcutModal = document.getElementById('close-shortcut-modal');
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey) {
+        if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+          shortcutModal.style.display = 'flex';
+          closeShortcutModal && closeShortcutModal.focus();
+          e.preventDefault();
+        }
+      }
+      if ((e.key === '?' && e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) || (e.key === '/' && e.shiftKey)) {
+        shortcutModal.style.display = 'flex';
+        closeShortcutModal && closeShortcutModal.focus();
+        e.preventDefault();
+      }
+      if (e.key === 'Escape' && shortcutModal.style.display === 'flex') {
+        shortcutModal.style.display = 'none';
+      }
+    });
+    if (closeShortcutModal) {
+      closeShortcutModal.addEventListener('click', function() {
+        shortcutModal.style.display = 'none';
+      });
+    }
 
     // Scroll-to-Top Button Logic
     const scrollBtn = document.getElementById("scroll-top-btn");
