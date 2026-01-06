@@ -259,3 +259,134 @@ a:hover {
   overflow: hidden;
   transition: max-height 0.3s ease-out;
 }
+
+/* --- Terminal Overlay Styles --- */
+#terminal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.terminal-window {
+  width: 90%; /* Responsive default */
+  max-width: 800px;
+  height: 60vh;
+  background-color: #0c0c0c; /* Deep black */
+  border: 1px solid #333;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  color: #0f0; /* Retro Green */
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.terminal-header {
+  background: #1a1a1a;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  user-select: none;
+}
+
+.terminal-title {
+  font-size: 13px;
+  color: #ccc;
+}
+
+#close-terminal {
+  background: none;
+  border: none;
+  color: #ff5f56; /* Mac-like red close button color */
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+#close-terminal:hover {
+  color: #ff3b30;
+}
+
+#terminal-output {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Scrollbar customization for a cleaner look */
+#terminal-output::-webkit-scrollbar {
+  width: 8px;
+}
+#terminal-output::-webkit-scrollbar-track {
+  background: #0c0c0c;
+}
+#terminal-output::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.terminal-input-area {
+  display: flex;
+  padding: 10px 12px;
+  background: #0c0c0c;
+  border-top: 1px solid #222;
+}
+
+.prompt {
+  color: #0f0;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+#terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #0f0;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  caret-color: #0f0; /* Green block cursor feel */
+}
+
+/* Command Output Styling */
+.cmd-logs {
+  margin-bottom: 8px;
+}
+.cmd-command {
+  color: #fff;
+  font-weight: bold;
+}
+.cmd-response {
+  color: #ccc;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.cmd-response a {
+  color: #4facfe;
+  text-decoration: underline;
+}
+.cmd-error {
+  color: #ff5f56;
+}

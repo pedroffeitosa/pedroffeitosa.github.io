@@ -708,5 +708,20 @@
       </svg>
     </button>
   </body>
+    <!-- Terminal Overlay -->
+    <div id="terminal-overlay" style="display: none;">
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-title">visitor@pedroffeitosa:~</span>
+          <button id="close-terminal" aria-label="Close terminal">×</button>
+        </div>
+        <div id="terminal-output"></div>
+        <div class="terminal-input-area">
+          <span class="prompt">visitor@pedroffeitosa:~$</span>
+          <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
 </html>
