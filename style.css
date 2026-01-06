@@ -1,0 +1,261 @@
+/* --- Notepad Base Theme --- */
+:root {
+  --bg-main: #f0f0f0;
+  --color-main: #000;
+  --border-main: #c0c0c0;
+  --section-border: #999;
+  --link: #0000cc;
+  --link-hover: #cc0000;
+  
+  /* Cat Walker Variables */
+  --cat-w: 60px;
+  --cat-h: 20px;
+  --cat-duration: 22s;
+}
+
+[data-theme="dark"] {
+  --bg-main: #181818;
+  --color-main: #f9f9f9;
+  --border-main: #444;
+  --section-border: #666;
+  --link: #88aaff;
+  --link-hover: #ffd466;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Monospace font is key to the Notepad look */
+  font-family: "Consolas", "Courier New", monospace;
+  background-color: var(--bg-main);
+  color: var(--color-main);
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--border-main); /* Page border */
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  /* Depth improvement */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] body {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0 0 5px 0;
+  border-bottom: 2px solid currentColor;
+  display: inline-block;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 15px 0 10px 0;
+  color: inherit; /* Inherit to respect theme */
+  opacity: 0.9;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 10px 0 5px 0;
+}
+
+.section {
+  margin-top: 25px;
+  padding-top: 5px;
+  border-top: 1px dashed var(--section-border);
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+.stack-item {
+  display: inline-block;
+  margin: 0 10px 5px 0;
+  padding: 2px 5px;
+  border: 1px solid currentColor;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+}
+
+[data-theme="dark"] .stack-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--border-main);
+}
+
+/* Status Indicator */
+.status-indicator {
+  font-size: 12px;
+  color: #4caf50; /* Green */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+[data-theme="dark"] .status-indicator {
+  color: #81c784;
+}
+
+/* --- Orange Cat Walker (Minimal Box) --- */
+.cat {
+  position: fixed;
+  left: -80px;
+  top: calc(100% - var(--cat-h) - 10px);
+  width: var(--cat-w);
+  height: var(--cat-h);
+  z-index: 1000;
+  pointer-events: auto;
+  transform-origin: center;
+  animation: walkPath var(--cat-duration) linear infinite;
+
+  /* Minimal Style */
+  border: 2px dashed currentColor;
+  background-color: transparent;
+  border-radius: 4px;
+  text-align: center;
+  line-height: var(--cat-h);
+  font-size: 10px;
+  font-family: "Consolas", "Courier New", monospace;
+  opacity: 0.7;
+}
+
+.cat::before {
+  content: "[CAT_WALKER]";
+  color: inherit;
+}
+
+/* Hide all the complex nested cat-drawing styles */
+.cat * {
+  display: none !important;
+}
+
+@keyframes walkPath {
+  0%   { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+  12%  { left: 6vw; top: 8vh; transform: scaleX(1) rotate(-6deg); }
+  37%  { left: calc(100% - var(--cat-w) - 6vw); top: 6vh; transform: scaleX(-1) rotate(0deg); }
+  62%  { left: calc(100% - var(--cat-w) - 6vw); top: calc(100% - var(--cat-h) - 8vh); transform: scaleX(-1) rotate(6deg); }
+  88%  { left: 6vw; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+  100% { left: -80px; top: calc(100% - var(--cat-h) - 10px); transform: scaleX(1) rotate(0deg); }
+}
+
+.cat.paused {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat {
+    animation: none;
+    left: calc(100% - var(--cat-w) - 10px);
+    top: calc(100% - var(--cat-h) - 10px);
+  }
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  min-width: 48px;
+  box-sizing: border-box;
+}
+.toggle-track {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  background: var(--border-main, #bdbdbd);
+  border-radius: 11px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  padding: 0 3px;
+}
+.toggle-thumb {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-main, #fff);
+  transition: transform 0.24s cubic-bezier(0.44, 0.11, 0.64, 0.96), background 0.18s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.toggle-thumb .toggle-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.18s;
+  pointer-events: none;
+}
+.toggle-thumb .toggle-sun { opacity: 1; }
+.toggle-thumb .toggle-moon { opacity: 0; }
+
+[data-theme="dark"] .toggle-thumb {
+  transform: translateX(20px);
+  background: #232941;
+}
+[data-theme="dark"] .toggle-thumb .toggle-sun { opacity: 0; }
+[data-theme="dark"] .toggle-thumb .toggle-moon { opacity: 1; }
+[data-theme="dark"] .toggle-track { background: #5060a9; }
+[data-theme="dark"] .toggle-thumb { box-shadow: 0 2px 4px rgba(80, 96, 169, 0.25); }
+
+/* Scroll Top Button */
+#scroll-top-btn {
+  opacity: 0.87;
+  background: var(--border-main, #c0c0c0);
+  color: var(--color-main, #000);
+  transition: all 0.2s ease;
+}
+[data-theme="dark"] #scroll-top-btn {
+  background: #3949ab;
+  color: #e3f2fd;
+}
+#scroll-top-btn:hover {
+  opacity: 1;
+  background: var(--link, #0000cc);
+  color: #fff;
+  box-shadow: 0 4px 18px #0004;
+  transform: translateY(-2px);
+}
+
+/* Experience Details transition */
+.exp-details {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
