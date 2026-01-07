@@ -20,7 +20,17 @@
           <h1>João Feitosa</h1>
           <div class="status-indicator">
             <span class="dot"></span>
-            <span>SYSTEM_ACTIVE // AUTO_REFRESH: ENABLED</span>
+            <span id="system-status-text">SYSTEM_ACTIVE</span>
+            <span class="status-separator" style="margin: 0 5px; opacity: 0.5;">//</span>
+            <span id="uptime-counter" style="font-family: 'Consolas', monospace;">UPTIME: 00:00:00</span>
+          </div>
+          <div id="last-commit-info" style="font-size: 11px; color: #666; margin-top: 2px; margin-left:14px; display: flex; align-items: center; gap: 4px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>LAST_UPDATE:</span>
+              <span id="commit-date">initializing...</span>
           </div>
           <p><strong>Full Stack Software Engineer & LLM Trainer</strong></p>
           <a

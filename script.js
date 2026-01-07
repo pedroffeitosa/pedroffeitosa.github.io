@@ -271,4 +271,70 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
             }
         });
     }
+
+    // --- System Status & Uptime Logic ---
+    const uptimeElement = document.getElementById('uptime-counter');
+    const commitDateElement = document.getElementById('commit-date');
+    const startTime = Date.now();
+
+    const updateUptime = () => {
+        if (!uptimeElement) return;
+        const now = Date.now();
+        const diff = now - startTime;
+        
+        const seconds = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
+        const minutes = Math.floor((diff / (1000 * 60)) % 60).toString().padStart(2, '0');
+        const hours = Math.floor((diff / (1000 * 60 * 60))).toString().padStart(2, '0');
+        
+        uptimeElement.textContent = `UPTIME: ${hours}:${minutes}:${seconds}`;
+    };
+
+    setInterval(updateUptime, 1000);
+    updateUptime(); // Initial call
+
+    // --- Fetch Last Commit Date ---
+    const fetchLastCommit = async () => {
+        if (!commitDateElement) return;
+        
+        try {
+            // Check localStorage first to avoid rate limits
+            const cachedCommit = localStorage.getItem('last_commit_date');
+            const cachedTimestamp = localStorage.getItem('last_commit_timestamp');
+            const now = Date.now();
+
+            // Use cache if less than 1 hour old
+            if (cachedCommit && cachedTimestamp && (now - parseInt(cachedTimestamp) < 1000 * 60 * 60)) {
+                commitDateElement.textContent = cachedCommit;
+                return;
+            }
+
+            const repo = 'pedroffeitosa/pedroffeitosa.github.io';
+            const response = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`);
+            
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            if (data && data.length > 0) {
+                const date = new Date(data[0].commit.author.date);
+                // Format: YYYY-MM-DD HH:MM
+                const formattedDate = date.getFullYear() + '-' + 
+                    (date.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                    date.getDate().toString().padStart(2, '0') + ' ' + 
+                    date.getHours().toString().padStart(2, '0') + ':' + 
+                    date.getMinutes().toString().padStart(2, '0');
+                
+                commitDateElement.textContent = formattedDate;
+                
+                // Cache the result
+                localStorage.setItem('last_commit_date', formattedDate);
+                localStorage.setItem('last_commit_timestamp', now.toString());
+            }
+        } catch (error) {
+            console.error('Error fetching commit:', error);
+            commitDateElement.textContent = 'OFFLINE_MODE';
+            commitDateElement.style.opacity = '0.5';
+        }
+    };
+
+    fetchLastCommit();
 });
