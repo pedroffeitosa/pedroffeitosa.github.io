@@ -214,14 +214,17 @@ a:hover {
   overflow: hidden;
 }
 .toggle-thumb .toggle-icon {
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   transition: opacity 0.18s;
   pointer-events: none;
+  display: flex; /* Ensure SVG centers inside */
+  align-items: center;
+  justify-content: center;
 }
 .toggle-thumb .toggle-sun { opacity: 1; }
 .toggle-thumb .toggle-moon { opacity: 0; }

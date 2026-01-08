@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>João Feitosa - Info</title>
   <meta name="description"
-    content="Portfolio of João Feitosa - Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.">
+    content="Portfolio of João Feitosa - Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI."
+    data-i18n="meta_description" data-i18n-target="content">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,9 +22,10 @@
         <h1>João Feitosa</h1>
         <div class="status-indicator">
           <span class="dot"></span>
-          <span id="system-status-text">SYSTEM_ACTIVE</span>
+          <span id="system-status-text" data-i18n="system_status">SYSTEM_ACTIVE</span>
           <span class="status-separator" style="margin: 0 5px; opacity: 0.5;">//</span>
-          <span id="uptime-counter" style="font-family: 'Consolas', monospace;">UPTIME: 00:00:00</span>
+          <span id="uptime-counter" style="font-family: 'Consolas', monospace;" data-i18n="uptime_label"
+            data-i18n-target="prepend">UPTIME: 00:00:00</span>
         </div>
         <div id="last-commit-info"
           style="font-size: 11px; color: #666; margin-top: 2px; margin-left:14px; display: flex; align-items: center; gap: 4px;">
@@ -31,10 +33,10 @@
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
           </svg>
-          <span>LAST_UPDATE:</span>
+          <span data-i18n="last_update">LAST_UPDATE:</span>
           <span id="commit-date">initializing...</span>
         </div>
-        <p><strong>Full Stack Software Engineer & LLM Trainer</strong></p>
+        <p><strong data-i18n="role_main">Full Stack Software Engineer & LLM Trainer</strong></p>
         <a href="https://pedroffeitosa.vercel.app/" target="_blank" style="
               display: inline-block;
               font-size: 13px;
@@ -43,54 +45,73 @@
               color: #666;
               margin-top: 2px;
               margin-bottom: 2px;
-            ">Check some projects</a>
+            " data-i18n="check_projects">Check some projects</a>
       </div>
     </div>
-    <!-- Modern theme switcher -->
-    <button id="theme-toggle" aria-label="Toggle theme" style="
+    <!-- Header Controls (Lang + Theme) -->
+    <div id="header-controls" style="
           float: right;
           margin-top: 10px;
-          background: none;
-          border: none;
-          padding: 0;
-          cursor: pointer;
-          outline: none;
           display: flex;
           align-items: center;
-          min-width: 44px;
+          gap: 12px;
         ">
-      <span class="toggle-switch">
-        <span class="toggle-track">
-          <span class="toggle-thumb">
-            <span class="toggle-icon toggle-sun" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="5" stroke="#ffb300" stroke-width="2" fill="#ffeb3b"></circle>
-                <g stroke="#ffb300" stroke-width="2">
-                  <line x1="12" y1="1" x2="12" y2="4" />
-                  <line x1="12" y1="20" x2="12" y2="23" />
-                  <line x1="4.22" y1="4.22" x2="5.86" y2="5.86" />
-                  <line x1="18.14" y1="18.14" x2="19.78" y2="19.78" />
-                  <line x1="1" y1="12" x2="4" y2="12" />
-                  <line x1="20" y1="12" x2="23" y2="12" />
-                  <line x1="4.22" y1="19.78" x2="5.86" y2="18.14" />
-                  <line x1="18.14" y1="5.86" x2="19.78" y2="4.22" />
-                </g>
-              </svg>
-            </span>
-            <span class="toggle-icon toggle-moon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M21 12.79A9 9 0 0112.21 3a7 7 0 108.79 9.79z" stroke="#90caf9" stroke-width="2"
-                  fill="#3949ab" />
-              </svg>
+      <!-- Language Toggle -->
+      <button id="lang-toggle" aria-label="Switch Language" style="
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: 'Consolas', monospace;
+          font-size: 14px;
+          color: inherit;
+          padding: 0;
+          opacity: 0.8;
+          font-weight: bold;
+        ">EN</button>
+
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" aria-label="Toggle theme" style="
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+          ">
+        <span class="toggle-switch">
+          <span class="toggle-track">
+            <span class="toggle-thumb">
+              <span class="toggle-icon toggle-sun" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="5" stroke="#ffb300" stroke-width="2" fill="#ffeb3b"></circle>
+                  <g stroke="#ffb300" stroke-width="2">
+                    <line x1="12" y1="1" x2="12" y2="4" />
+                    <line x1="12" y1="20" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.86" y2="5.86" />
+                    <line x1="18.14" y1="18.14" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="4" y2="12" />
+                    <line x1="20" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.86" y2="18.14" />
+                    <line x1="18.14" y1="5.86" x2="19.78" y2="4.22" />
+                  </g>
+                </svg>
+              </span>
+              <span class="toggle-icon toggle-moon" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 12.79A9 9 0 0112.21 3a7 7 0 108.79 9.79z" stroke="#90caf9" stroke-width="2"
+                    fill="#3949ab" />
+                </svg>
+              </span>
             </span>
           </span>
         </span>
-      </span>
-    </button>
+      </button>
+    </div>
 
     <div class="section">
-      <h2>// Career</h2>
-      <p>
+      <h2 data-i18n="career_title">// Career</h2>
+      <p data-i18n="career_text">
         Full Stack Engineer with extensive experience in high-performance
         commerce and enterprise software. Adept at leading complex projects,
         from architecting scalable storefronts to integrating custom AWS
@@ -100,7 +121,7 @@
     </div>
 
     <div class="section">
-      <h2>// Main Stack & Expertise</h2>
+      <h2 data-i18n="stack_title">// Main Stack & Expertise</h2>
       <div>
         <span class="stack-item">React</span>
         <span class="stack-item">TypeScript</span>
@@ -117,7 +138,7 @@
     </div>
 
     <div class="section">
-      <h2>// Experience</h2>
+      <h2 data-i18n="experience_title">// Experience</h2>
       <div>
         <!-- Turing -->
         <div style="
@@ -128,14 +149,15 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">Turing</span>
-            <span style="margin-left: 12px">Business Analyst & LLM Trainer, Palo Alto, CA</span>
+            <span style="margin-left: 12px" data-i18n="exp_turing_role">Business Analyst & LLM Trainer, Palo Alto,
+              CA</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Sep 2025 - Present</span>
+              " data-i18n="exp_turing_date">Sep 2025 - Present</span>
           <button class="exp-toggle-btn" data-target="exp-turing" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -150,18 +172,18 @@
           </button>
         </div>
         <ul id="exp-turing" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_turing_1">
             Developed and executed RLHF frameworks for LLM evaluation and
             enhancement.
           </li>
-          <li>
+          <li data-i18n="exp_turing_2">
             Generated/scored 'gold standard' data for technical fine-tuning.
           </li>
-          <li>
+          <li data-i18n="exp_turing_3">
             Conducted deep error analysis to optimize prompts and data
             collection.
           </li>
-          <li>
+          <li data-i18n="exp_turing_4">
             Applied advanced analytics for data quality and structuring.
           </li>
         </ul>
@@ -175,14 +197,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">Pave (Dilis)</span>
-            <span style="margin-left: 12px">Full Stack Engineer, Remote</span>
+            <span style="margin-left: 12px" data-i18n="exp_pave_role">Full Stack Engineer, Remote</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Jun 2024 - Sep 2025</span>
+              " data-i18n="exp_pave_date">Jun 2024 - Sep 2025</span>
           <button class="exp-toggle-btn" data-target="exp-pave" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -197,22 +219,22 @@
           </button>
         </div>
         <ul id="exp-pave" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_pave_1">
             Integrated frontend with AWS backend, enabling seamless data flow
             and auth.
           </li>
-          <li>
+          <li data-i18n="exp_pave_2">
             Designed system: auth, uploads, event creation, data management.
           </li>
-          <li>
+          <li data-i18n="exp_pave_3">
             Built a full event platform for brand campaign
             engagement/registration.
           </li>
-          <li>
+          <li data-i18n="exp_pave_4">
             Collaborated with design for responsive performance across all
             devices.
           </li>
-          <li>Provided continual UX/UI improvements and bugfixes.</li>
+          <li data-i18n="exp_pave_5">Provided continual UX/UI improvements and bugfixes.</li>
         </ul>
         <!-- InsideHome -->
         <div style="
@@ -224,14 +246,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">InsideHome</span>
-            <span style="margin-left: 12px">Full Stack Engineer, Remote</span>
+            <span style="margin-left: 12px" data-i18n="exp_inside_role">Full Stack Engineer, Remote</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Jun 2024 - Present</span>
+              " data-i18n="exp_inside_date">Jun 2024 - Present</span>
           <button class="exp-toggle-btn" data-target="exp-insidehome" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -246,18 +268,18 @@
           </button>
         </div>
         <ul id="exp-insidehome" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_inside_1">
             Led team to build e-commerce platform using Deco, boosting
             performance.
           </li>
-          <li>
+          <li data-i18n="exp_inside_2">
             Integrated ERP, CRM, Ads, cashback with real-time campaign
             tracking.
           </li>
-          <li>
+          <li data-i18n="exp_inside_3">
             Delivered a scalable storefront & high-speed feature launches.
           </li>
-          <li>
+          <li data-i18n="exp_inside_4">
             Drove technical decisions and agile processes for quality and UX.
           </li>
         </ul>
@@ -271,14 +293,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">Wave Commerce</span>
-            <span style="margin-left: 12px">Front-End Dev, Remote</span>
+            <span style="margin-left: 12px" data-i18n="exp_wave_role">Front-End Dev, Remote</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Feb 2024 - May 2024</span>
+              " data-i18n="exp_wave_date">Feb 2024 - May 2024</span>
           <button class="exp-toggle-btn" data-target="exp-wave" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -293,12 +315,12 @@
           </button>
         </div>
         <ul id="exp-wave" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_wave_1">
             Turned Figma designs into pixel-perfect, accessible Preact
             components.
           </li>
-          <li>Owned call center section: navigation, forms, A11y, SEO.</li>
-          <li>
+          <li data-i18n="exp_wave_2">Owned call center section: navigation, forms, A11y, SEO.</li>
+          <li data-i18n="exp_wave_3">
             Shipped fast, reusable pages with high PageSpeed & CMS
             integration.
           </li>
@@ -313,14 +335,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">Integralys</span>
-            <span style="margin-left: 12px">Lead SWE, Remote</span>
+            <span style="margin-left: 12px" data-i18n="exp_integralys_role">Lead SWE, Remote</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Nov 2023 - Jan 2024</span>
+              " data-i18n="exp_integralys_date">Nov 2023 - Jan 2024</span>
           <button class="exp-toggle-btn" data-target="exp-integralys" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -335,14 +357,14 @@
           </button>
         </div>
         <ul id="exp-integralys" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_integralys_1">
             Delivered all features from high-fi Figma to production React
             code.
           </li>
-          <li>
+          <li data-i18n="exp_integralys_2">
             Modernized stack: refactored legacy PHP to React+TypeScript.
           </li>
-          <li>
+          <li data-i18n="exp_integralys_3">
             Worked cross-team for accuracy, performance & maintainability.
           </li>
         </ul>
@@ -356,14 +378,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">TEC4U</span>
-            <span style="margin-left: 12px">Full Stack Eng, Remote</span>
+            <span style="margin-left: 12px" data-i18n="exp_tec4u_role">Full Stack Eng, Remote</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Aug 2023 - Oct 2023</span>
+              " data-i18n="exp_tec4u_date">Aug 2023 - Oct 2023</span>
           <button class="exp-toggle-btn" data-target="exp-tec4u" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -378,11 +400,11 @@
           </button>
         </div>
         <ul id="exp-tec4u" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_tec4u_1">
             Built key e-commerce modules for Deco : PDP, PLP, landing pages.
           </li>
-          <li>Integrated custom CMS for flexible, editable content.</li>
-          <li>Shipped high-quality, reusable and performant code.</li>
+          <li data-i18n="exp_tec4u_2">Integrated custom CMS for flexible, editable content.</li>
+          <li data-i18n="exp_tec4u_3">Shipped high-quality, reusable and performant code.</li>
         </ul>
         <!-- Triilha -->
         <div style="
@@ -394,14 +416,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">Triilha</span>
-            <span style="margin-left: 12px">Full Stack Eng, Campina Grande</span>
+            <span style="margin-left: 12px" data-i18n="exp_triilha_role">Full Stack Eng, Campina Grande</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Apr 2022 - Jul 2023</span>
+              " data-i18n="exp_triilha_date">Apr 2022 - Jul 2023</span>
           <button class="exp-toggle-btn" data-target="exp-triilha" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -416,11 +438,11 @@
           </button>
         </div>
         <ul id="exp-triilha" class="exp-details" style="display: none; margin-top: 4px">
-          <li>
+          <li data-i18n="exp_triilha_1">
             Built React/Postgres/Node.js Scrum productivity suite from
             scratch.
           </li>
-          <li>Product manager & Scrum Master for improved team delivery.</li>
+          <li data-i18n="exp_triilha_2">Product manager & Scrum Master for improved team delivery.</li>
         </ul>
         <!-- AbInBev -->
         <div style="
@@ -432,14 +454,14 @@
             ">
           <div style="flex: 1; min-width: 0">
             <span style="font-weight: bold">AbInBev</span>
-            <span style="margin-left: 12px">Full Stack Eng, Campina Grande</span>
+            <span style="margin-left: 12px" data-i18n="exp_abinbev_role">Full Stack Eng, Campina Grande</span>
           </div>
           <span style="
                 min-width: 78px;
                 font-size: 12px;
                 color: #444;
                 text-align: right;
-              ">Jan 2020 - Apr 2021</span>
+              " data-i18n="exp_abinbev_date">Jan 2020 - Apr 2021</span>
           <button class="exp-toggle-btn" data-target="exp-abinbev" style="
                 margin-left: 8px;
                 font-family: inherit;
@@ -454,32 +476,32 @@
           </button>
         </div>
         <ul id="exp-abinbev" class="exp-details" style="display: none; margin-top: 4px">
-          <li>Built real-time dashboards & charts with JS/Node.</li>
-          <li>Streamlined reporting & performance flows.</li>
-          <li>Resolved backend/frontend issues & shipped new features.</li>
+          <li data-i18n="exp_abinbev_1">Built real-time dashboards & charts with JS/Node.</li>
+          <li data-i18n="exp_abinbev_2">Streamlined reporting & performance flows.</li>
+          <li data-i18n="exp_abinbev_3">Resolved backend/frontend issues & shipped new features.</li>
         </ul>
       </div>
     </div>
 
     <div class="section">
-      <h2>// Featured Projects</h2>
+      <h2 data-i18n="projects_title">// Featured Projects</h2>
 
-      <h3>1. AmeoPet - Pet Care Management</h3>
-      <p>
+      <h3 data-i18n="proj_ameo_title">1. AmeoPet - Pet Care Management</h3>
+      <p data-i18n="proj_ameo_desc">
         Full-stack web application with React, TypeScript, and MongoDB.
         Features real-time state management (React Query) and robust form
         validation (React Hook Form/Zod).
       </p>
 
-      <h3>2. MCPWeather - Custom Data Protocol</h3>
-      <p>
+      <h3 data-i18n="proj_mcp_title">2. MCPWeather - Custom Data Protocol</h3>
+      <p data-i18n="proj_mcp_desc">
         Client-server application implementing a custom protocol for weather
         data services. Built with TypeScript/Node.js using clean architecture,
         intelligent caching, and external API integration.
       </p>
 
-      <h3>3. Chess Game Engine (Ruby)</h3>
-      <p>
+      <h3 data-i18n="proj_chess_title">3. Chess Game Engine (Ruby)</h3>
+      <p data-i18n="proj_chess_desc">
         A robust engine demonstrating advanced object-oriented design,
         supporting all standard chess rules (castling, en passant, check/mate
         detection) with a modular architecture.
@@ -487,11 +509,13 @@
     </div>
 
     <div class="section">
-      <h2>// Connect & Status</h2>
+      <h2 data-i18n="connect_title">// Connect & Status</h2>
       <p>
-        <strong>Currently at:</strong> Turing (Business Analyst & LLM Trainer)
+        <strong data-i18n="connect_current">Currently at:</strong> <span data-i18n="connect_current_val">Turing
+          (Business Analyst & LLM Trainer)</span>
       </p>
-      <p><strong>Location:</strong> Campina Grande, PB, Brazil (Remote)</p>
+      <p><strong data-i18n="connect_location">Location:</strong> <span data-i18n="connect_location_val">Campina Grande,
+          PB, Brazil (Remote)</span></p>
       <p>
         GitHub:
         <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a><br />
@@ -507,7 +531,7 @@
               border-radius: 3px;
               cursor: pointer;
               font-family: inherit;
-            ">
+            " data-i18n="copy_btn">
           Copy
         </button>
         <span id="copy-status" style="
@@ -515,7 +539,7 @@
               font-size: 12px;
               color: #4caf50;
               display: none;
-            ">Copied!</span>
+            " data-i18n="copied_msg">Copied!</span>
       </p>
     </div>
   </div>
@@ -527,17 +551,22 @@
       style="background:var(--bg-main,#fff);color:var(--color-main,#222);border:2px solid var(--border-main,#c0c0c0);border-radius:7px;padding:26px 28px;min-width:320px;max-width:94vw;box-shadow:0 8px 40px #0007;position:relative;font-family:inherit;">
       <button id="close-shortcut-modal" aria-label="Close modal"
         style="position:absolute;top:10px;right:16px;font-size:20px;background:none;border:none;color:inherit;cursor:pointer;">&times;</button>
-      <h2 style="margin-top:0;font-size:20px;text-align:center;">Keyboard Shortcuts & Tips</h2>
+      <h2 style="margin-top:0;font-size:20px;text-align:center;" data-i18n="modal_title">Keyboard Shortcuts & Tips</h2>
       <ul style="padding-left:0;list-style:none;">
-        <li><b>?</b> �?" Show this help</li>
-        <li><b>Esc</b> �?" Close this help</li>
-        <li><b>Tab</b> �?" Standard web navigation</li>
-        <li><b>Scroll to Top</b> �?" Use the �?️ button or Home key</li>
-        <li><b>Switch Theme</b> �?" Navigate to Theme Button and hit Enter</li>
-        <li><b>Expand Experience</b> �?" Tab to Experience [+] and Enter</li>
-        <li><b>Copy Email</b> �?" Tab to Email Copy and Enter</li>
+        <li><b data-i18n="modal_help_key">?</b> – <span data-i18n="modal_help_desc">Show this help</span></li>
+        <li><b data-i18n="modal_esc_key">Esc</b> – <span data-i18n="modal_esc_desc">Close this help</span></li>
+        <li><b data-i18n="modal_tab_key">Tab</b> – <span data-i18n="modal_tab_desc">Standard web navigation</span></li>
+        <li><b data-i18n="modal_scroll_key">Scroll to Top</b> – <span data-i18n="modal_scroll_desc">Use the ⬆️ button or
+            Home key</span></li>
+        <li><b data-i18n="modal_theme_key">Switch Theme</b> – <span data-i18n="modal_theme_desc">Navigate to Theme
+            Button and hit Enter</span></li>
+        <li><b data-i18n="modal_exp_key">Expand Experience</b> – <span data-i18n="modal_exp_desc">Tab to Experience [+]
+            and Enter</span></li>
+        <li><b data-i18n="modal_copy_key">Copy Email</b> – <span data-i18n="modal_copy_desc">Tab to Email Copy and
+            Enter</span></li>
       </ul>
-      <div style="font-size:13px;color:#888;margin-top:1em;text-align:center;">For more features, use standard keyboard
+      <div style="font-size:13px;color:#888;margin-top:1em;text-align:center;" data-i18n="modal_footer">For more
+        features, use standard keyboard
         navigation and screen reader tips.</div>
     </div>
   </div>
