@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
             modal_footer: "For more features, use standard keyboard navigation and screen reader tips."
         },
         pt: {
-             // Meta
+            // Meta
             meta_description: "Portfólio de João Feitosa - Engenheiro de Software Full Stack & Treinador de LLM. Especialista em React, Node.js e IA.",
             // Header
             system_status: "SISTEMA_ATIVO",
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             connect_location_val: "Campina Grande, PB, Brasil (Remoto)",
             copy_btn: "Copiar",
             copied_msg: "Copiado!",
-             // Modal
+            // Modal
             modal_title: "Atalhos de Teclado & Dicas",
             modal_help_key: "?",
             modal_help_desc: "Mostrar esta ajuda",
@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("lang", lang);
         document.documentElement.lang = lang; // Accessibility
 
-         // Update UI
+        // Update UI
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach(el => {
             const key = el.getAttribute("data-i18n");
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Keyboard shortcut to open (Backtick ` or Ctrl+K)
+    // Keyboard shortcut to open (Backtick ` or Ctrl+B)
     document.addEventListener('keydown', (e) => {
         // Toggle with Backtick (`)
         if (e.key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
@@ -409,8 +409,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const isVisible = terminalOverlay.style.display === 'flex';
             toggleTerminal(!isVisible);
         }
-        // Toggle with Ctrl+K
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        // Toggle with Ctrl+B (Alternative safe shortcut)
+        if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
             e.preventDefault();
             const isVisible = terminalOverlay.style.display === 'flex';
             toggleTerminal(!isVisible);
@@ -431,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         whoami: {
             desc: 'Display user info',
-            exec: () => currentLang === 'pt' ? 
+            exec: () => currentLang === 'pt' ?
                 "Usuário: Visitante\nFunção: Convidado\nNível de Acesso: Leitura\n\nBio: Engenheiro de Software Full Stack & Treinador de LLM. Especialista em React, Node.js e IA." :
                 "User: Visitor\nRole: Guest\nAccess Level: Read-Only\n\nBio: Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI."
         },
@@ -485,12 +485,36 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
                 toggleTerminal(false);
                 return 'Session closed...';
             }
+        },
+        theme: {
+            desc: 'Switch theme (light, dark, matrix, cyberpunk, amber)',
+            exec: () => {
+                const args = terminalInput.value.trim().split(' ');
+                if (args.length < 2) return 'Usage: theme <name>\nAvailable: light, dark, matrix, cyberpunk, amber';
+
+                const themeName = args[1].toLowerCase();
+                const validThemes = ['light', 'dark', 'matrix', 'cyberpunk', 'amber'];
+
+                if (validThemes.includes(themeName)) {
+                    setTheme(themeName);
+                    return `Theme set to: ${themeName}`;
+                } else {
+                    return `Invalid theme. Try: ${validThemes.join(', ')}`;
+                }
+            }
+        },
+        themes: {
+            desc: 'List available themes',
+            exec: () => 'Available themes:\n- light\n- dark\n- matrix\n- cyberpunk\n- amber'
         }
     };
 
     const processCommand = (cmdStr) => {
-        const cleanCmd = cmdStr.trim().toLowerCase();
-        if (!cleanCmd) return;
+        const trimmed = cmdStr.trim();
+        if (!trimmed) return;
+
+        const parts = trimmed.split(' ');
+        const cmdName = parts[0].toLowerCase();
 
         // Create log entry
         const logEntry = document.createElement('div');
@@ -498,12 +522,14 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 
         const cmdLine = document.createElement('div');
         cmdLine.className = 'cmd-command';
-        cmdLine.textContent = `visitor@pedroffeitosa:~$ ${cmdStr}`; // Keep original case for display
+        cmdLine.textContent = `visitor@pedroffeitosa:~$ ${trimmed}`; // Keep original case for display
         logEntry.appendChild(cmdLine);
 
         // Process command
-        if (commands[cleanCmd]) {
-            const response = commands[cleanCmd].exec();
+        if (commands[cmdName]) {
+            // Pass the full original string or args if needed, 
+            // but our theme command reads from terminalInput.value or we can pass args
+            const response = commands[cmdName].exec(parts.slice(1));
             if (response !== null) {
                 const respLine = document.createElement('div');
                 respLine.className = 'cmd-response';
@@ -513,7 +539,7 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
         } else {
             const errorLine = document.createElement('div');
             errorLine.className = 'cmd-response cmd-error';
-            errorLine.textContent = `Command not found: ${cleanCmd}. Type 'help' for options.`;
+            errorLine.textContent = `Command not found: ${cmdName}. Type 'help' for options.`;
             logEntry.appendChild(errorLine);
         }
 
@@ -584,7 +610,7 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
                     date.getMinutes().toString().padStart(2, '0');
 
                 commitDateElement.textContent = formattedDate;
-                
+
                 // Update LAST_UPDATE label dynamically if needed, 
                 // but handled by setLanguage() generally.
 
