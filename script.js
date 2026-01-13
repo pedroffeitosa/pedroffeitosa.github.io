@@ -506,6 +506,21 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
         themes: {
             desc: 'List available themes',
             exec: () => 'Available themes:\n- light\n- dark\n- matrix\n- cyberpunk\n- amber'
+        },
+        cat: {
+            desc: 'Spawn a cat walker',
+            exec: () => {
+                const cat = document.getElementById('cat-walker');
+                if (!cat) return 'Error: Cat not found.';
+
+                if (cat.style.display === 'none') {
+                    cat.style.display = 'block';
+                    return '🐈 Meow! The cat is now walking.';
+                } else {
+                    cat.style.display = 'none';
+                    return 'Cat has been tucked away.';
+                }
+            }
         }
     };
 

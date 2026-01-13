@@ -165,87 +165,162 @@ a:hover {
   color: #81c784;
 }
 
-/* --- Orange Cat Walker (Minimal Box) --- */
+/* --- Animated CSS Cat --- */
 .cat {
   position: fixed;
-  left: -80px;
-  top: calc(100% - var(--cat-h) - 10px);
-  width: var(--cat-w);
-  height: var(--cat-h);
   z-index: 1000;
-  pointer-events: auto;
-  transform-origin: center;
-  animation: walkPath var(--cat-duration) linear infinite;
-
-  /* Minimal Style */
-  border: 2px dashed currentColor;
-  background-color: transparent;
-  border-radius: 4px;
-  text-align: center;
-  line-height: var(--cat-h);
-  font-size: 10px;
-  font-family: "Consolas", "Courier New", monospace;
-  opacity: 0.7;
+  width: 50px; /* Body Width */
+  height: 28px; /* Body Height */
+  bottom: 20px;
+  left: -80px;
+  color: var(--color-main);
+  pointer-events: none;
+  transform-origin: center bottom;
+  animation: walkPath 22s linear infinite;
+  /* Ensure we can see it */
+  display: block; 
 }
 
-.cat::before {
-  content: "[CAT_WALKER]";
-  color: inherit;
-}
-
-/* Hide all the complex nested cat-drawing styles */
-.cat * {
-  display: none !important;
-}
-
-@keyframes walkPath {
-  0% {
-    left: -80px;
-    top: calc(100% - var(--cat-h) - 10px);
-    transform: scaleX(1) rotate(0deg);
-  }
-
-  12% {
-    left: 6vw;
-    top: 8vh;
-    transform: scaleX(1) rotate(-6deg);
-  }
-
-  37% {
-    left: calc(100% - var(--cat-w) - 6vw);
-    top: 6vh;
-    transform: scaleX(-1) rotate(0deg);
-  }
-
-  62% {
-    left: calc(100% - var(--cat-w) - 6vw);
-    top: calc(100% - var(--cat-h) - 8vh);
-    transform: scaleX(-1) rotate(6deg);
-  }
-
-  88% {
-    left: 6vw;
-    top: calc(100% - var(--cat-h) - 10px);
-    transform: scaleX(1) rotate(0deg);
-  }
-
-  100% {
-    left: -80px;
-    top: calc(100% - var(--cat-h) - 10px);
-    transform: scaleX(1) rotate(0deg);
-  }
-}
-
+/* Pause when hidden or paused */
 .cat.paused {
   animation-play-state: paused;
 }
 
+/* --- Parts --- */
+.cat div {
+  position: absolute;
+  background-color: currentColor;
+}
+
+.cat-body {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+}
+
+.cat-head {
+  width: 22px;
+  height: 22px;
+  top: -8px;
+  right: -5px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Ears */
+.cat-ear {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 8px solid currentColor;
+  background: transparent !important;
+  top: -5px;
+  left: -2px;
+  transform: rotate(-20deg);
+}
+.cat-ear.right {
+  left: auto;
+  right: -2px;
+  transform: rotate(20deg);
+}
+
+/* Face (Eyes/Nose) - uses background color for "holes" */
+.cat-face {
+  background: transparent !important;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.cat-eye {
+  width: 3px;
+  height: 3px;
+  background: var(--bg-main) !important;
+  border-radius: 50%;
+  top: 7px;
+  left: 5px;
+  animation: blinkCat 4s infinite;
+}
+.cat-eye.right {
+  left: auto;
+  right: 5px;
+}
+.cat-nose {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 4px solid var(--bg-main);
+  background: transparent !important;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Tail */
+.cat-tail {
+  width: 6px;
+  height: 24px;
+  bottom: 12px;
+  left: 2px;
+  border-radius: 3px;
+  transform-origin: bottom center;
+  transform: rotate(-35deg);
+  animation: tailWag 1.5s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+/* Legs */
+.cat-leg {
+  width: 7px;
+  height: 16px;
+  bottom: -8px;
+  border-radius: 3px;
+  transform-origin: top center;
+  z-index: 1;
+}
+
+.cat-leg.front {
+  right: 8px;
+  animation: legMove 0.6s ease-in-out infinite alternate;
+}
+.cat-leg.back {
+  left: 8px;
+  animation: legMove 0.6s ease-in-out infinite alternate-reverse;
+}
+
+.cat-leg.right-leg {
+  z-index: -1;
+  opacity: 0.6;
+  animation-delay: 0.6s; /* Offset for walking gait */
+}
+
+/* --- Animations --- */
+@keyframes walkPath {
+  0% { left: -80px; transform: scaleX(1); }
+  45% { left: 105%; transform: scaleX(1); }
+  46% { left: 105%; transform: scaleX(-1); }
+  99% { left: -80px; transform: scaleX(-1); }
+  100% { left: -80px; transform: scaleX(1); }
+}
+
+@keyframes tailWag {
+  0% { transform: rotate(-45deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+@keyframes legMove {
+  from { transform: rotate(25deg); }
+  to { transform: rotate(-25deg); }
+}
+
+@keyframes blinkCat {
+  0%, 96%, 100% { height: 3px; }
+  97% { height: 0px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .cat {
-    animation: none;
-    left: calc(100% - var(--cat-w) - 10px);
-    top: calc(100% - var(--cat-h) - 10px);
-  }
+  .cat, .cat * { animation: none !important; }
 }
 
 /* Toggle Switch Styles */
