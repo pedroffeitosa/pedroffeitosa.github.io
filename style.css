@@ -169,8 +169,10 @@ a:hover {
 .cat {
   position: fixed;
   z-index: 1000;
-  width: 50px; /* Body Width */
-  height: 28px; /* Body Height */
+  width: 50px;
+  /* Body Width */
+  height: 28px;
+  /* Body Height */
   bottom: 20px;
   left: -80px;
   color: var(--color-main);
@@ -178,7 +180,7 @@ a:hover {
   transform-origin: center bottom;
   animation: walkPath 22s linear infinite;
   /* Ensure we can see it */
-  display: block; 
+  display: block;
 }
 
 /* Pause when hidden or paused */
@@ -219,6 +221,7 @@ a:hover {
   left: -2px;
   transform: rotate(-20deg);
 }
+
 .cat-ear.right {
   left: auto;
   right: -2px;
@@ -232,6 +235,7 @@ a:hover {
   height: 100%;
   position: relative;
 }
+
 .cat-eye {
   width: 3px;
   height: 3px;
@@ -241,10 +245,12 @@ a:hover {
   left: 5px;
   animation: blinkCat 4s infinite;
 }
+
 .cat-eye.right {
   left: auto;
   right: 5px;
 }
+
 .cat-nose {
   width: 0;
   height: 0;
@@ -284,6 +290,7 @@ a:hover {
   right: 8px;
   animation: legMove 0.6s ease-in-out infinite alternate;
 }
+
 .cat-leg.back {
   left: 8px;
   animation: legMove 0.6s ease-in-out infinite alternate-reverse;
@@ -292,35 +299,77 @@ a:hover {
 .cat-leg.right-leg {
   z-index: -1;
   opacity: 0.6;
-  animation-delay: 0.6s; /* Offset for walking gait */
+  animation-delay: 0.6s;
+  /* Offset for walking gait */
 }
 
 /* --- Animations --- */
 @keyframes walkPath {
-  0% { left: -80px; transform: scaleX(1); }
-  45% { left: 105%; transform: scaleX(1); }
-  46% { left: 105%; transform: scaleX(-1); }
-  99% { left: -80px; transform: scaleX(-1); }
-  100% { left: -80px; transform: scaleX(1); }
+  0% {
+    left: -80px;
+    transform: scaleX(1);
+  }
+
+  45% {
+    left: 105%;
+    transform: scaleX(1);
+  }
+
+  46% {
+    left: 105%;
+    transform: scaleX(-1);
+  }
+
+  99% {
+    left: -80px;
+    transform: scaleX(-1);
+  }
+
+  100% {
+    left: -80px;
+    transform: scaleX(1);
+  }
 }
 
 @keyframes tailWag {
-  0% { transform: rotate(-45deg); }
-  100% { transform: rotate(-15deg); }
+  0% {
+    transform: rotate(-45deg);
+  }
+
+  100% {
+    transform: rotate(-15deg);
+  }
 }
 
 @keyframes legMove {
-  from { transform: rotate(25deg); }
-  to { transform: rotate(-25deg); }
+  from {
+    transform: rotate(25deg);
+  }
+
+  to {
+    transform: rotate(-25deg);
+  }
 }
 
 @keyframes blinkCat {
-  0%, 96%, 100% { height: 3px; }
-  97% { height: 0px; }
+
+  0%,
+  96%,
+  100% {
+    height: 3px;
+  }
+
+  97% {
+    height: 0px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cat, .cat * { animation: none !important; }
+
+  .cat,
+  .cat * {
+    animation: none !important;
+  }
 }
 
 /* Toggle Switch Styles */
@@ -429,8 +478,23 @@ a:hover {
 
 /* Experience Details transition */
 .exp-details {
+  max-height: 0;
+  opacity: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  transform: translateY(-10px);
+  margin-top: 0;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    margin-top 0.4s ease;
+}
+
+.exp-details.open {
+  max-height: 500px;
+  /* Arbitrary large height */
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 10px;
 }
 
 /* --- Terminal Overlay Styles --- */

@@ -283,11 +283,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = document.getElementById(targetId);
 
             if (target) {
-                const isOpen = target.style.display === "block";
-                target.style.display = isOpen ? "none" : "block";
-                btn.textContent = isOpen ? "+" : "-";
+                // Toggle Class for CSS transition
+                target.classList.toggle("open");
+                const isOpen = target.classList.contains("open");
+
+                btn.textContent = isOpen ? "-" : "+";
                 // Update ARIA state
-                btn.setAttribute("aria-expanded", !isOpen);
+                btn.setAttribute("aria-expanded", isOpen);
             }
         });
     });
