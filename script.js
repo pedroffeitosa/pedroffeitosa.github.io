@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- Localization Logic ---
-    const langToggle = document.getElementById("lang-toggle");
+    const btnEn = document.getElementById("btn-en");
+    const btnPt = document.getElementById("btn-pt");
     let currentLang = localStorage.getItem("lang") || (navigator.language.startsWith("pt") ? "pt" : "en");
 
     const translations = {
@@ -236,16 +237,36 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Update Toggle Button Text
-        if (langToggle) {
-            langToggle.textContent = lang === "en" ? "EN" : "PT";
+        // Update Toggle UI (Active State)
+        if (btnEn && btnPt) {
+            if (lang === "en") {
+                btnEn.classList.add("active");
+                btnPt.classList.remove("active");
+            } else {
+                btnEn.classList.remove("active");
+                btnPt.classList.add("active");
+            }
         }
     };
 
-    if (langToggle) {
-        langToggle.addEventListener("click", () => {
-            const newLang = currentLang === "en" ? "pt" : "en";
-            updateLanguage(newLang);
+    // Event Listeners for Language Buttons
+    if (btnEn) btnEn.addEventListener("click", () => updateLanguage("en"));
+    if (btnPt) btnPt.addEventListener("click", () => updateLanguage("pt"));
+    // Keyboard accessibility for spans
+    if (btnEn) {
+        btnEn.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                updateLanguage("en");
+            }
+        });
+    }
+    if (btnPt) {
+        btnPt.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                updateLanguage("pt");
+            }
         });
     }
 

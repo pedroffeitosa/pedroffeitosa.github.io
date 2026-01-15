@@ -113,6 +113,23 @@ a:hover {
   color: var(--link-hover);
 }
 
+/* Language Toggle Styles */
+.lang-option {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s, font-weight 0.2s;
+}
+
+.lang-option:hover {
+  opacity: 0.8;
+}
+
+.lang-option.active {
+  opacity: 1;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .stack-item {
   display: inline-block;
   margin: 0 10px 5px 0;
