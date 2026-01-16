@@ -440,6 +440,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Terminal Toggle Button (Hint)
+    const terminalToggleBtn = document.getElementById('terminal-toggle');
+    if (terminalToggleBtn) {
+        terminalToggleBtn.addEventListener('click', () => {
+            // Always open, or toggle? The user might click it to close too if it wasn't covered.
+            // Since the overlay covers the screen, clicking the button again isn't possible unless the overlay is not full screen or has transparency that allows clicking through (which it doesn't).
+            // However, strictly speaking, it's a "toggle" button.
+            toggleTerminal(true);
+        });
+    }
+
     // Command Processing
     const commands = {
         help: {
