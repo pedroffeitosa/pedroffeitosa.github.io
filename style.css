@@ -153,6 +153,7 @@ a:hover {
   align-items: center;
   gap: 5px;
   margin-top: 5px;
+  white-space: nowrap;
 }
 
 .dot {
