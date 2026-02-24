@@ -1,4 +1,120 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // --- Sound Engine ---
+    class SoundEngine {
+        constructor() {
+            this.audioCtx = null;
+            this.enabled = false;
+        }
+
+        init() {
+            if (!this.audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    this.audioCtx = new AudioContext();
+                }
+            }
+            if (this.audioCtx && this.audioCtx.state === 'suspended') {
+                this.audioCtx.resume();
+            }
+        }
+
+        playTone(freq, type, duration, vol) {
+            if (!this.enabled || !this.audioCtx) return;
+            const oscillator = this.audioCtx.createOscillator();
+            const gainNode = this.audioCtx.createGain();
+
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(freq, this.audioCtx.currentTime);
+
+            gainNode.gain.setValueAtTime(vol, this.audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + duration);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioCtx.destination);
+
+            oscillator.start();
+            oscillator.stop(this.audioCtx.currentTime + duration);
+        }
+
+        playKeystroke() {
+            // Short, low-pitch click mimicking a mechanical keyboard
+            this.playTone(150 + Math.random() * 50, 'square', 0.05, 0.05);
+        }
+
+        playToggle() {
+            // Soft beep for toggle buttons
+            this.playTone(600, 'sine', 0.1, 0.08);
+            setTimeout(() => this.playTone(800, 'sine', 0.15, 0.08), 80);
+        }
+
+        playBeep() {
+            // Classic terminal beep
+            this.playTone(500, 'sine', 0.15, 0.1);
+        }
+
+        playError() {
+            // Lower pitched, slightly longer beep for errors
+            this.playTone(150, 'sawtooth', 0.2, 0.1);
+        }
+    }
+
+    const sound = new SoundEngine();
+
+    // Sound Toggle UI Logic
+    const soundToggleBtn = document.getElementById("sound-toggle");
+    const soundIconOn = document.getElementById("sound-icon-on");
+    const soundIconOff = document.getElementById("sound-icon-off");
+
+    const updateSoundUI = () => {
+        if (sound.enabled) {
+            if (soundIconOn) soundIconOn.style.display = "block";
+            if (soundIconOff) soundIconOff.style.display = "none";
+            if (soundToggleBtn) {
+                soundToggleBtn.style.opacity = "1";
+                soundToggleBtn.style.color = "var(--link)";
+            }
+        } else {
+            if (soundIconOn) soundIconOn.style.display = "none";
+            if (soundIconOff) soundIconOff.style.display = "block";
+            if (soundToggleBtn) {
+                soundToggleBtn.style.opacity = "0.6";
+                soundToggleBtn.style.color = "inherit";
+            }
+        }
+    };
+
+    if (soundToggleBtn) {
+        soundToggleBtn.addEventListener("click", () => {
+            sound.init(); // Need user interaction to initialize AudioContext
+            sound.enabled = !sound.enabled;
+            // Save preference
+            localStorage.setItem("soundEnabled", sound.enabled);
+            updateSoundUI();
+            if (sound.enabled) sound.playToggle();
+        });
+    }
+
+    // Load saved sound preference
+    const savedSoundSetting = localStorage.getItem("soundEnabled");
+    if (savedSoundSetting === "true") {
+        sound.enabled = true;
+        // AudioContext is intentionally not initialized here until first interaction
+        updateSoundUI();
+    }
+
+    // --- Interaction Listeners for Global Audio Init ---
+    // Initialize audio context on first user interaction if sound is meant to be enabled
+    const initAudioOnInteract = () => {
+        if (sound.enabled && !sound.audioCtx) {
+            sound.init();
+        }
+        document.removeEventListener("click", initAudioOnInteract);
+        document.removeEventListener("keydown", initAudioOnInteract);
+    };
+    document.addEventListener("click", initAudioOnInteract);
+    document.addEventListener("keydown", initAudioOnInteract);
+
+
     // --- Localization Logic ---
     const btnEn = document.getElementById("btn-en");
     const btnPt = document.getElementById("btn-pt");
@@ -250,14 +366,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Event Listeners for Language Buttons
-    if (btnEn) btnEn.addEventListener("click", () => updateLanguage("en"));
-    if (btnPt) btnPt.addEventListener("click", () => updateLanguage("pt"));
+    if (btnEn) btnEn.addEventListener("click", () => {
+        updateLanguage("en");
+        sound.playToggle();
+    });
+    if (btnPt) btnPt.addEventListener("click", () => {
+        updateLanguage("pt");
+        sound.playToggle();
+    });
     // Keyboard accessibility for spans
     if (btnEn) {
         btnEn.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 updateLanguage("en");
+                sound.playToggle();
             }
         });
     }
@@ -266,6 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 updateLanguage("pt");
+                sound.playToggle();
             }
         });
     }
@@ -311,6 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.textContent = isOpen ? "-" : "+";
                 // Update ARIA state
                 btn.setAttribute("aria-expanded", isOpen);
+                sound.playToggle();
             }
         });
     });
@@ -336,6 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
         themeToggle.addEventListener("click", () => {
             const current = document.documentElement.getAttribute("data-theme") || "light";
             setTheme(current === "dark" ? "light" : "dark");
+            sound.playToggle();
         });
     }
 
@@ -429,14 +555,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // Toggle with Backtick (`)
         if (e.key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
             e.preventDefault();
-            const isVisible = terminalOverlay.style.display === 'flex';
+            const isVisible = terminalOverlay && terminalOverlay.style.display === 'flex';
             toggleTerminal(!isVisible);
+            sound.playToggle();
         }
         // Toggle with Ctrl+B (Alternative safe shortcut)
         if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
             e.preventDefault();
-            const isVisible = terminalOverlay.style.display === 'flex';
+            const isVisible = terminalOverlay && terminalOverlay.style.display === 'flex';
             toggleTerminal(!isVisible);
+            sound.playToggle();
         }
     });
 
@@ -448,6 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Since the overlay covers the screen, clicking the button again isn't possible unless the overlay is not full screen or has transparency that allows clicking through (which it doesn't).
             // However, strictly speaking, it's a "toggle" button.
             toggleTerminal(true);
+            sound.playToggle();
         });
     }
 
@@ -607,11 +736,13 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
                 respLine.innerHTML = response.replace(/\n/g, '<br>'); // Simple formatting
                 logEntry.appendChild(respLine);
             }
+            sound.playBeep();
         } else {
             const errorLine = document.createElement('div');
             errorLine.className = 'cmd-response cmd-error';
             errorLine.textContent = `Command not found: ${cmdName}. Type 'help' for options.`;
             logEntry.appendChild(errorLine);
+            sound.playError();
         }
 
         terminalOutput.appendChild(logEntry);
@@ -621,6 +752,11 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
+            // Only play keystroke sound for actual characters, backspace, and space.
+            if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
+                sound.playKeystroke();
+            }
+
             if (e.key === 'Enter') {
                 processCommand(terminalInput.value);
                 terminalInput.value = '';
