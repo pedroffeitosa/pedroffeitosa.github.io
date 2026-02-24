@@ -555,6 +555,28 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
                     return 'Cat has been tucked away.';
                 }
             }
+        },
+        neofetch: {
+            desc: 'Display system information summary',
+            exec: () => {
+                const uptime = document.getElementById('uptime-counter')?.textContent || "00:00:00";
+                const role = translations[currentLang]?.role_main || "Software Engineer";
+                const langLine = currentLang === 'pt' ? 'Língua: Português' : 'Language: English';
+
+                return `
+<pre style="color: var(--link); line-height: 1.2; font-size: 11px;">
+       .---.
+      /     \\
+      |() ()|   <b>João Feitosa</b>
+       \\  ^  /    -------------------
+        |||||     <b>OS</b>: PortfolioOS v2.0
+        |||||     <b>Role</b>: ${role}
+                  <b>Stack</b>: React, TS, Node, AI
+                  <b>Uptime</b>: ${uptime.replace('UPTIME: ', '').replace('LIGADO: ', '')}
+                  <b>${langLine}</b>
+                  <b>Location</b>: Brazil (Remote)
+</pre>`.trim();
+            }
         }
     };
 
@@ -775,5 +797,24 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
             konamiIndex = (key === "arrowup") ? 1 : 0;
             if (konamiIndex === 1) console.log("Konami Restarted");
         }
+    });
+    // --- Scroll Reveal Logic ---
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-visible");
+                entry.target.classList.remove("reveal-hidden");
+                // Stop observing once revealed if you want it to trigger only once
+                // revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15 // Trigger when 15% visible
+    });
+
+    const sections = document.querySelectorAll(".section");
+    sections.forEach(section => {
+        section.classList.add("reveal-hidden");
+        revealObserver.observe(section);
     });
 });
