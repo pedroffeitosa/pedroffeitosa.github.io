@@ -200,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
             connect_current_val: "Turing (Business Analyst & LLM Trainer)",
             connect_location: "Location:",
             connect_location_val: "Campina Grande, PB, Brazil (Remote)",
+            cv_link: "View / Download CV",
             copy_btn: "Copy",
             copied_msg: "Copied!",
             // Modal
@@ -299,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
             connect_current_val: "Turing (Analista de Negócios & Treinador de LLM)",
             connect_location: "Localização:",
             connect_location_val: "Campina Grande, PB, Brasil (Remoto)",
+            cv_link: "Ver / Baixar CV",
             copy_btn: "Copiar",
             copied_msg: "Copiado!",
             // Modal

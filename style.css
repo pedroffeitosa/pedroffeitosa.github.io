@@ -195,6 +195,107 @@ a:hover {
   color: #81c784;
 }
 
+/* Header Layout */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-status {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+}
+
+#header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--bg-main);
+  margin-top: 10px;
+}
+
+#header-controls button, #header-controls div {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+}
+
+#lang-selector {
+  gap: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 14px;
+}
+
+#header-controls #sound-toggle, 
+#header-controls #terminal-toggle {
+  margin-left: 8px;
+  opacity: 0.6;
+  color: inherit;
+}
+
+#header-controls #sound-toggle:hover, 
+#header-controls #terminal-toggle:hover {
+  opacity: 1;
+}
+
+#last-commit-info {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bio-row {
+  margin-top: 10px;
+}
+
+.role-text {
+  margin: 0;
+}
+
+.cv-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.cv-links a {
+  display: inline-block;
+  font-size: 13px;
+  font-family: inherit;
+  text-decoration: underline;
+  color: var(--color-main);
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 600px) {
+  .header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cv-links {
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+}
+
 /* --- Animated CSS Cat --- */
 .cat {
   position: fixed;
