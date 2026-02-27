@@ -753,7 +753,10 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 
         const cmdLine = document.createElement('div');
         cmdLine.className = 'cmd-command';
-        cmdLine.textContent = `visitor@pedroffeitosa:~$ ${trimmed}`; // Keep original case for display
+        cmdLine.innerHTML = `<span class="prompt"><span class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$ </span>`;
+        const cmdText = document.createElement('span');
+        cmdText.textContent = trimmed;
+        cmdLine.appendChild(cmdText);
         logEntry.appendChild(cmdLine);
 
         // Process command
