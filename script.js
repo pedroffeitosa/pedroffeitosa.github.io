@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
             last_update: "LAST_UPDATE:",
             role_main: "Full Stack Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
+            terminal_hint: "Terminal: Ctrl+B / `",
             // Sections
             career_title: "// Career",
             career_text: "Full Stack Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.",
@@ -230,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
             last_update: "ULT_ATUALIZACAO:",
             role_main: "Engenheiro de Software Full Stack & Treinador de LLM",
             check_projects: "Ver alguns projetos",
+            terminal_hint: "Terminal: Ctrl+B / `",
             // Sections
             career_title: "// Carreira",
             career_text: "Engenheiro Full Stack com vasta experiência em comércio de alta performance e software empresarial. Hábil em liderar projetos complexos, desde arquitetura de lojas escaláveis até integração de backends AWS customizados e sistemas corporativos (ERP/CRM). Atualmente focado em aplicar expertise em IA/LLMs na Turing.",
@@ -531,8 +533,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle Terminal visibility
     const toggleTerminal = (show) => {
         if (!terminalOverlay) return;
-        terminalOverlay.style.display = show ? 'flex' : 'none';
-        if (show) {
+
+        // If 'show' is undefined or something else, we toggle based on current display style
+        const shouldShow = (typeof show === 'boolean') ? show : (terminalOverlay.style.display !== 'flex');
+
+        terminalOverlay.style.display = shouldShow ? 'flex' : 'none';
+        if (shouldShow) {
             terminalInput.value = '';
             terminalInput.focus();
         }
@@ -540,10 +546,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close on button click
     if (closeTerminalBtn) {
-        closeTerminalBtn.addEventListener('click', () => toggleTerminal(false));
+        closeTerminalBtn.addEventListener('click', () => {
+            toggleTerminal(false);
+        });
     }
 
-    // Close on outside click (optional, maybe keep it modal-like)
+    // Close on outside click
     if (terminalOverlay) {
         terminalOverlay.addEventListener('click', (e) => {
             if (e.target === terminalOverlay) {
@@ -554,18 +562,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Keyboard shortcut to open (Backtick ` or Ctrl+B)
     document.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
         // Toggle with Backtick (`)
-        if (e.key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
-            e.preventDefault();
-            const isVisible = terminalOverlay && terminalOverlay.style.display === 'flex';
-            toggleTerminal(!isVisible);
-            sound.playToggle();
+        if (key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+            if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                toggleTerminal(); // Toggle
+                sound.playToggle();
+            }
         }
         // Toggle with Ctrl+B (Alternative safe shortcut)
-        if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+        if ((e.ctrlKey || e.metaKey) && key === 'b') {
             e.preventDefault();
-            const isVisible = terminalOverlay && terminalOverlay.style.display === 'flex';
-            toggleTerminal(!isVisible);
+            toggleTerminal(); // Toggle
             sound.playToggle();
         }
     });
@@ -574,10 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminalToggleBtn = document.getElementById('terminal-toggle');
     if (terminalToggleBtn) {
         terminalToggleBtn.addEventListener('click', () => {
-            // Always open, or toggle? The user might click it to close too if it wasn't covered.
-            // Since the overlay covers the screen, clicking the button again isn't possible unless the overlay is not full screen or has transparency that allows clicking through (which it doesn't).
-            // However, strictly speaking, it's a "toggle" button.
-            toggleTerminal(true);
+            toggleTerminal(); // Toggle
             sound.playToggle();
         });
     }
@@ -601,8 +607,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 "User: Visitor\nRole: Guest\nAccess Level: Read-Only\n\nBio: Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI."
         },
         skills: {
-            desc: 'List technical skills',
-            exec: () => `
+            desc: 'List technical skills (use --visual for chart)',
+            exec: (args) => {
+                const isVisual = args && args.includes('--visual');
+                if (isVisual) {
+                    const skillsData = [
+                        { name: 'React', level: 90 },
+                        { name: 'TypeScript', level: 85 },
+                        { name: 'Node.js', level: 80 },
+                        { name: 'Tailwind', level: 90 },
+                        { name: 'AI/LLM', level: 75 },
+                        { name: 'PostgreSQL', level: 70 }
+                    ];
+
+                    let output = currentLang === 'pt' ? '<b>Visualização de Skills:</b>\n\n' : '<b>Skills Visualization:</b>\n\n';
+                    skillsData.forEach(s => {
+                        const barLength = 20;
+                        const filledLength = Math.round((s.level / 100) * barLength);
+                        const bar = '█'.repeat(filledLength) + '░'.repeat(barLength - filledLength);
+                        output += `${s.name.padEnd(12)} ${bar} ${s.level}%\n`;
+                    });
+                    return `<pre style="color: inherit; line-height: 1.2;">${output}</pre>`;
+                }
+
+                return `
 [FRONTEND]
 - React, TypeScript, Tailwind, Preact, HTML/CSS
 [BACKEND]
@@ -611,7 +639,8 @@ document.addEventListener("DOMContentLoaded", () => {
 - LLM Training (RLHF), Prompt Engineering, Data Analysis
 [OTHER]
 - Scrum Master, QA, E-commerce (Deco, VTEX)
-            `.trim()
+                `.trim();
+            }
         },
         projects: {
             desc: 'List featured projects',

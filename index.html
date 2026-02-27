@@ -107,6 +107,8 @@
           <span class="status-separator" style="margin: 0 5px; opacity: 0.5">//</span>
           <span id="uptime-counter" style="font-family: 'Consolas', monospace" data-i18n="uptime_label"
             data-i18n-target="prepend">UPTIME: 00:00:00</span>
+          <span class="status-separator" style="margin: 0 5px; opacity: 0.5">//</span>
+          <span id="terminal-hint" class="terminal-hint" data-i18n="terminal_hint">Terminal: Ctrl+B / `</span>
         </div>
         <div id="last-commit-info">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -662,24 +664,25 @@
         tips.
       </div>
     </div>
-    <div id="cat-walker" class="cat" style="display: none">
-      <div class="cat-body"></div>
-      <div class="cat-head">
-        <div class="cat-ear"></div>
-        <div class="cat-ear right"></div>
-        <div class="cat-face">
-          <div class="cat-eye"></div>
-          <div class="cat-eye right"></div>
-          <div class="cat-nose"></div>
-        </div>
+  </div>
+  <div id="cat-walker" class="cat" style="display: none">
+    <div class="cat-body"></div>
+    <div class="cat-head">
+      <div class="cat-ear"></div>
+      <div class="cat-ear right"></div>
+      <div class="cat-face">
+        <div class="cat-eye"></div>
+        <div class="cat-eye right"></div>
+        <div class="cat-nose"></div>
       </div>
-      <div class="cat-tail"></div>
-      <div class="cat-leg front"></div>
-      <div class="cat-leg back"></div>
-      <div class="cat-leg front right-leg"></div>
-      <div class="cat-leg back right-leg"></div>
     </div>
-    <button id="scroll-top-btn" aria-label="Scroll to top" style="
+    <div class="cat-tail"></div>
+    <div class="cat-leg front"></div>
+    <div class="cat-leg back"></div>
+    <div class="cat-leg front right-leg"></div>
+    <div class="cat-leg back right-leg"></div>
+  </div>
+  <button id="scroll-top-btn" aria-label="Scroll to top" style="
         position: fixed;
         right: 28px;
         bottom: 36px;
@@ -698,40 +701,41 @@
         justify-content: center;
         transition: background 0.2s, color 0.2s, opacity 0.2s;
       ">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5" fill="none" />
-        <path d="M12 16V8M8.5 11.5 12 8l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
-    </button>
-</body>
-<!-- Terminal Overlay -->
-<div id="terminal-overlay" style="display: none">
-  <div class="terminal-window">
-    <div class="terminal-header">
-      <span class="terminal-title">visitor@pedroffeitosa:~</span>
-      <button id="close-terminal" aria-label="Close terminal">×</button>
-    </div>
-    <div id="terminal-output"></div>
-    <div class="terminal-input-area">
-      <span class="prompt">visitor@pedroffeitosa:~$</span>
-      <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1.5" fill="none" />
+      <path d="M12 16V8M8.5 11.5 12 8l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <!-- Terminal Overlay -->
+  <div id="terminal-overlay" style="display: none">
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="terminal-title">visitor@pedroffeitosa:~</span>
+        <button id="close-terminal" aria-label="Close terminal">×</button>
+      </div>
+      <div id="terminal-output"></div>
+      <div class="terminal-input-area">
+        <span class="prompt">visitor@pedroffeitosa:~$</span>
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Matrix Canvas -->
-<canvas id="matrix-canvas" style="
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      background: black;
-    "></canvas>
+  <!-- Matrix Canvas -->
+  <canvas id="matrix-canvas" style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 9998;
+          background: black;
+        "></canvas>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
+</body>
 
 </html>
