@@ -220,7 +220,17 @@ document.addEventListener("DOMContentLoaded", () => {
             modal_exp_desc: "Tab to Experience [+] and Enter",
             modal_copy_key: "Copy Email",
             modal_copy_desc: "Tab to Email Copy and Enter",
-            modal_footer: "For more features, use standard keyboard navigation and screen reader tips."
+            modal_footer: "For more features, use standard keyboard navigation and screen reader tips.",
+            // Contact Flow
+            contact_start: "Initializing secure connection to contact service...",
+            contact_usage: "Usage: contact --send (to send a message) or just contact to see email.",
+            contact_step_name: "Please enter your Name: ",
+            contact_step_email: "Please enter your Email: ",
+            contact_step_msg: "Please enter your Message: ",
+            contact_sending: "Sending message...",
+            contact_success: "Message sent successfully! I'll get back to you soon.",
+            contact_error: "Error sending message. Please try again or use direct email.",
+            contact_cancelled: "Contact flow cancelled."
         },
         pt: {
             // Meta
@@ -321,7 +331,17 @@ document.addEventListener("DOMContentLoaded", () => {
             modal_exp_desc: "Tab até a Experiência [+] e Enter",
             modal_copy_key: "Copiar Email",
             modal_copy_desc: "Tab até Copiar Email e Enter",
-            modal_footer: "Para mais, use navegação de teclado padrão e dicas de leitor de tela."
+            modal_footer: "Para mais, use navegação de teclado padrão e dicas de leitor de tela.",
+            // Contact Flow
+            contact_start: "Iniciando conexão segura com serviço de contato...",
+            contact_usage: "Uso: contact --send (para enviar mensagem) ou contact para ver email.",
+            contact_step_name: "Por favor, digite seu Nome: ",
+            contact_step_email: "Por favor, digite seu E-mail: ",
+            contact_step_msg: "Por favor, digite sua Mensagem: ",
+            contact_sending: "Enviando mensagem...",
+            contact_success: "Mensagem enviada com sucesso! Responderei em breve.",
+            contact_error: "Erro ao enviar mensagem. Tente novamente ou use o e-mail direto.",
+            contact_cancelled: "Envio de contato cancelado."
         }
     };
 
@@ -589,6 +609,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Command Processing
+    let contactFlow = {
+        active: false,
+        step: 0,
+        data: { name: '', email: '', message: '' }
+    };
+
+    const resetContactFlow = () => {
+        contactFlow.active = false;
+        contactFlow.step = 0;
+        contactFlow.data = { name: '', email: '', message: '' };
+    };
+
     const commands = {
         help: {
             desc: 'List available commands',
@@ -655,12 +687,22 @@ document.addEventListener("DOMContentLoaded", () => {
             `.trim()
         },
         contact: {
-            desc: 'Display contact info',
-            exec: () => `
+            desc: 'Display contact info or send message (--send)',
+            exec: (args) => {
+                const isSend = args && args.includes('--send');
+                if (isSend) {
+                    contactFlow.active = true;
+                    contactFlow.step = 1;
+                    return `<b>${translations[currentLang].contact_start}</b>\n${translations[currentLang].contact_step_name}`;
+                }
+                return `
 Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
 LinkedIn: <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank">in/pedroffeitosa</a>
 GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a>
-            `.trim()
+
+<i>Hint: type 'contact --send' for an interactive prompt.</i>
+            `.trim();
+            }
         },
         clear: {
             desc: 'Clear terminal output',
@@ -742,7 +784,13 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 
     const processCommand = (cmdStr) => {
         const trimmed = cmdStr.trim();
-        if (!trimmed) return;
+        if (!trimmed && !contactFlow.active) return;
+
+        // If contact flow is active, we handle it differently
+        if (contactFlow.active) {
+            handleContactFlow(trimmed);
+            return;
+        }
 
         const parts = trimmed.split(' ');
         const cmdName = parts[0].toLowerCase();
@@ -781,6 +829,82 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 
         terminalOutput.appendChild(logEntry);
         // Scroll to bottom
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    };
+
+    const handleContactFlow = async (text) => {
+        const logEntry = document.createElement('div');
+        logEntry.className = 'cmd-logs';
+
+        // Show what user typed
+        const userLine = document.createElement('div');
+        userLine.className = 'cmd-command';
+        userLine.innerHTML = `<span class="prompt">> </span><span>${text}</span>`;
+        logEntry.appendChild(userLine);
+        terminalOutput.appendChild(logEntry);
+
+        if (text.toLowerCase() === 'exit' || text.toLowerCase() === 'cancel') {
+            const cancelLine = document.createElement('div');
+            cancelLine.className = 'cmd-response';
+            cancelLine.textContent = translations[currentLang].contact_cancelled;
+            logEntry.appendChild(cancelLine);
+            resetContactFlow();
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            return;
+        }
+
+        const respLine = document.createElement('div');
+        respLine.className = 'cmd-response';
+
+        switch (contactFlow.step) {
+            case 1: // Name entered
+                contactFlow.data.name = text || 'Anonymous';
+                contactFlow.step = 2;
+                respLine.textContent = translations[currentLang].contact_step_email;
+                break;
+            case 2: // Email entered
+                contactFlow.data.email = text || 'no-email@provided.com';
+                contactFlow.step = 3;
+                respLine.textContent = translations[currentLang].contact_step_msg;
+                break;
+            case 3: // Message entered
+                contactFlow.data.message = text || '(Empty Message)';
+                respLine.textContent = translations[currentLang].contact_sending;
+                logEntry.appendChild(respLine);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+                // Actual Send Logic
+                try {
+                    // Using Formspree as example. Replace 'your-id' with actual one.
+                    // For now, using a placeholder endpoint so it doesn't fail silently 
+                    // or use the user's email directly if they have a formspree set up.
+                    // We can also use a simple 'fetch' back to a placeholder.
+                    const response = await fetch('https://formspree.io/f/mojnzlnq', {
+                        method: 'POST',
+                        body: JSON.stringify(contactFlow.data),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        respLine.innerHTML = `<span style="color: #4caf50;">${translations[currentLang].contact_success}</span>`;
+                        sound.playToggle();
+                    } else {
+                        throw new Error('Network error');
+                    }
+                } catch (e) {
+                    respLine.innerHTML = `<span style="color: #ff5f56;">${translations[currentLang].contact_error}</span>`;
+                    sound.playError();
+                }
+                resetContactFlow();
+                break;
+        }
+
+        if (contactFlow.active) {
+            logEntry.appendChild(respLine);
+        }
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     };
 
