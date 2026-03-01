@@ -837,6 +837,54 @@ a:hover {
   text-decoration: underline;
 }
 
+.email-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  gap: 8px;
+}
+
+#copy-email-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s, border-color 0.2s;
+  pointer-events: none;
+  cursor: pointer;
+  padding: 4px;
+  border: 1px solid var(--border-main);
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  color: var(--color-main);
+}
+
+[data-theme="dark"] #copy-email-btn {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.email-container:hover #copy-email-btn {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+#copy-email-btn:hover {
+  background: var(--border-main);
+  border-color: var(--color-main);
+}
+
+#copy-status {
+  position: absolute;
+  left: 100%;
+  margin-left: 10px;
+  white-space: nowrap;
+  font-size: 11px;
+  color: #4caf50;
+  font-weight: bold;
+}
+
 .cmd-error {
   color: #ff5f56;
 }

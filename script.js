@@ -361,6 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (text) {
                 if (target === "content") {
                     el.content = text; // for meta tags
+                } else if (target === "aria-label") {
+                    el.setAttribute("aria-label", text);
                 } else if (target === "prepend") {
                     // Be careful not to wipe out the live uptime counter
                     // The uptime logic updates textContent completely, so we need to
