@@ -123,30 +123,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         en: {
             // Meta
-            meta_description: "Portfolio of João Feitosa - Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
+            meta_description: "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
             // Header
             system_status: "SYSTEM_ACTIVE",
             uptime_label: "UPTIME: ",
             last_update: "LAST_UPDATE:",
-            role_main: "Full Stack Software Engineer & LLM Trainer",
+            role_main: "Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
             terminal_hint: "Terminal: Ctrl+B / `",
             // Sections
             career_title: "// Career",
-            career_text: "Full Stack Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.",
+            career_text: "Software Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.",
             stack_title: "// Main Stack & Expertise",
             experience_title: "// Experience",
             projects_title: "// Featured Projects",
             connect_title: "// Connect & Status",
             // Experience - Turing
-            exp_turing_role: "Business Analyst & LLM Trainer, Palo Alto, CA",
+            exp_turing_role: "LLM Trainer, Palo Alto, CA, Remote",
             exp_turing_date: "Sep 2025 - Present",
             exp_turing_1: "Developed and executed RLHF frameworks for LLM evaluation and enhancement.",
             exp_turing_2: "Generated/scored 'gold standard' data for technical fine-tuning.",
             exp_turing_3: "Conducted deep error analysis to optimize prompts and data collection.",
             exp_turing_4: "Applied advanced analytics for data quality and structuring.",
             // Experience - Pave
-            exp_pave_role: "Full Stack Engineer, Remote",
+            exp_pave_role: "Full Stack Engineer, Campina Grande, PB, Remote",
             exp_pave_date: "Jun 2024 - Sep 2025",
             exp_pave_1: "Integrated frontend with AWS backend, enabling seamless data flow and auth.",
             exp_pave_2: "Designed system: auth, uploads, event creation, data management.",
@@ -154,37 +154,37 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_4: "Collaborated with design for responsive performance across all devices.",
             exp_pave_5: "Provided continual UX/UI improvements and bugfixes.",
             // Experience - InsideHome
-            exp_inside_role: "Full Stack Engineer, Remote",
+            exp_inside_role: "Full Stack Engineer, Campina Grande, PB, Remote",
             exp_inside_date: "Jun 2024 - Present",
             exp_inside_1: "Led team to build e-commerce platform using Deco, boosting performance.",
             exp_inside_2: "Integrated ERP, CRM, Ads, cashback with real-time campaign tracking.",
             exp_inside_3: "Delivered a scalable storefront & high-speed feature launches.",
             exp_inside_4: "Drove technical decisions and agile processes for quality and UX.",
             // Experience - Wave
-            exp_wave_role: "Front-End Dev, Remote",
+            exp_wave_role: "Front-End Dev, Belo Horizonte, MG, Remote",
             exp_wave_date: "Feb 2024 - May 2024",
             exp_wave_1: "Turned Figma designs into pixel-perfect, accessible Preact components.",
             exp_wave_2: "Owned call center section: navigation, forms, A11y, SEO.",
             exp_wave_3: "Shipped fast, reusable pages with high PageSpeed & CMS integration.",
             // Experience - Integralys
-            exp_integralys_role: "Lead SWE, Remote",
+            exp_integralys_role: "Lead SWE, São Paulo, SP, Remote",
             exp_integralys_date: "Nov 2023 - Jan 2024",
             exp_integralys_1: "Delivered all features from high-fi Figma to production React code.",
             exp_integralys_2: "Modernized stack: refactored legacy PHP to React+TypeScript.",
             exp_integralys_3: "Worked cross-team for accuracy, performance & maintainability.",
             // Experience - TEC4U
-            exp_tec4u_role: "Full Stack Eng, Remote",
+            exp_tec4u_role: "Full Stack Eng, São Paulo, SP, Remote",
             exp_tec4u_date: "Aug 2023 - Oct 2023",
             exp_tec4u_1: "Built key e-commerce modules for Deco : PDP, PLP, landing pages.",
             exp_tec4u_2: "Integrated custom CMS for flexible, editable content.",
             exp_tec4u_3: "Shipped high-quality, reusable and performant code.",
             // Experience - Triilha
-            exp_triilha_role: "Full Stack Eng, Campina Grande",
+            exp_triilha_role: "Full Stack Eng, João Pessoa, PB",
             exp_triilha_date: "Apr 2022 - Jul 2023",
             exp_triilha_1: "Built React/Postgres/Node.js Scrum productivity suite from scratch.",
             exp_triilha_2: "Product manager & Scrum Master for improved team delivery.",
             // Experience - AbInBev
-            exp_abinbev_role: "Full Stack Eng, Campina Grande",
+            exp_abinbev_role: "Full Stack Eng, Campina Grande, PB",
             exp_abinbev_date: "Jan 2020 - Apr 2021",
             exp_abinbev_1: "Built real-time dashboards & charts with JS/Node.",
             exp_abinbev_2: "Streamlined reporting & performance flows.",
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_chess_desc: "A robust engine demonstrating advanced object-oriented design, supporting all standard chess rules (castling, en passant, check/mate detection) with a modular architecture.",
             // Connect
             connect_current: "Currently at:",
-            connect_current_val: "Turing (Business Analyst & LLM Trainer)",
+            connect_current_val: "Turing (LLM Trainer, Remote)",
             connect_location: "Location:",
             connect_location_val: "Campina Grande, PB, Brazil (Remote)",
             cv_link: "View / Download CV",
@@ -234,30 +234,30 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         pt: {
             // Meta
-            meta_description: "Portfólio de João Feitosa - Engenheiro de Software Full Stack & Treinador de LLM. Especialista em React, Node.js e IA.",
+            meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
             // Header
             system_status: "SISTEMA_ATIVO",
             uptime_label: "LIGADO: ",
             last_update: "ULT_ATUALIZACAO:",
-            role_main: "Engenheiro de Software Full Stack & Treinador de LLM",
+            role_main: "Engenheiro de Software & Treinador de LLM",
             check_projects: "Ver alguns projetos",
             terminal_hint: "Terminal: Ctrl+B / `",
             // Sections
             career_title: "// Carreira",
-            career_text: "Engenheiro Full Stack com vasta experiência em comércio de alta performance e software empresarial. Hábil em liderar projetos complexos, desde arquitetura de lojas escaláveis até integração de backends AWS customizados e sistemas corporativos (ERP/CRM). Atualmente focado em aplicar expertise em IA/LLMs na Turing.",
+            career_text: "Engenheiro de Software com vasta experiência em comércio de alta performance e software empresarial. Hábil em liderar projetos complexos, desde arquitetura de lojas escaláveis até integração de backends AWS customizados e sistemas corporativos (ERP/CRM). Atualmente focado em aplicar expertise em IA/LLMs na Turing.",
             stack_title: "// Stack Principal & Expertise",
             experience_title: "// Experiência",
             projects_title: "// Projetos em Destaque",
             connect_title: "// Contato & Status",
             // Experience - Turing
-            exp_turing_role: "Analista de Negócios & Treinador de LLM, Palo Alto, CA",
+            exp_turing_role: "Treinador de LLM, Palo Alto, CA, Remoto",
             exp_turing_date: "Set 2025 - Presente",
             exp_turing_1: "Desenvolvi e executei frameworks RLHF para avaliação e melhoria de LLMs.",
             exp_turing_2: "Gerei/avaliei dados 'gold standard' para fine-tuning técnico.",
             exp_turing_3: "Conduzi análises profundas de erros para otimizar prompts e coleta de dados.",
             exp_turing_4: "Apliquei análises avançadas para estruturação e qualidade de dados.",
             // Experience - Pave
-            exp_pave_role: "Engenheiro Full Stack, Remoto",
+            exp_pave_role: "Engenheiro Full Stack, Campina Grande, PB, Remoto",
             exp_pave_date: "Jun 2024 - Set 2025",
             exp_pave_1: "Integrei frontend com backend AWS, permitindo fluxo de dados e autenticação.",
             exp_pave_2: "Projetei sistema: auth, uploads, criação de eventos, gestão de dados.",
@@ -265,37 +265,37 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_4: "Colaborei com design para performance responsiva em todos os dispositivos.",
             exp_pave_5: "Forneci melhorias contínuas de UX/UI e correções de bugs.",
             // Experience - InsideHome
-            exp_inside_role: "Engenheiro Full Stack, Remoto",
+            exp_inside_role: "Engenheiro Full Stack, Campina Grande, PB, Remoto",
             exp_inside_date: "Jun 2024 - Presente",
             exp_inside_1: "Liderei equipe na construção de plataforma e-commerce usando Deco, aumentando performance.",
             exp_inside_2: "Integrei ERP, CRM, Ads, cashback com rastreamento de campanhas em tempo real.",
             exp_inside_3: "Entreguei uma loja escalável e lançamentos de features em alta velocidade.",
             exp_inside_4: "Impulsionei decisões técnicas e processos ágeis para qualidade e UX.",
             // Experience - Wave
-            exp_wave_role: "Dev Front-End, Remoto",
+            exp_wave_role: "Dev Front-End, Belo Horizonte, MG, Remoto",
             exp_wave_date: "Fev 2024 - Mai 2024",
             exp_wave_1: "Transformei designs do Figma em componentes Preact acessíveis e pixel-perfect.",
             exp_wave_2: "Responsável pela seção de call center: navegação, formulários, A11y, SEO.",
             exp_wave_3: "Lancei páginas rápidas e reutilizáveis com alta pontuação de PageSpeed e integração CMS.",
             // Experience - Integralys
-            exp_integralys_role: "Engenheiro SWE Líder, Remoto",
+            exp_integralys_role: "Engenheiro SWE Líder, São Paulo, SP, Remoto",
             exp_integralys_date: "Nov 2023 - Jan 2024",
             exp_integralys_1: "Entreguei todas as features de Figma high-fi para código React em produção.",
             exp_integralys_2: "Modernizei stack: refatoração de legado PHP para React+TypeScript.",
             exp_integralys_3: "Trabalhei entre equipes para precisão, performance e manutenibilidade.",
             // Experience - TEC4U
-            exp_tec4u_role: "Eng Full Stack, Remoto",
+            exp_tec4u_role: "Eng Full Stack, São Paulo, SP, Remoto",
             exp_tec4u_date: "Ago 2023 - Out 2023",
             exp_tec4u_1: "Construí módulos chave de e-commerce para Deco: PDP, PLP, landing pages.",
             exp_tec4u_2: "Integrei CMS customizado para conteúdo flexível e editável.",
             exp_tec4u_3: "Entreguei código de alta qualidade, reutilizável e performático.",
             // Experience - Triilha
-            exp_triilha_role: "Eng Full Stack, Campina Grande",
+            exp_triilha_role: "Eng Full Stack, João Pessoa, PB",
             exp_triilha_date: "Abr 2022 - Jul 2023",
             exp_triilha_1: "Construí suíte de produtividade Scrum React/Postgres/Node.js do zero.",
             exp_triilha_2: "Gerente de Produto & Scrum Master para melhor entrega da equipe.",
             // Experience - AbInBev
-            exp_abinbev_role: "Eng Full Stack, Campina Grande",
+            exp_abinbev_role: "Eng Full Stack, Campina Grande, PB",
             exp_abinbev_date: "Jan 2020 - Abr 2021",
             exp_abinbev_1: "Construí dashboards e gráficos em tempo real com JS/Node.",
             exp_abinbev_2: "Otimizei fluxos de relatório e performance.",
@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_chess_desc: "Um motor robusto demonstrando design orientado a objetos avançado, suportando todas as regras padrão de xadrez (roque, en passant, detecção de xeque/mate) com arquitetura modular.",
             // Connect
             connect_current: "Atualmente na:",
-            connect_current_val: "Turing (Analista de Negócios & Treinador de LLM)",
+            connect_current_val: "Turing (Treinador de LLM, Remoto)",
             connect_location: "Localização:",
             connect_location_val: "Campina Grande, PB, Brasil (Remoto)",
             cv_link: "Ver / Baixar CV",
@@ -637,8 +637,8 @@ document.addEventListener("DOMContentLoaded", () => {
         whoami: {
             desc: 'Display user info',
             exec: () => currentLang === 'pt' ?
-                "Usuário: Visitante\nFunção: Convidado\nNível de Acesso: Leitura\n\nBio: Engenheiro de Software Full Stack & Treinador de LLM. Especialista em React, Node.js e IA." :
-                "User: Visitor\nRole: Guest\nAccess Level: Read-Only\n\nBio: Full Stack Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI."
+                "Usuário: Visitante\nFunção: Convidado\nNível de Acesso: Leitura\n\nBio: Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA." :
+                "User: Visitor\nRole: Guest\nAccess Level: Read-Only\n\nBio: Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI."
         },
         skills: {
             desc: 'List technical skills (use --visual for chart)',
@@ -771,7 +771,7 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
 <pre style="color: var(--link); line-height: 1.2; font-size: 11px;">
        .---.
       /     \\
-      |() ()|   <b>João Feitosa</b>
+      |() ()|   <b>João Pedro Feitosa</b>
        \\  ^  /    -------------------
         |||||     <b>OS</b>: PortfolioOS v2.0
         |||||     <b>Role</b>: ${role}
