@@ -298,7 +298,8 @@ a:hover {
 
   /* Hide sound and terminal icons on mobile */
   #sound-toggle,
-  #terminal-toggle {
+  #terminal-toggle,
+  .header-status {
     display: none !important;
   }
 
