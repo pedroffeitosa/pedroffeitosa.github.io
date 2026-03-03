@@ -37,30 +37,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         playKeystroke() {
-            // Short, low-pitch click mimicking a mechanical keyboard
             this.playTone(150 + Math.random() * 50, 'square', 0.05, 0.05);
         }
 
         playToggle() {
-            // Soft beep for toggle buttons
             this.playTone(600, 'sine', 0.1, 0.08);
             setTimeout(() => this.playTone(800, 'sine', 0.15, 0.08), 80);
         }
 
         playBeep() {
-            // Classic terminal beep
             this.playTone(500, 'sine', 0.15, 0.1);
         }
 
         playError() {
-            // Lower pitched, slightly longer beep for errors
             this.playTone(150, 'sawtooth', 0.2, 0.1);
         }
     }
 
     const sound = new SoundEngine();
 
-    // Sound Toggle UI Logic
     const soundToggleBtn = document.getElementById("sound-toggle");
     const soundIconOn = document.getElementById("sound-icon-on");
     const soundIconOff = document.getElementById("sound-icon-off");
@@ -71,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (soundIconOff) soundIconOff.style.display = "none";
             if (soundToggleBtn) {
                 soundToggleBtn.style.opacity = "1";
-                soundToggleBtn.style.color = "var(--link)";
+                soundToggleBtn.style.color = "var(--sound-active)";
             }
         } else {
             if (soundIconOn) soundIconOn.style.display = "none";
@@ -85,25 +80,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (soundToggleBtn) {
         soundToggleBtn.addEventListener("click", () => {
-            sound.init(); // Need user interaction to initialize AudioContext
+            sound.init();
             sound.enabled = !sound.enabled;
-            // Save preference
             localStorage.setItem("soundEnabled", sound.enabled);
             updateSoundUI();
             if (sound.enabled) sound.playToggle();
         });
     }
 
-    // Load saved sound preference
     const savedSoundSetting = localStorage.getItem("soundEnabled");
     if (savedSoundSetting === "true") {
         sound.enabled = true;
-        // AudioContext is intentionally not initialized here until first interaction
         updateSoundUI();
     }
 
-    // --- Interaction Listeners for Global Audio Init ---
-    // Initialize audio context on first user interaction if sound is meant to be enabled
     const initAudioOnInteract = () => {
         if (sound.enabled && !sound.audioCtx) {
             sound.init();
@@ -114,7 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", initAudioOnInteract);
     document.addEventListener("keydown", initAudioOnInteract);
 
-
     // --- Localization Logic ---
     const btnEn = document.getElementById("btn-en");
     const btnPt = document.getElementById("btn-pt");
@@ -122,23 +111,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const translations = {
         en: {
-            // Meta
             meta_description: "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
-            // Header
             system_status: "SYSTEM_ACTIVE",
-            uptime_label: "UPTIME: ",
-            last_update: "LAST_UPDATE:",
             role_main: "Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
             terminal_hint: "Terminal: Ctrl+B / `",
-            // Sections
             career_title: "// Career",
             career_text: "Software Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.",
             stack_title: "// Main Stack & Expertise",
             experience_title: "// Experience",
             projects_title: "// Featured Projects",
             connect_title: "// Connect & Status",
-            // Experience - Turing
             exp_turing_role_main: "LLM Trainer",
             exp_turing_location: ", Palo Alto, CA, Remote",
             exp_turing_date: "Sep 2025 - Present",
@@ -146,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_turing_2: "Generated/scored 'gold standard' data for technical fine-tuning.",
             exp_turing_3: "Conducted deep error analysis to optimize prompts and data collection.",
             exp_turing_4: "Applied advanced analytics for data quality and structuring.",
-            // Experience - Pave
             exp_pave_role_main: "Full Stack Engineer",
             exp_pave_location: ", Campina Grande, PB, Remote",
             exp_pave_date: "Jun 2024 - Sep 2025",
@@ -155,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_3: "Built a full event platform for brand campaign engagement/registration.",
             exp_pave_4: "Collaborated with design for responsive performance across all devices.",
             exp_pave_5: "Provided continual UX/UI improvements and bugfixes.",
-            // Experience - InsideHome
             exp_inside_role_main: "Full Stack Engineer",
             exp_inside_location: ", Campina Grande, PB, Remote",
             exp_inside_date: "Jun 2024 - Present",
@@ -163,48 +144,41 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_inside_2: "Integrated ERP, CRM, Ads, cashback with real-time campaign tracking.",
             exp_inside_3: "Delivered a scalable storefront & high-speed feature launches.",
             exp_inside_4: "Drove technical decisions and agile processes for quality and UX.",
-            // Experience - Wave
             exp_wave_role_main: "Front-End Dev",
             exp_wave_location: ", Belo Horizonte, MG, Remote",
             exp_wave_date: "Feb 2024 - May 2024",
             exp_wave_1: "Turned Figma designs into pixel-perfect, accessible Preact components.",
             exp_wave_2: "Owned call center section: navigation, forms, A11y, SEO.",
             exp_wave_3: "Shipped fast, reusable pages with high PageSpeed & CMS integration.",
-            // Experience - Integralys
             exp_integralys_role_main: "Lead SWE",
             exp_integralys_location: ", São Paulo, SP, Remote",
             exp_integralys_date: "Nov 2023 - Jan 2024",
             exp_integralys_1: "Delivered all features from high-fi Figma to production React code.",
             exp_integralys_2: "Modernized stack: refactored legacy PHP to React+TypeScript.",
             exp_integralys_3: "Worked cross-team for accuracy, performance & maintainability.",
-            // Experience - TEC4U
             exp_tec4u_role_main: "Full Stack Eng",
             exp_tec4u_location: ", São Paulo, SP, Remote",
             exp_tec4u_date: "Aug 2023 - Oct 2023",
             exp_tec4u_1: "Built key e-commerce modules for Deco : PDP, PLP, landing pages.",
             exp_tec4u_2: "Integrated custom CMS for flexible, editable content.",
             exp_tec4u_3: "Shipped high-quality, reusable and performant code.",
-            // Experience - Triilha
             exp_triilha_role_main: "Full Stack Eng",
             exp_triilha_location: ", João Pessoa, PB",
             exp_triilha_date: "Apr 2022 - Jul 2023",
             exp_triilha_1: "Built React/Postgres/Node.js Scrum productivity suite from scratch.",
             exp_triilha_2: "Product manager & Scrum Master for improved team delivery.",
-            // Experience - AbInBev
             exp_abinbev_role_main: "Full Stack Eng",
             exp_abinbev_location: ", Campina Grande, PB",
             exp_abinbev_date: "Jan 2020 - Apr 2021",
             exp_abinbev_1: "Built real-time dashboards & charts with JS/Node.",
             exp_abinbev_2: "Streamlined reporting & performance flows.",
             exp_abinbev_3: "Resolved backend/frontend issues & shipped new features.",
-            // Projects
             proj_ameo_title: "1. AmeoPet - Pet Care Management",
             proj_ameo_desc: "Full-stack web application with React, TypeScript, and MongoDB. Features real-time state management (React Query) and robust form validation (React Hook Form/Zod).",
             proj_mcp_title: "2. MCPWeather - Custom Data Protocol",
             proj_mcp_desc: "Client-server application implementing a custom protocol for weather data services. Built with TypeScript/Node.js using clean architecture, intelligent caching, and external API integration.",
             proj_chess_title: "3. Chess Game Engine (Ruby)",
             proj_chess_desc: "A robust engine demonstrating advanced object-oriented design, supporting all standard chess rules (castling, en passant, check/mate detection) with a modular architecture.",
-            // Connect
             connect_current: "Currently at:",
             connect_current_val: "Turing (LLM Trainer, Remote)",
             connect_location: "Location:",
@@ -212,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cv_link: "View / Download CV",
             copy_btn: "Copy",
             copied_msg: "Copied!",
-            // Modal
             modal_title: "Keyboard Shortcuts & Tips",
             modal_help_key: "?",
             modal_help_desc: "Show this help",
@@ -229,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
             modal_copy_key: "Copy Email",
             modal_copy_desc: "Tab to Email Copy and Enter",
             modal_footer: "For more features, use standard keyboard navigation and screen reader tips.",
-            // Contact Flow
             contact_start: "Initializing secure connection to contact service...",
             contact_usage: "Usage: contact --send (to send a message) or just contact to see email.",
             contact_step_name: "Please enter your Name: ",
@@ -241,23 +213,17 @@ document.addEventListener("DOMContentLoaded", () => {
             contact_cancelled: "Contact flow cancelled."
         },
         pt: {
-            // Meta
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
-            // Header
             system_status: "SISTEMA_ATIVO",
-            uptime_label: "LIGADO: ",
-            last_update: "ULT_ATUALIZACAO:",
             role_main: "Engenheiro de Software & Treinador de LLM",
             check_projects: "Ver alguns projetos",
             terminal_hint: "Terminal: Ctrl+B / `",
-            // Sections
             career_title: "// Carreira",
             career_text: "Engenheiro de Software com vasta experiência em comércio de alta performance e software empresarial. Hábil em liderar projetos complexos, desde arquitetura de lojas escaláveis até integração de backends AWS customizados e sistemas corporativos (ERP/CRM). Atualmente focado em aplicar expertise em IA/LLMs na Turing.",
             stack_title: "// Stack Principal & Expertise",
             experience_title: "// Experiência",
             projects_title: "// Projetos em Destaque",
             connect_title: "// Contato & Status",
-            // Experience - Turing
             exp_turing_role_main: "Treinador de LLM",
             exp_turing_location: ", Palo Alto, CA, Remoto",
             exp_turing_date: "Set 2025 - Presente",
@@ -265,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_turing_2: "Gerei/avaliei dados 'gold standard' para fine-tuning técnico.",
             exp_turing_3: "Conduzi análises profundas de erros para otimizar prompts e coleta de dados.",
             exp_turing_4: "Apliquei análises avançadas para estruturação e qualidade de dados.",
-            // Experience - Pave
             exp_pave_role_main: "Engenheiro Full Stack",
             exp_pave_location: ", Campina Grande, PB, Remoto",
             exp_pave_date: "Jun 2024 - Set 2025",
@@ -274,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_3: "Construí uma plataforma completa de eventos para engajamento de campanhas de marcas.",
             exp_pave_4: "Colaborei com design para performance responsiva em todos os dispositivos.",
             exp_pave_5: "Forneci melhorias contínuas de UX/UI e correções de bugs.",
-            // Experience - InsideHome
             exp_inside_role_main: "Engenheiro Full Stack",
             exp_inside_location: ", Campina Grande, PB, Remoto",
             exp_inside_date: "Jun 2024 - Presente",
@@ -282,48 +246,41 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_inside_2: "Integrei ERP, CRM, Ads, cashback com rastreamento de campanhas em tempo real.",
             exp_inside_3: "Entreguei uma loja escalável e lançamentos de features em alta velocidade.",
             exp_inside_4: "Impulsionei decisões técnicas e processos ágeis para qualidade e UX.",
-            // Experience - Wave
             exp_wave_role_main: "Dev Front-End",
             exp_wave_location: ", Belo Horizonte, MG, Remoto",
             exp_wave_date: "Fev 2024 - Mai 2024",
             exp_wave_1: "Transformei designs do Figma em componentes Preact acessíveis e pixel-perfect.",
             exp_wave_2: "Responsável pela seção de call center: navegação, formulários, A11y, SEO.",
             exp_wave_3: "Lancei páginas rápidas e reutilizáveis com alta pontuação de PageSpeed e integração CMS.",
-            // Experience - Integralys
             exp_integralys_role_main: "Engenheiro SWE Líder",
             exp_integralys_location: ", São Paulo, SP, Remoto",
             exp_integralys_date: "Nov 2023 - Jan 2024",
             exp_integralys_1: "Entreguei todas as features de Figma high-fi para código React em produção.",
             exp_integralys_2: "Modernizei stack: refatoração de legado PHP para React+TypeScript.",
             exp_integralys_3: "Trabalhei entre equipes para precisão, performance e manutenibilidade.",
-            // Experience - TEC4U
             exp_tec4u_role_main: "Eng Full Stack",
             exp_tec4u_location: ", São Paulo, SP, Remoto",
             exp_tec4u_date: "Ago 2023 - Out 2023",
             exp_tec4u_1: "Construí módulos chave de e-commerce para Deco: PDP, PLP, landing pages.",
             exp_tec4u_2: "Integrei CMS customizado para conteúdo flexível e editável.",
             exp_tec4u_3: "Entreguei código de alta qualidade, reutilizável e performático.",
-            // Experience - Triilha
             exp_triilha_role_main: "Eng Full Stack",
             exp_triilha_location: ", João Pessoa, PB",
             exp_triilha_date: "Abr 2022 - Jul 2023",
             exp_triilha_1: "Construí suíte de produtividade Scrum React/Postgres/Node.js do zero.",
             exp_triilha_2: "Gerente de Produto & Scrum Master para melhor entrega da equipe.",
-            // Experience - AbInBev
             exp_abinbev_role_main: "Eng Full Stack",
             exp_abinbev_location: ", Campina Grande, PB",
             exp_abinbev_date: "Jan 2020 - Abr 2021",
             exp_abinbev_1: "Construí dashboards e gráficos em tempo real com JS/Node.",
             exp_abinbev_2: "Otimizei fluxos de relatório e performance.",
             exp_abinbev_3: "Resolvi problemas de backend/frontend e entreguei novas features.",
-            // Projects
             proj_ameo_title: "1. AmeoPet - Gestão de Cuidados Pet",
             proj_ameo_desc: "Aplicação web full-stack com React, TypeScript e MongoDB. Possui gerenciamento de estado em tempo real (React Query) e validação robusta de formulários (React Hook Form/Zod).",
             proj_mcp_title: "2. MCPWeather - Protocolo de Dados Customizado",
             proj_mcp_desc: "Aplicação cliente-servidor implementando protocolo customizado para serviços de clima. Construído com TypeScript/Node.js usando arquitetura limpa, cache inteligente e integração de API externa.",
             proj_chess_title: "3. Chess Game Engine (Ruby)",
             proj_chess_desc: "Um motor robusto demonstrando design orientado a objetos avançado, suportando todas as regras padrão de xadrez (roque, en passant, detecção de xeque/mate) com arquitetura modular.",
-            // Connect
             connect_current: "Atualmente na:",
             connect_current_val: "Turing (Treinador de LLM, Remoto)",
             connect_location: "Localização:",
@@ -331,7 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cv_link: "Ver / Baixar CV",
             copy_btn: "Copiar",
             copied_msg: "Copiado!",
-            // Modal
             modal_title: "Atalhos de Teclado & Dicas",
             modal_help_key: "?",
             modal_help_desc: "Mostrar esta ajuda",
@@ -348,7 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
             modal_copy_key: "Copiar Email",
             modal_copy_desc: "Tab até Copiar Email e Enter",
             modal_footer: "Para mais, use navegação de teclado padrão e dicas de leitor de tela.",
-            // Contact Flow
             contact_start: "Iniciando conexão segura com serviço de contato...",
             contact_usage: "Uso: contact --send (para enviar mensagem) ou contact para ver email.",
             contact_step_name: "Por favor, digite seu Nome: ",
@@ -362,40 +317,19 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateLanguage = (lang) => {
-        // Update state
         currentLang = lang;
         localStorage.setItem("lang", lang);
-        document.documentElement.lang = lang; // Accessibility
+        document.documentElement.lang = lang;
 
-        // Update UI
         const elements = document.querySelectorAll("[data-i18n]");
         elements.forEach(el => {
             const key = el.getAttribute("data-i18n");
-            const target = el.getAttribute("data-i18n-target");
             const text = translations[lang][key];
-
             if (text) {
-                if (target === "content") {
-                    el.content = text; // for meta tags
-                } else if (target === "aria-label") {
-                    el.setAttribute("aria-label", text);
-                } else if (target === "prepend") {
-                    // Be careful not to wipe out the live uptime counter
-                    // The uptime logic updates textContent completely, so we need to
-                    // update the template prefix used by the interval or just let it be.
-                    // Wait! The uptime function just sets property directly:
-                    // uptimeElement.textContent = `UPTIME: ...`;
-                    // So just changing the inner text here once won't persist.
-                    // I need to update the uptime function itself to use the translation.
-                    // For now, let's just update the static label if possible.
-                    // Actually, simpler: I will update the uptime function to read from translations.
-                } else {
-                    el.innerText = text;
-                }
+                el.innerText = text;
             }
         });
 
-        // Update Toggle UI (Active State)
         if (btnEn && btnPt) {
             if (lang === "en") {
                 btnEn.classList.add("active");
@@ -407,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Event Listeners for Language Buttons
     if (btnEn) btnEn.addEventListener("click", () => {
         updateLanguage("en");
         sound.playToggle();
@@ -416,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateLanguage("pt");
         sound.playToggle();
     });
-    // Keyboard accessibility for spans
+
     if (btnEn) {
         btnEn.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -436,10 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Initialize with current language (default or saved)
     updateLanguage(currentLang);
 
-    // --- Copy Email Logic ---
     const copyBtn = document.getElementById("copy-email-btn");
     const copyStatus = document.getElementById("copy-status");
 
@@ -449,42 +380,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(() => {
                     if (copyStatus) {
                         copyStatus.style.display = "inline";
-                        setTimeout(() => {
-                            copyStatus.style.display = "none";
-                        }, 1400);
+                        setTimeout(() => copyStatus.style.display = "none", 1400);
                     }
                 })
                 .catch(err => console.error('Failed to copy text: ', err));
         });
     }
 
-    // --- Experience Details Toggle ---
     const expButtons = document.querySelectorAll(".exp-toggle-btn");
-
     expButtons.forEach(btn => {
-        // Set initial ARIA state
         btn.setAttribute("aria-expanded", "false");
-
         btn.addEventListener("click", () => {
             const targetId = btn.dataset.target;
             const target = document.getElementById(targetId);
-
             if (target) {
-                // Toggle Class for CSS transition
                 target.classList.toggle("open");
                 const isOpen = target.classList.contains("open");
-
                 btn.textContent = isOpen ? "-" : "+";
-                // Update ARIA state
                 btn.setAttribute("aria-expanded", isOpen);
                 sound.playToggle();
             }
         });
     });
 
-    // --- Theme Toggle Logic ---
     const themeToggle = document.getElementById("theme-toggle");
-
     const setTheme = (theme) => {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
@@ -492,11 +411,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const initTheme = () => {
         const saved = localStorage.getItem("theme");
-        if (saved) {
-            setTheme(saved);
-        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            setTheme("dark");
-        }
+        if (saved) setTheme(saved);
+        else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
     };
 
     if (themeToggle) {
@@ -506,75 +422,49 @@ document.addEventListener("DOMContentLoaded", () => {
             sound.playToggle();
         });
     }
-
     initTheme();
 
-    // --- Shortcut Modal Keyboard Listener ---
     const shortcutModal = document.getElementById('shortcut-modal');
     const closeShortcutModal = document.getElementById('close-shortcut-modal');
-
     const toggleModal = (show) => {
         if (shortcutModal) {
             shortcutModal.style.display = show ? 'flex' : 'none';
-            if (show && closeShortcutModal) {
-                closeShortcutModal.focus();
-            }
+            if (show && closeShortcutModal) closeShortcutModal.focus();
         }
     };
 
     document.addEventListener('keydown', (e) => {
-        // '?' key
         if (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey && !e.shiftKey) {
             if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
                 toggleModal(true);
                 e.preventDefault();
             }
         }
-        // Shift + ? or / (standard help shortcut)
         if ((e.key === '?' && e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) || (e.key === '/' && e.shiftKey)) {
             toggleModal(true);
             e.preventDefault();
         }
-        // Escape to close
-        if (e.key === 'Escape') {
-            toggleModal(false);
-        }
+        if (e.key === 'Escape') toggleModal(false);
     });
 
-    if (closeShortcutModal) {
-        closeShortcutModal.addEventListener('click', () => toggleModal(false));
-    }
+    if (closeShortcutModal) closeShortcutModal.addEventListener('click', () => toggleModal(false));
 
-    // --- Scroll-to-Top Button Logic ---
     const scrollBtn = document.getElementById("scroll-top-btn");
-
     window.addEventListener("scroll", () => {
         if (!scrollBtn) return;
-        if (window.scrollY > 180) {
-            scrollBtn.style.display = "flex";
-        } else {
-            scrollBtn.style.display = "none";
-        }
+        scrollBtn.style.display = window.scrollY > 180 ? "flex" : "none";
     });
 
-    if (scrollBtn) {
-        scrollBtn.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-    // --- TERMINAL LOGIC ---
+    if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
     const terminalOverlay = document.getElementById('terminal-overlay');
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
     const closeTerminalBtn = document.getElementById('close-terminal');
 
-    // Toggle Terminal visibility
     const toggleTerminal = (show) => {
         if (!terminalOverlay) return;
-
-        // If 'show' is undefined or something else, we toggle based on current display style
         const shouldShow = (typeof show === 'boolean') ? show : (terminalOverlay.style.display !== 'flex');
-
         terminalOverlay.style.display = shouldShow ? 'flex' : 'none';
         if (shouldShow) {
             terminalInput.value = '';
@@ -582,57 +472,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Close on button click
-    if (closeTerminalBtn) {
-        closeTerminalBtn.addEventListener('click', () => {
-            toggleTerminal(false);
-        });
-    }
+    if (closeTerminalBtn) closeTerminalBtn.addEventListener('click', () => toggleTerminal(false));
+    if (terminalOverlay) terminalOverlay.addEventListener('click', (e) => { if (e.target === terminalOverlay) toggleTerminal(false); });
 
-    // Close on outside click
-    if (terminalOverlay) {
-        terminalOverlay.addEventListener('click', (e) => {
-            if (e.target === terminalOverlay) {
-                toggleTerminal(false);
-            }
-        });
-    }
-
-    // Keyboard shortcut to open (Backtick ` or Ctrl+B)
     document.addEventListener('keydown', (e) => {
         const key = e.key.toLowerCase();
-        // Toggle with Backtick (`)
         if (key === '`' && !e.ctrlKey && !e.altKey && !e.metaKey) {
             if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
                 e.preventDefault();
-                toggleTerminal(); // Toggle
+                toggleTerminal();
                 sound.playToggle();
             }
         }
-        // Toggle with Ctrl+B (Alternative safe shortcut)
         if ((e.ctrlKey || e.metaKey) && key === 'b') {
             e.preventDefault();
-            toggleTerminal(); // Toggle
+            toggleTerminal();
             sound.playToggle();
         }
     });
 
-    // Terminal Toggle Button (Hint)
     const terminalToggleBtn = document.getElementById('terminal-toggle');
-    if (terminalToggleBtn) {
-        terminalToggleBtn.addEventListener('click', () => {
-            toggleTerminal(); // Toggle
-            sound.playToggle();
-        });
-    }
+    if (terminalToggleBtn) terminalToggleBtn.addEventListener('click', () => { toggleTerminal(); sound.playToggle(); });
 
-    // Command Processing
-    let contactFlow = {
-        active: false,
-        step: 0,
-        data: { name: '', email: '', message: '' }
-    };
-
+    let contactFlow = { active: false, step: 0, data: { name: '', email: '', message: '' } };
     const resetContactFlow = () => {
         contactFlow.active = false;
         contactFlow.step = 0;
@@ -662,14 +524,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const isVisual = args && args.includes('--visual');
                 if (isVisual) {
                     const skillsData = [
-                        { name: 'React', level: 90 },
-                        { name: 'TypeScript', level: 85 },
-                        { name: 'Node.js', level: 80 },
-                        { name: 'Tailwind', level: 90 },
-                        { name: 'AI/LLM', level: 75 },
-                        { name: 'PostgreSQL', level: 70 }
+                        { name: 'React', level: 90 }, { name: 'TypeScript', level: 85 },
+                        { name: 'Node.js', level: 80 }, { name: 'Tailwind', level: 90 },
+                        { name: 'AI/LLM', level: 75 }, { name: 'PostgreSQL', level: 70 }
                     ];
-
                     let output = currentLang === 'pt' ? '<b>Visualização de Skills:</b>\n\n' : '<b>Skills Visualization:</b>\n\n';
                     skillsData.forEach(s => {
                         const barLength = 20;
@@ -679,123 +537,53 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     return `<pre style="color: inherit; line-height: 1.2;">${output}</pre>`;
                 }
-
-                return `
-[FRONTEND]
-- React, TypeScript, Tailwind, Preact, HTML/CSS
-[BACKEND]
-- Node.js, PostgreSQL, MongoDB, AWS (Lambda, S3)
-[AI/ML]
-- LLM Training (RLHF), Prompt Engineering, Data Analysis
-[OTHER]
-- Scrum Master, QA, E-commerce (Deco, VTEX)
-                `.trim();
+                return `[FRONTEND]\n- React, TypeScript, Tailwind, Preact, HTML/CSS\n[BACKEND]\n- Node.js, PostgreSQL, MongoDB, AWS (Lambda, S3)\n[AI/ML]\n- LLM Training (RLHF), Prompt Engineering, Data Analysis\n[OTHER]\n- Scrum Master, QA, E-commerce (Deco, VTEX)`;
             }
         },
         projects: {
             desc: 'List featured projects',
-            exec: () => currentLang === 'pt' ? `
-1. <a href="#" target="_blank">AmeoPet</a> - Gestão de Cuidados Pet (React/Mongo)
-2. <a href="#" target="_blank">MCPWeather</a> - Protocolo de Dados Customizado (TS/Node)
-3. <a href="#" target="_blank">Chess Engine</a> - Design Orientado a Objetos em Ruby
-            `.trim() : `
-1. <a href="#" target="_blank">AmeoPet</a> - Pet Care Management (React/Mongo)
-2. <a href="#" target="_blank">MCPWeather</a> - Custom Data Protocol (TS/Node)
-3. <a href="#" target="_blank">Chess Engine</a> - Ruby Object-Oriented Design
-            `.trim()
+            exec: () => currentLang === 'pt' ? `1. AmeoPet - Gestão de Cuidados Pet\n2. MCPWeather - Protocolo de Dados Customizado\n3. Chess Engine - Design Orientado a Objetos` : `1. AmeoPet - Pet Care Management\n2. MCPWeather - Custom Data Protocol\n3. Chess Engine - Ruby Object-Oriented Design`
         },
         contact: {
             desc: 'Display contact info or send message (--send)',
             exec: (args) => {
-                const isSend = args && args.includes('--send');
-                if (isSend) {
+                if (args && args.includes('--send')) {
                     contactFlow.active = true;
                     contactFlow.step = 1;
                     return `<b>${translations[currentLang].contact_start}</b>\n${translations[currentLang].contact_step_name}`;
                 }
-                return `
-Email: <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
-LinkedIn: <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank">in/pedroffeitosa</a>
-GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a>
-
-<i>Hint: type 'contact --send' for an interactive prompt.</i>
-            `.trim();
+                return `Email: jppfeitosa@gmail.com\nLinkedIn: in/pedroffeitosa\nGitHub: pedroffeitosa\n\n<i>Hint: type 'contact --send' for an interactive prompt.</i>`;
             }
         },
-        clear: {
-            desc: 'Clear terminal output',
-            exec: () => {
-                terminalOutput.innerHTML = '';
-                return null; // Return null to prevent printing anything
-            }
-        },
-        date: {
-            desc: 'Show current date/time',
-            exec: () => new Date().toString()
-        },
-        exit: {
-            desc: 'Close terminal',
-            exec: () => {
-                toggleTerminal(false);
-                return 'Session closed...';
-            }
-        },
+        clear: { desc: 'Clear terminal output', exec: () => { terminalOutput.innerHTML = ''; return null; } },
+        date: { desc: 'Show current date/time', exec: () => new Date().toString() },
+        exit: { desc: 'Close terminal', exec: () => { toggleTerminal(false); return 'Session closed...'; } },
         theme: {
             desc: 'Switch theme (light, dark, matrix, cyberpunk, amber)',
-            exec: () => {
-                const args = terminalInput.value.trim().split(' ');
-                if (args.length < 2) return 'Usage: theme <name>\nAvailable: light, dark, matrix, cyberpunk, amber';
-
-                const themeName = args[1].toLowerCase();
+            exec: (args) => {
+                if (!args || args.length === 0) return 'Usage: theme <name>\nAvailable: light, dark, matrix, cyberpunk, amber';
+                const themeName = args[0].toLowerCase();
                 const validThemes = ['light', 'dark', 'matrix', 'cyberpunk', 'amber'];
-
-                if (validThemes.includes(themeName)) {
-                    setTheme(themeName);
-                    return `Theme set to: ${themeName}`;
-                } else {
-                    return `Invalid theme. Try: ${validThemes.join(', ')}`;
-                }
+                if (validThemes.includes(themeName)) { setTheme(themeName); return `Theme set to: ${themeName}`; }
+                return `Invalid theme. Try: ${validThemes.join(', ')}`;
             }
         },
-        themes: {
-            desc: 'List available themes',
-            exec: () => 'Available themes:\n- light\n- dark\n- matrix\n- cyberpunk\n- amber'
-        },
+        themes: { desc: 'List available themes', exec: () => 'Available themes: light, dark, matrix, cyberpunk, amber' },
         cat: {
             desc: 'Spawn a cat walker',
             exec: () => {
                 const cat = document.getElementById('cat-walker');
                 if (!cat) return 'Error: Cat not found.';
-
-                if (cat.style.display === 'none') {
-                    cat.style.display = 'block';
-                    return '🐈 Meow! The cat is now walking.';
-                } else {
-                    cat.style.display = 'none';
-                    return 'Cat has been tucked away.';
-                }
+                cat.style.display = cat.style.display === 'none' ? 'block' : 'none';
+                return cat.style.display === 'block' ? '🐈 Meow!' : 'Cat hidden.';
             }
         },
         neofetch: {
             desc: 'Display system information summary',
             exec: () => {
-                const uptime = document.getElementById('uptime-counter')?.textContent || "00:00:00";
                 const role = translations[currentLang]?.role_main || "Software Engineer";
                 const langLine = currentLang === 'pt' ? 'Língua: Português' : 'Language: English';
-
-                return `
-<pre style="color: var(--link); line-height: 1.2; font-size: 11px;">
-       .---.
-      /     \\
-      |() ()|   <b>João Pedro Feitosa</b>
-       \\  ^  /    -------------------
-        |||||     <b>OS</b>: PortfolioOS v2.0
-        |||||     <b>Role</b>: ${role}
-                  <b>Stack</b>: React, TS, Node, AI
-                  <b>Uptime</b>: ${uptime.replace('UPTIME: ', '').replace('LIGADO: ', '')}
-                  <b>${langLine}</b>
-                  <b>Location</b>: Brazil (Remote)
-</pre>`.trim();
+                return `<pre style="color: var(--link); line-height: 1.2; font-size: 11px;">\n       .---.\n      /     \\\n      |() ()|   <b>João Pedro Feitosa</b>\n       \\  ^  /    -------------------\n        |||||     <b>OS</b>: PortfolioOS v2.0\n        |||||     <b>Role</b>: ${role}\n                  <b>Stack</b>: React, TS, Node, AI\n                  <b>${langLine}</b>\n                  <b>Location</b>: Brazil (Remote)\n</pre>`.trim();
             }
         }
     };
@@ -803,37 +591,21 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
     const processCommand = (cmdStr) => {
         const trimmed = cmdStr.trim();
         if (!trimmed && !contactFlow.active) return;
-
-        // If contact flow is active, we handle it differently
-        if (contactFlow.active) {
-            handleContactFlow(trimmed);
-            return;
-        }
-
+        if (contactFlow.active) { handleContactFlow(trimmed); return; }
         const parts = trimmed.split(' ');
         const cmdName = parts[0].toLowerCase();
-
-        // Create log entry
         const logEntry = document.createElement('div');
         logEntry.className = 'cmd-logs';
-
         const cmdLine = document.createElement('div');
         cmdLine.className = 'cmd-command';
-        cmdLine.innerHTML = `<span class="prompt"><span class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$ </span>`;
-        const cmdText = document.createElement('span');
-        cmdText.textContent = trimmed;
-        cmdLine.appendChild(cmdText);
+        cmdLine.innerHTML = `<span class="prompt"><span class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$ </span><span>${trimmed}</span>`;
         logEntry.appendChild(cmdLine);
-
-        // Process command
         if (commands[cmdName]) {
-            // Pass the full original string or args if needed, 
-            // but our theme command reads from terminalInput.value or we can pass args
             const response = commands[cmdName].exec(parts.slice(1));
             if (response !== null) {
                 const respLine = document.createElement('div');
                 respLine.className = 'cmd-response';
-                respLine.innerHTML = response.replace(/\n/g, '<br>'); // Simple formatting
+                respLine.innerHTML = response.replace(/\n/g, '<br>');
                 logEntry.appendChild(respLine);
             }
             sound.playBeep();
@@ -844,23 +616,18 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
             logEntry.appendChild(errorLine);
             sound.playError();
         }
-
         terminalOutput.appendChild(logEntry);
-        // Scroll to bottom
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     };
 
     const handleContactFlow = async (text) => {
         const logEntry = document.createElement('div');
         logEntry.className = 'cmd-logs';
-
-        // Show what user typed
         const userLine = document.createElement('div');
         userLine.className = 'cmd-command';
         userLine.innerHTML = `<span class="prompt">> </span><span>${text}</span>`;
         logEntry.appendChild(userLine);
         terminalOutput.appendChild(logEntry);
-
         if (text.toLowerCase() === 'exit' || text.toLowerCase() === 'cancel') {
             const cancelLine = document.createElement('div');
             cancelLine.className = 'cmd-response';
@@ -870,48 +637,33 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
             return;
         }
-
         const respLine = document.createElement('div');
         respLine.className = 'cmd-response';
-
         switch (contactFlow.step) {
-            case 1: // Name entered
+            case 1:
                 contactFlow.data.name = text || 'Anonymous';
                 contactFlow.step = 2;
                 respLine.textContent = translations[currentLang].contact_step_email;
                 break;
-            case 2: // Email entered
+            case 2:
                 contactFlow.data.email = text || 'no-email@provided.com';
                 contactFlow.step = 3;
                 respLine.textContent = translations[currentLang].contact_step_msg;
                 break;
-            case 3: // Message entered
+            case 3:
                 contactFlow.data.message = text || '(Empty Message)';
                 respLine.textContent = translations[currentLang].contact_sending;
                 logEntry.appendChild(respLine);
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
-
-                // Actual Send Logic
                 try {
-                    // Using Formspree as example. Replace 'your-id' with actual one.
-                    // For now, using a placeholder endpoint so it doesn't fail silently 
-                    // or use the user's email directly if they have a formspree set up.
-                    // We can also use a simple 'fetch' back to a placeholder.
                     const response = await fetch('https://formspree.io/f/mojnzlnq', {
                         method: 'POST',
                         body: JSON.stringify(contactFlow.data),
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        }
+                        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
                     });
-
                     if (response.ok) {
                         respLine.innerHTML = `<span style="color: #4caf50;">${translations[currentLang].contact_success}</span>`;
                         sound.playToggle();
-                    } else {
-                        throw new Error('Network error');
-                    }
+                    } else throw new Error();
                 } catch (e) {
                     respLine.innerHTML = `<span style="color: #ff5f56;">${translations[currentLang].contact_error}</span>`;
                     sound.playError();
@@ -919,162 +671,48 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
                 resetContactFlow();
                 break;
         }
-
-        if (contactFlow.active) {
-            logEntry.appendChild(respLine);
-        }
+        if (contactFlow.active) logEntry.appendChild(respLine);
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
     };
 
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
-            // Only play keystroke sound for actual characters, backspace, and space.
-            if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
-                sound.playKeystroke();
-            }
-
-            if (e.key === 'Enter') {
-                processCommand(terminalInput.value);
-                terminalInput.value = '';
-            }
+            if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') sound.playKeystroke();
+            if (e.key === 'Enter') { processCommand(terminalInput.value); terminalInput.value = ''; }
         });
     }
 
-    // --- System Status & Uptime Logic ---
-    const uptimeElement = document.getElementById('uptime-counter');
-    const commitDateElement = document.getElementById('commit-date');
-    const startTime = Date.now();
-
-    const updateUptime = () => {
-        if (!uptimeElement) return;
-        const now = Date.now();
-        const diff = now - startTime;
-
-        const seconds = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
-        const minutes = Math.floor((diff / (1000 * 60)) % 60).toString().padStart(2, '0');
-        const hours = Math.floor((diff / (1000 * 60 * 60))).toString().padStart(2, '0');
-
-        const label = translations[currentLang]?.uptime_label || "UPTIME: ";
-        uptimeElement.textContent = `${label}${hours}:${minutes}:${seconds}`;
-    };
-
-    setInterval(updateUptime, 1000);
-    updateUptime(); // Initial call
-
-    // --- Fetch Last Commit Date ---
-    const fetchLastCommit = async () => {
-        if (!commitDateElement) return;
-
-        try {
-            // Check localStorage first to avoid rate limits
-            const cachedCommit = localStorage.getItem('last_commit_date');
-            const cachedTimestamp = localStorage.getItem('last_commit_timestamp');
-            const now = Date.now();
-
-            // Use cache if less than 1 hour old
-            if (cachedCommit && cachedTimestamp && (now - parseInt(cachedTimestamp) < 1000 * 60 * 60)) {
-                commitDateElement.textContent = cachedCommit;
-                return;
-            }
-
-            const repo = 'pedroffeitosa/pedroffeitosa.github.io';
-            const response = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`);
-
-            if (!response.ok) throw new Error('Network response was not ok');
-
-            const data = await response.json();
-            if (data && data.length > 0) {
-                const date = new Date(data[0].commit.author.date);
-                // Format: YYYY-MM-DD HH:MM
-                const formattedDate = date.getFullYear() + '-' +
-                    (date.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                    date.getDate().toString().padStart(2, '0') + ' ' +
-                    date.getHours().toString().padStart(2, '0') + ':' +
-                    date.getMinutes().toString().padStart(2, '0');
-
-                commitDateElement.textContent = formattedDate;
-
-                // Update LAST_UPDATE label dynamically if needed, 
-                // but handled by setLanguage() generally.
-
-                // Cache the result
-                localStorage.setItem('last_commit_date', formattedDate);
-                localStorage.setItem('last_commit_timestamp', now.toString());
-            }
-        } catch (error) {
-            console.error('Error fetching commit:', error);
-            commitDateElement.textContent = 'OFFLINE_MODE';
-            commitDateElement.style.opacity = '0.5';
-        }
-    };
-
-    fetchLastCommit();
-
-    // --- Konami Code & Matrix Easter Egg ---
-    const konamiCode = [
-        "arrowup", "arrowup",
-        "arrowdown", "arrowdown",
-        "arrowleft", "arrowright",
-        "arrowleft", "arrowright",
-        "b", "a"
-    ];
+    const konamiCode = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
     let konamiIndex = 0;
-
-    // Matrix Variables
     const canvas = document.getElementById("matrix-canvas");
-    let ctx = null;
-    let matrixInterval = null;
-
-    // Matrix Characters (Katakana + Latin + nums)
-    const chars = "अआइईउऊऋएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    // Using Devanagari/Latin mix looks cool too, or standard Katakana:
+    let ctx = null, matrixInterval = null;
     const katakana = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポ";
+    const chars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const matrixChars = (katakana + chars).split("");
-
-    let fontSize = 16;
-    let drops = [];
+    let fontSize = 16, drops = [];
 
     const startMatrix = () => {
         if (!canvas) return;
-        console.log("Matrix Easter Egg Triggered!");
-
         ctx = canvas.getContext("2d");
         canvas.style.display = "block";
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         const columns = canvas.width / fontSize;
-        drops = [];
-        for (let x = 0; x < columns; x++) {
-            drops[x] = 1;
-        }
-
-        // Draw loop
+        drops = Array(Math.floor(columns)).fill(1);
         const draw = () => {
-            // Translucent black background for trail effect
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#0F0"; // Green text
+            ctx.fillStyle = "#0F0";
             ctx.font = fontSize + "px monospace";
-
             for (let i = 0; i < drops.length; i++) {
                 const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                // Random reset of drop
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         };
-
         if (matrixInterval) clearInterval(matrixInterval);
         matrixInterval = setInterval(draw, 33);
-
-        // Hide other overlay elements if needed
         document.body.style.overflow = "hidden";
     };
 
@@ -1083,49 +721,28 @@ GitHub: <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa
         clearInterval(matrixInterval);
         canvas.style.display = "none";
         document.body.style.overflow = "";
-        konamiIndex = 0; // Reset code
+        konamiIndex = 0;
     };
 
     document.addEventListener("keydown", (e) => {
-        // Check for Escape to close Matrix
-        if (e.key === "Escape" && canvas && canvas.style.display === "block") {
-            stopMatrix();
-            return;
-        }
-
+        if (e.key === "Escape" && canvas && canvas.style.display === "block") { stopMatrix(); return; }
         const key = e.key.toLowerCase();
-
-        // Konami Logic
         if (key === konamiCode[konamiIndex]) {
             konamiIndex++;
-            console.log(`Konami Progress: ${konamiIndex}/${konamiCode.length}`);
-            if (konamiIndex === konamiCode.length) {
-                startMatrix();
-                konamiIndex = 0;
-            }
-        } else {
-            // Only reset if it's NOT the start of a new sequence (ArrowUp)
-            // But usually just resetting to 0 is safer standard behavior
-            konamiIndex = (key === "arrowup") ? 1 : 0;
-            if (konamiIndex === 1) console.log("Konami Restarted");
-        }
+            if (konamiIndex === konamiCode.length) { startMatrix(); konamiIndex = 0; }
+        } else konamiIndex = (key === "arrowup") ? 1 : 0;
     });
-    // --- Scroll Reveal Logic ---
+
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("reveal-visible");
                 entry.target.classList.remove("reveal-hidden");
-                // Stop observing once revealed if you want it to trigger only once
-                // revealObserver.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.15 // Trigger when 15% visible
-    });
+    }, { threshold: 0.15 });
 
-    const sections = document.querySelectorAll(".section");
-    sections.forEach(section => {
+    document.querySelectorAll(".section").forEach(section => {
         section.classList.add("reveal-hidden");
         revealObserver.observe(section);
     });

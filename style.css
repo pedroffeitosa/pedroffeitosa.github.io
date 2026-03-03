@@ -6,6 +6,7 @@
   --section-border: #999;
   --link: #0000cc;
   --link-hover: #cc0000;
+  --sound-active: var(--color-main);
 
   /* Cat Walker Variables */
   --cat-w: 60px;
@@ -20,6 +21,7 @@
   --section-border: #666;
   --link: #88aaff;
   --link-hover: #ffd466;
+  --sound-active: var(--link);
 }
 
 [data-theme="matrix"] {
@@ -156,23 +158,11 @@ a:hover {
   border-color: var(--border-main);
 }
 
-/* Status Indicator */
-.status-indicator {
-  font-size: 12px;
-  color: #4caf50;
-  /* Green */
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-  white-space: nowrap;
-}
-
+/* Terminal Hint styling */
 .terminal-hint {
   font-size: 11px;
   color: var(--color-main);
   opacity: 0.4;
-  margin-left: 2px;
   font-family: 'Consolas', monospace;
 }
 
@@ -204,32 +194,7 @@ a:hover {
   opacity: 0.8;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  background-color: #4caf50;
-  border-radius: 50%;
-  display: inline-block;
-  animation: blink 1.5s infinite;
-}
 
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.3;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-[data-theme="dark"] .status-indicator {
-  color: #81c784;
-}
 
 /* Header Layout */
 .header-container {
@@ -246,7 +211,7 @@ a:hover {
 
 .header-status {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   margin-top: 2px;
 }
 
@@ -277,7 +242,6 @@ a:hover {
 
 #header-controls #sound-toggle,
 #header-controls #terminal-toggle {
-  margin-left: 8px;
   opacity: 0.6;
   color: inherit;
 }
@@ -287,14 +251,7 @@ a:hover {
   opacity: 1;
 }
 
-#last-commit-info {
-  font-size: 11px;
-  color: #666;
-  margin-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+
 
 .bio-row {
   margin-top: 10px;
@@ -341,23 +298,8 @@ a:hover {
 
   /* Hide sound and terminal icons on mobile */
   #sound-toggle,
-  #terminal-toggle,
-  #terminal-hint,
-  .status-separator:nth-of-type(2) {
+  #terminal-toggle {
     display: none !important;
-  }
-
-  /* Improve experience date visibility on mobile */
-  .exp-date {
-    color: var(--color-main) !important;
-    font-weight: 600;
-    font-size: 11px;
-  }
-
-  .status-indicator {
-    flex-wrap: wrap;
-    gap: 4px;
-    white-space: normal;
   }
 
   .prompt-host {
