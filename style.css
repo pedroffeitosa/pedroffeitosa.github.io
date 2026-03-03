@@ -176,6 +176,25 @@ a:hover {
   font-family: 'Consolas', monospace;
 }
 
+.exp-date {
+  min-width: 78px;
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+  transition: color 0.3s;
+}
+
+[data-theme="dark"] .exp-date {
+  color: #bbb;
+}
+
+[data-theme="matrix"] .exp-date,
+[data-theme="cyberpunk"] .exp-date,
+[data-theme="amber"] .exp-date {
+  color: var(--color-main);
+  opacity: 0.8;
+}
+
 .dot {
   width: 8px;
   height: 8px;
@@ -304,10 +323,17 @@ a:hover {
     margin-top: 10px;
   }
 
-  /* Hide terminal shortcut hint on mobile as Ctrl+B is not applicable */
-  .terminal-hint,
-  .status-separator:last-of-type {
+  /* Hide sound and terminal icons on mobile */
+  #sound-toggle,
+  #terminal-toggle {
     display: none !important;
+  }
+
+  /* Improve experience date visibility on mobile */
+  .exp-date {
+    color: var(--color-main) !important;
+    font-weight: 600;
+    font-size: 11px;
   }
 
   .status-indicator {
