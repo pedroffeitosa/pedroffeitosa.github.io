@@ -176,6 +176,15 @@ a:hover {
   font-family: 'Consolas', monospace;
 }
 
+.exp-role {
+  margin-left: 12px;
+}
+
+.exp-location {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
 .exp-date {
   min-width: 78px;
   font-size: 12px;
@@ -318,14 +327,23 @@ a:hover {
     gap: 10px;
   }
 
+  #header-controls {
+    align-self: flex-end;
+    margin-top: 0;
+  }
+
   .cv-links {
-    align-items: flex-start;
+    align-items: flex-end;
+    align-self: flex-end;
     margin-top: 10px;
+    width: 100%;
   }
 
   /* Hide sound and terminal icons on mobile */
   #sound-toggle,
-  #terminal-toggle {
+  #terminal-toggle,
+  #terminal-hint,
+  .status-separator:nth-of-type(2) {
     display: none !important;
   }
 
@@ -344,6 +362,11 @@ a:hover {
 
   .prompt-host {
     display: none;
+  }
+
+  /* Center footer links on mobile */
+  .footer-links {
+    text-align: center;
   }
 }
 
