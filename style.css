@@ -253,6 +253,29 @@ a:hover {
 
 
 
+#chess-widget {
+  padding: 2px 6px;
+  border: 1px solid var(--border-main);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  cursor: default;
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+[data-theme="dark"] #chess-widget {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#chess-widget:hover {
+  transform: translateY(-1px);
+  background: rgba(0, 0, 0, 0.06);
+  opacity: 1 !important;
+}
+
+[data-theme="dark"] #chess-widget:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 .bio-row {
   margin-top: 10px;
 }

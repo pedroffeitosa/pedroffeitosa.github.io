@@ -141,6 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_3: "Built a full event platform for brand campaign engagement/registration.",
             exp_pave_4: "Collaborated with design for responsive performance across all devices.",
             exp_pave_5: "Provided continual UX/UI improvements and bugfixes.",
+            chess_rating: "Chess Blitz Rating",
+            chess_pawn: "♟",
             exp_inside_role_main: "Full Stack Engineer",
             exp_inside_location: ", Campina Grande, PB, Remote",
             exp_inside_date: "Jun 2024 - Present",
@@ -247,6 +249,8 @@ document.addEventListener("DOMContentLoaded", () => {
             exp_pave_3: "Construí uma plataforma completa de eventos para engajamento de campanhas de marcas.",
             exp_pave_4: "Colaborei com design para performance responsiva em todos os dispositivos.",
             exp_pave_5: "Forneci melhorias contínuas de UX/UI e correções de bugs.",
+            chess_rating: "Rating de Xadrez Blitz",
+            chess_pawn: "♟",
             exp_inside_role_main: "Engenheiro Full Stack",
             exp_inside_location: ", Campina Grande, PB, Remoto",
             exp_inside_date: "Jun 2024 - Presente",
@@ -754,4 +758,42 @@ document.addEventListener("DOMContentLoaded", () => {
         section.classList.add("reveal-hidden");
         revealObserver.observe(section);
     });
+
+    // --- Chess Rating Logic ---
+    const CHESS_CACHE_KEY = "lichess_rating_data";
+    const CHESS_CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+    const updateChessUI = (rating) => {
+        const ratingEl = document.getElementById("chess-rating-val");
+        if (ratingEl) {
+            ratingEl.textContent = rating;
+            const container = document.getElementById("chess-widget");
+            if (container) container.style.display = "flex";
+        }
+    };
+
+    const fetchLichessRating = async () => {
+        const cached = localStorage.getItem(CHESS_CACHE_KEY);
+        if (cached) {
+            const { rating, timestamp } = JSON.parse(cached);
+            if (Date.now() - timestamp < CHESS_CACHE_EXPIRY) {
+                updateChessUI(rating);
+                return;
+            }
+        }
+
+        try {
+            const response = await fetch("https://lichess.org/api/user/Pedxr0");
+            if (response.ok) {
+                const data = await response.json();
+                const rating = data.perfs.blitz.rating;
+                localStorage.setItem(CHESS_CACHE_KEY, JSON.stringify({ rating, timestamp: Date.now() }));
+                updateChessUI(rating);
+            }
+        } catch (error) {
+            console.error("Error fetching Lichess rating:", error);
+        }
+    };
+
+    fetchLichessRating();
 });
