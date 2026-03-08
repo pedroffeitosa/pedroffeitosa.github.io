@@ -112,10 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         en: {
             meta_description: "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
-            system_status: "SYSTEM_ACTIVE",
-            role_main: "Software Engineer & LLM Trainer",
+            system_status: "SYSTEM_ACTIVE",            role_main: "Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
-            terminal_hint: "Terminal: Ctrl+B / `",
+            terminal_tooltip: "Open Terminal (Ctrl+B / `)",
             career_title: "// Career",
             career_text: "Software Engineer with extensive experience in high-performance commerce and enterprise software. Adept at leading complex projects, from architecting scalable storefronts to integrating custom AWS backends and enterprise systems (ERP/CRM). Currently focused on applying AI/LLMs expertise at Turing.",
             stack_title: "// Main Stack & Expertise",
@@ -223,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             system_status: "SISTEMA_ATIVO",
             role_main: "Engenheiro de Software & Treinador de LLM",
             check_projects: "Ver alguns projetos",
-            terminal_hint: "Terminal: Ctrl+B / `",
+            terminal_tooltip: "Abrir Terminal (Ctrl+B / `)",
             career_title: "// Carreira",
             career_text: "Engenheiro de Software com vasta experiência em comércio de alta performance e software empresarial. Hábil em liderar projetos complexos, desde arquitetura de lojas escaláveis até integração de backends AWS customizados e sistemas corporativos (ERP/CRM). Atualmente focado em aplicar expertise em IA/LLMs na Turing.",
             stack_title: "// Stack Principal & Expertise",
@@ -338,7 +337,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const key = el.getAttribute("data-i18n");
             const text = translations[lang][key];
             if (text) {
-                el.innerText = text;
+                const targetAttribute = el.getAttribute("data-i18n-target");
+                if (targetAttribute) {
+                    el.setAttribute(targetAttribute, text);
+                } else {
+                    el.innerText = text;
+                }
             }
         });
 
