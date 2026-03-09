@@ -186,8 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_chess_desc: "A robust engine demonstrating advanced object-oriented design, supporting all standard chess rules (castling, en passant, check/mate detection) with a modular architecture.",
             connect_current: "Currently at:",
             connect_current_val: "Revelo (LLM Trainer, Remote)",
-            connect_location: "Location:",
-            connect_location_val: "Campina Grande, PB, Brazil (Remote)",
+
             cv_link: "View / Download CV",
             copy_btn: "Copy",
             copied_msg: "Copied!",
@@ -294,8 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_chess_desc: "Um motor robusto demonstrando design orientado a objetos avançado, suportando todas as regras padrão de xadrez (roque, en passant, detecção de xeque/mate) com arquitetura modular.",
             connect_current: "Atualmente na:",
             connect_current_val: "Revelo (Treinador de LLM, Remoto)",
-            connect_location: "Localização:",
-            connect_location_val: "Campina Grande, PB, Brasil (Remoto)",
+
             cv_link: "Ver / Baixar CV",
             copy_btn: "Copiar",
             copied_msg: "Copiado!",
