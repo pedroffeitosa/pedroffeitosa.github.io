@@ -1,0 +1,23 @@
+{
+  "name": "João Pedro Feitosa - Portfolio",
+  "short_name": "JP Portfolio",
+  "description": "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#181818",
+  "theme_color": "#181818",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
