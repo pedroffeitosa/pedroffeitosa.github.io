@@ -715,6 +715,23 @@
           background: black;
         "></canvas>
 
+  <!-- PWA Install Prompt -->
+  <div id="pwa-install-prompt" class="pwa-prompt-hidden">
+    <div class="pwa-prompt-content">
+      <div class="pwa-prompt-header">
+        <img src="icon-192.png" alt="App Icon" class="pwa-prompt-icon">
+        <div class="pwa-prompt-text">
+          <strong data-i18n="pwa_install_title">Install App</strong>
+          <p id="pwa-prompt-message" data-i18n="pwa_install_desc">Add to home screen for quick access.</p>
+        </div>
+      </div>
+      <div class="pwa-prompt-actions">
+        <button id="pwa-cancel" data-i18n="pwa_cancel">Not now</button>
+        <button id="pwa-install" data-i18n="pwa_install_btn">Install</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 
