@@ -519,6 +519,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (terminalToggleBtn) terminalToggleBtn.addEventListener('click', () => { toggleTerminal(); sound.playToggle(); });
 
     let contactFlow = { active: false, step: 0, data: { name: '', email: '', message: '' } };
+    let commandHistory = [];
+    let historyIndex = -1;
+    let tempDraft = '';
+
     const resetContactFlow = () => {
         contactFlow.active = false;
         contactFlow.step = 0;
@@ -616,7 +620,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const trimmed = cmdStr.trim();
         if (!trimmed && !contactFlow.active) return;
         if (contactFlow.active) { handleContactFlow(trimmed); return; }
+
+        if (trimmed) {
+            if (commandHistory.length === 0 || commandHistory[commandHistory.length - 1] !== trimmed) {
+                commandHistory.push(trimmed);
+            }
+            historyIndex = -1;
+            tempDraft = '';
+        }
+
         const parts = trimmed.split(' ');
+
         const cmdName = parts[0].toLowerCase();
         const logEntry = document.createElement('div');
         logEntry.className = 'cmd-logs';
@@ -702,9 +716,36 @@ document.addEventListener("DOMContentLoaded", () => {
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
             if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') sound.playKeystroke();
-            if (e.key === 'Enter') { processCommand(terminalInput.value); terminalInput.value = ''; }
+            
+            if (e.key === 'Enter') {
+                processCommand(terminalInput.value);
+                terminalInput.value = '';
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (commandHistory.length > 0) {
+                    if (historyIndex === -1) {
+                        tempDraft = terminalInput.value;
+                        historyIndex = commandHistory.length - 1;
+                    } else if (historyIndex > 0) {
+                        historyIndex--;
+                    }
+                    terminalInput.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex !== -1) {
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = commandHistory[historyIndex];
+                    } else {
+                        historyIndex = -1;
+                        terminalInput.value = tempDraft;
+                    }
+                }
+            }
         });
     }
+
 
     const konamiCode = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
     let konamiIndex = 0;
