@@ -219,7 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
             pwa_install_desc: "Add to home screen for quick access.",
             pwa_cancel: "Not now",
             pwa_install_btn: "Install",
-            pwa_ios_msg: "Tap the 'Share' icon and then 'Add to Home Screen'."
+            pwa_ios_msg: "Tap the 'Share' icon and then 'Add to Home Screen'.",
+            ai_chat_title: "João's AI Assistant",
+            ai_chat_placeholder: "Ask something...",
+            ai_chat_welcome: "Hi! I'm João's virtual assistant. Ask me about his skills, experience, projects, or even his chess rating!",
+            ai_chat_error: "I'm not sure I understand. Could you try asking about his 'experience', 'skills', or 'projects'?",
+            ai_chat_thinking: "Thinking..."
         },
         pt: {
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
@@ -331,7 +336,12 @@ document.addEventListener("DOMContentLoaded", () => {
             pwa_install_desc: "Adicione à tela de início para acesso rápido.",
             pwa_cancel: "Agora não",
             pwa_install_btn: "Instalar",
-            pwa_ios_msg: "Toque no ícone de 'Compartilhar' e depois em 'Adicionar à Tela de Início'."
+            pwa_ios_msg: "Toque no ícone de 'Compartilhar' e depois em 'Adicionar à Tela de Início'.",
+            ai_chat_title: "Assistente IA do João",
+            ai_chat_placeholder: "Pergunte algo...",
+            ai_chat_welcome: "Olá! Sou o assistente virtual do João. Pergunte-me sobre suas habilidades, experiência, projetos ou até seu rating de xadrez!",
+            ai_chat_error: "Não tenho certeza se entendi. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!",
+            ai_chat_thinking: "Pensando..."
         }
     };
 
@@ -612,6 +622,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 const role = translations[currentLang]?.role_main || "Software Engineer";
                 const langLine = currentLang === 'pt' ? 'Língua: Português' : 'Language: English';
                 return `<pre style="color: var(--link); line-height: 1.2; font-size: 11px;">\n       .---.\n      /     \\\n      |() ()|   <b>João Pedro Feitosa</b>\n       \\  ^  /    -------------------\n        |||||     <b>OS</b>: PortfolioOS v2.0\n        |||||     <b>Role</b>: ${role}\n                  <b>Stack</b>: React, TS, Node, AI\n                  <b>${langLine}</b>\n                  <b>Location</b>: Brazil (Remote)\n</pre>`.trim();
+            }
+        },
+        ask: {
+            desc: 'Ask the AI Assistant a question',
+            exec: (args) => {
+                if (!args || args.length === 0) return 'Usage: ask <your question>';
+                const question = args.join(' ');
+                if (typeof AIChat !== 'undefined') {
+                    const response = AIChat.generateResponse(question);
+                    return `<b>AI Assistant:</b> ${response}`;
+                }
+                return 'AI Assistant is initializing...';
             }
         }
     };
@@ -913,3 +935,110 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW Registration failed:', err));
     });
 }
+
+// --- AI Chatbot Implementation ---
+const AIChat = {
+    kb: {
+        en: {
+            who: "João is a Software Engineer & LLM Trainer specialized in React, Node.js, and AI. He's currently at Revelo.",
+            skills: "João excels in React, TypeScript, Node.js, Tailwind, AWS, and AI/LLM Training (RLHF).",
+            experience: "João has worked at companies like Revelo, Turing, Dilis Studio, IH Store, and AbInBev. He's an expert in e-commerce and AI-driven platforms.",
+            projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
+            chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
+            contact: "You can reach João via email at jppfeitosa@gmail.com or on LinkedIn at /in/pedroffeitosa.",
+            hobbies: "Besides coding and chess, João enjoy exploring AI tech and contributing to open-source.",
+            default: "I'm not exactly sure about that. Try asking about 'experience', 'skills', or 'projects'!"
+        },
+        pt: {
+            who: "João é um Engenheiro de Software e Treinador de LLM especializado em React, Node.js e IA. Atualmente está na Revelo.",
+            skills: "João domina React, TypeScript, Node.js, Tailwind, AWS e Treinamento de AI/LLM (RLHF).",
+            experience: "João trabalhou em empresas como Revelo, Turing, Dilis Studio, IH Store e AbInBev. É especialista em e-commerce e plataformas baseadas em IA.",
+            projects: "Projetos de destaque incluem AmeoPet (Pet Care), MCPWeather (Protocolo Customizado) e um Motor de Xadrez em Ruby.",
+            chess: "João adora xadrez! O rating blitz dele no Lichess é 1900+ (veja o valor atualizado no widget!).",
+            contact: "Você pode falar com o João pelo e-mail jppfeitosa@gmail.com ou pelo LinkedIn em /in/pedroffeitosa.",
+            hobbies: "Além de programar e jogar xadrez, o João gosta de explorar tecnologias de IA e contribuir para open-source.",
+            default: "Não tenho certeza sobre isso. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!"
+        }
+    },
+
+    generateResponse: function(input) {
+        const text = input.toLowerCase();
+        const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
+        const data = this.kb[lang];
+
+        if (text.includes("quem") || text.includes("who") || text.includes("joao") || text.includes("joão")) return data.who;
+        if (text.includes("skill") || text.includes("habilidade") || text.includes("stack") || text.includes("tecnologi")) return data.skills;
+        if (text.includes("exp") || text.includes("carreira") || text.includes("trabalho") || text.includes("work") || text.includes("career")) return data.experience;
+        if (text.includes("proj") || text.includes("feito")) return data.projects;
+        if (text.includes("chess") || text.includes("xadrez") || text.includes("rating")) return data.chess;
+        if (text.includes("contato") || text.includes("contact") || text.includes("email") || text.includes("falar")) return data.contact;
+        if (text.includes("hobby") || text.includes("gosta")) return data.hobbies;
+
+        return data.default;
+    },
+
+    init: function() {
+        const trigger = document.getElementById('ai-chat-trigger');
+        const windowEl = document.getElementById('ai-chat-window');
+        const closeBtn = document.getElementById('close-chat');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const messagesContainer = document.getElementById('chat-messages');
+        const typingIndicator = document.querySelector('.typing-wrapper');
+
+        if (!trigger || !windowEl) return;
+
+        const addMessage = (text, sender) => {
+            const msgEl = document.createElement('div');
+            msgEl.className = `message ${sender}`;
+            msgEl.innerText = text;
+            messagesContainer.appendChild(msgEl);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        };
+
+        const showBotResponse = (question) => {
+            typingIndicator.style.display = 'block';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const response = this.generateResponse(question);
+                addMessage(response, 'bot');
+                if (typeof sound !== 'undefined') sound.playBeep();
+            }, 800 + Math.random() * 1000);
+        };
+
+        trigger.addEventListener('click', () => {
+            const isOpening = windowEl.style.display !== 'flex';
+            windowEl.style.display = isOpening ? 'flex' : 'none';
+            if (isOpening) {
+                if (messagesContainer.children.length === 0) {
+                    const welcome = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].ai_chat_welcome : "Hi!";
+                    addMessage(welcome, 'bot');
+                }
+                chatInput.focus();
+            }
+            if (typeof sound !== 'undefined') sound.playToggle();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            windowEl.style.display = 'none';
+            if (typeof sound !== 'undefined') sound.playToggle();
+        });
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+            if (typeof sound !== 'undefined') sound.playKeystroke();
+
+            showBotResponse(text);
+        });
+    }
+};
+
+// Initialize the Chatbot
+AIChat.init();

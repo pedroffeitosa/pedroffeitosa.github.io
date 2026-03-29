@@ -732,6 +732,42 @@
     </div>
   </div>
 
+  <!-- AI Chatbot UI -->
+  <button id="ai-chat-trigger" aria-label="Chat with João's AI" title="Chat with AI">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      <circle cx="9" cy="9" r="1"></circle>
+      <circle cx="15" cy="9" r="1"></circle>
+      <path d="M9 13h6"></path>
+    </svg>
+  </button>
+
+  <div id="ai-chat-window">
+    <div class="chat-header">
+      <h3 data-i18n="ai_chat_title">João's AI Assistant</h3>
+      <button id="close-chat" aria-label="Close Chat">&times;</button>
+    </div>
+    <div id="chat-messages">
+      <!-- Initial welcome message will be added via JS -->
+    </div>
+    <div class="typing-wrapper">
+      <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+    <form class="chat-input-area" id="chat-form">
+      <input type="text" id="chat-input" placeholder="Ask something..." autocomplete="off" data-i18n="ai_chat_placeholder" data-i18n-target="placeholder" />
+      <button type="submit" id="send-chat" aria-label="Send Message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+
   <script src="script.js"></script>
 </body>
 
