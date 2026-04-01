@@ -224,7 +224,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ai_chat_placeholder: "Ask something...",
             ai_chat_welcome: "Hi! I'm João's virtual assistant. Ask me about his skills, experience, projects, or even his chess rating!",
             ai_chat_error: "I'm not sure I understand. Could you try asking about his 'experience', 'skills', or 'projects'?",
-            ai_chat_thinking: "Thinking..."
+            ai_chat_thinking: "Thinking...",
+            stack_algorithms: "Algorithms Solving"
         },
         pt: {
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
@@ -341,7 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ai_chat_placeholder: "Pergunte algo...",
             ai_chat_welcome: "Olá! Sou o assistente virtual do João. Pergunte-me sobre suas habilidades, experiência, projetos ou até seu rating de xadrez!",
             ai_chat_error: "Não tenho certeza se entendi. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!",
-            ai_chat_thinking: "Pensando..."
+            ai_chat_thinking: "Pensando...",
+            stack_algorithms: "Resolução de Algoritmos"
         }
     };
 
@@ -575,7 +577,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     return `<pre style="color: inherit; line-height: 1.2;">${output}</pre>`;
                 }
-                return `[FRONTEND]\n- React, TypeScript, Tailwind, Preact, HTML/CSS\n[BACKEND]\n- Node.js, PostgreSQL, MongoDB, AWS (Lambda, S3)\n[AI/ML]\n- LLM Training (RLHF), Prompt Engineering, Data Analysis\n[OTHER]\n- Scrum Master, QA, E-commerce (Deco, VTEX)`;
+                return `[FRONTEND]\n- React, TypeScript, Tailwind, Preact, HTML/CSS\n[BACKEND]\n- Node.js, PostgreSQL, MongoDB, AWS (Lambda, S3)\n[AI/ML]\n- LLM Training (RLHF), Prompt Engineering, Data Analysis\n[ALGORITHMS]\n- Problem Solving, Data Structures, Optimizing Complexity\n[OTHER]\n- Scrum Master, QA, E-commerce (Deco, VTEX)`;
             }
         },
         projects: {
@@ -941,7 +943,7 @@ const AIChat = {
     kb: {
         en: {
             who: "João is a Software Engineer & LLM Trainer specialized in React, Node.js, and AI. He's currently at Revelo.",
-            skills: "João excels in React, TypeScript, Node.js, Tailwind, AWS, and AI/LLM Training (RLHF).",
+            skills: "João excels in React, TypeScript, Node.js, Tailwind, Algorithms Solving, AWS, and AI/LLM Training (RLHF).",
             experience: "João has worked at companies like Revelo, Turing, Dilis Studio, IH Store, and AbInBev. He's an expert in e-commerce and AI-driven platforms.",
             projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
             chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
@@ -951,7 +953,7 @@ const AIChat = {
         },
         pt: {
             who: "João é um Engenheiro de Software e Treinador de LLM especializado em React, Node.js e IA. Atualmente está na Revelo.",
-            skills: "João domina React, TypeScript, Node.js, Tailwind, AWS e Treinamento de AI/LLM (RLHF).",
+            skills: "João domina React, TypeScript, Node.js, Tailwind, Resolução de Algoritmos, AWS e Treinamento de AI/LLM (RLHF).",
             experience: "João trabalhou em empresas como Revelo, Turing, Dilis Studio, IH Store e AbInBev. É especialista em e-commerce e plataformas baseadas em IA.",
             projects: "Projetos de destaque incluem AmeoPet (Pet Care), MCPWeather (Protocolo Customizado) e um Motor de Xadrez em Ruby.",
             chess: "João adora xadrez! O rating blitz dele no Lichess é 1900+ (veja o valor atualizado no widget!).",
