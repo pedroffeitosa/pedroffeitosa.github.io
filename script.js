@@ -225,7 +225,20 @@ document.addEventListener("DOMContentLoaded", () => {
             ai_chat_welcome: "Hi! I'm João's virtual assistant. Ask me about his skills, experience, projects, or even his chess rating!",
             ai_chat_error: "I'm not sure I understand. Could you try asking about his 'experience', 'skills', or 'projects'?",
             ai_chat_thinking: "Thinking...",
-            stack_algorithms: "Algorithms Solving"
+            stack_algorithms: "Algorithms Solving",
+            fortune_quotes: [
+                "Programs must be written for people to read, and only incidentally for machines to execute. — Abelson & Sussman",
+                "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. — Martin Fowler",
+                "First, solve the problem. Then, write the code. — John Johnson",
+                "The best error message is the one that never shows up. — Thomas Fuchs",
+                "There are only two hard things in Computer Science: cache invalidation and naming things. — Phil Karlton",
+                "Talk is cheap. Show me the code. — Linus Torvalds",
+                "The cake is a lie.",
+                "There is no spoon.",
+                "Don't panic.",
+                "Hello world!",
+                "My other computer is a Commodore 64."
+            ]
         },
         pt: {
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
@@ -343,7 +356,20 @@ document.addEventListener("DOMContentLoaded", () => {
             ai_chat_welcome: "Olá! Sou o assistente virtual do João. Pergunte-me sobre suas habilidades, experiência, projetos ou até seu rating de xadrez!",
             ai_chat_error: "Não tenho certeza se entendi. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!",
             ai_chat_thinking: "Pensando...",
-            stack_algorithms: "Resolução de Algoritmos"
+            stack_algorithms: "Resolução de Algoritmos",
+            fortune_quotes: [
+                "Programas devem ser escritos para que pessoas leiam, e apenas de passagem para máquinas executarem. — Abelson & Sussman",
+                "Qualquer tolo consegue escrever código que um computador entenda. Bons programadores escrevem código que humanos entendam. — Martin Fowler",
+                "Primeiro, resolva o problema. Depois, escreva o código. — John Johnson",
+                "A melhor mensagem de erro é aquela que nunca aparece. — Thomas Fuchs",
+                "Só existem duas coisas difíceis na Ciência da Computação: invalidação de cache e nomear coisas. — Phil Karlton",
+                "Falar é fácil. Mostre-me o código. — Linus Torvalds",
+                "O bolo é uma mentira.",
+                "Não existe colher.",
+                "Não entre em pânico.",
+                "Olá mundo!",
+                "Meu outro computador é um Commodore 64."
+            ]
         }
     };
 
@@ -505,6 +531,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (shouldShow) {
             terminalInput.value = '';
             terminalInput.focus();
+            
+            // Show a random fortune on open
+            const quote = getFortune();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'cmd-logs';
+            logEntry.innerHTML = `<div class="cmd-response"><i>${quote}</i></div>`;
+            terminalOutput.appendChild(logEntry);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
         }
     };
 
@@ -637,7 +671,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 return 'AI Assistant is initializing...';
             }
+        },
+        fortune: {
+            desc: 'Display a random technical quote or easter egg',
+            exec: () => `<i>${getFortune()}</i>`
         }
+    };
+
+    const getFortune = () => {
+        const quotes = translations[currentLang].fortune_quotes;
+        return quotes[Math.floor(Math.random() * quotes.length)];
     };
 
     const processCommand = (cmdStr) => {
