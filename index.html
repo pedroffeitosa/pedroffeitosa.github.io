@@ -688,12 +688,15 @@
     </svg>
   </button>
 
-  <!-- Terminal Overlay -->
-  <div id="terminal-overlay" style="display: none">
-    <div class="terminal-window">
-      <div class="terminal-header">
-        <span class="terminal-title">visitor@pedroffeitosa:~</span>
-        <button id="close-terminal" aria-label="Close terminal">×</button>
+  <div id="terminal-overlay">
+    <div class="terminal-window window" id="terminal-window">
+      <div class="terminal-header window-header">
+        <span class="terminal-title window-title">visitor@pedroffeitosa:~</span>
+        <div class="window-controls">
+          <button class="win-btn minimize" aria-label="Minimize terminal">_</button>
+          <button class="win-btn maximize" aria-label="Maximize terminal">□</button>
+          <button id="close-terminal" class="win-btn close terminal-close" aria-label="Close terminal">×</button>
+        </div>
       </div>
       <div id="terminal-output"></div>
       <div class="terminal-input-area">
@@ -701,6 +704,7 @@
             class="prompt-host">@pedroffeitosa</span>:~$</span>
         <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
       </div>
+      <div class="resize-handle"></div>
     </div>
   </div>
 
@@ -743,10 +747,14 @@
     </span>
   </button>
 
-  <div id="ai-chat-window">
-    <div class="chat-header">
-      <h3 data-i18n="ai_chat_title">João's AI Assistant</h3>
-      <button id="close-chat" aria-label="Close Chat">&times;</button>
+  <div id="ai-chat-window" class="window">
+    <div class="chat-header window-header">
+      <h3 data-i18n="ai_chat_title" class="window-title">João's AI Assistant</h3>
+      <div class="window-controls">
+        <button class="win-btn minimize" aria-label="Minimize chat">_</button>
+        <button class="win-btn maximize" aria-label="Maximize chat">□</button>
+        <button id="close-chat" class="win-btn close" aria-label="Close Chat">&times;</button>
+      </div>
     </div>
     <div id="chat-messages">
       <!-- Initial welcome message will be added via JS -->
@@ -767,6 +775,7 @@
         </svg>
       </button>
     </form>
+    <div class="resize-handle"></div>
   </div>
 
   <script src="script.js"></script>

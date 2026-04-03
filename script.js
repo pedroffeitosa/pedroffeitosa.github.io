@@ -519,31 +519,198 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
+    // --- Window Manager ---
+    class WindowManager {
+        constructor() {
+            this.windows = [];
+            this.activeWindow = null;
+            this.zIndexBase = 9000;
+            this.isDragging = false;
+            this.isResizing = false;
+        }
+
+        initWindow(elId) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+
+            const header = el.querySelector('.window-header');
+            const resizer = el.querySelector('.resize-handle');
+            const closeBtn = el.querySelector('.close');
+            const minimizeBtn = el.querySelector('.minimize');
+            const maximizeBtn = el.querySelector('.maximize');
+
+            this.windows.push(el);
+
+            // Bring to front on click
+            el.addEventListener('mousedown', () => this.bringToFront(el));
+
+            // Dragging
+            if (header) {
+                header.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('.window-controls')) return;
+                    if (window.innerWidth <= 600) return; // Disable drag on mobile
+                    this.startDrag(e, el);
+                });
+            }
+
+            // Resizing
+            if (resizer) {
+                resizer.addEventListener('mousedown', (e) => {
+                    if (window.innerWidth <= 600) return; // Disable resize on mobile
+                    this.startResize(e, el);
+                });
+            }
+
+            // Controls
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    el.style.display = 'none';
+                    if (elId === 'terminal-window') {
+                        document.getElementById('terminal-overlay').style.display = 'none';
+                    }
+                    if (typeof sound !== 'undefined') sound.playToggle();
+                });
+            }
+
+            if (maximizeBtn) {
+                maximizeBtn.addEventListener('click', () => {
+                    if (window.innerWidth <= 600) return;
+                    this.toggleMaximize(el);
+                    if (typeof sound !== 'undefined') sound.playToggle();
+                });
+            }
+
+            if (minimizeBtn) {
+                minimizeBtn.addEventListener('click', () => {
+                    el.style.display = 'none';
+                    if (typeof sound !== 'undefined') sound.playToggle();
+                });
+            }
+        }
+
+        bringToFront(el) {
+            if (this.activeWindow === el) return;
+            this.windows.forEach(w => w.classList.remove('focused'));
+            el.classList.add('focused');
+            this.activeWindow = el;
+            
+            this.zIndexBase += 2;
+            el.style.zIndex = this.zIndexBase;
+        }
+
+        startDrag(e, el) {
+            if (el.dataset.maximized === 'true') return;
+            this.isDragging = true;
+            this.bringToFront(el);
+
+            const startX = e.clientX;
+            const startY = e.clientY;
+            const startLeft = el.offsetLeft;
+            const startTop = el.offsetTop;
+
+            const onMouseMove = (e) => {
+                if (!this.isDragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                el.style.left = `${startLeft + dx}px`;
+                el.style.top = `${startTop + dy}px`;
+                el.style.right = 'auto';
+                el.style.bottom = 'auto';
+            };
+
+            const onMouseUp = () => {
+                this.isDragging = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        startResize(e, el) {
+            if (el.dataset.maximized === 'true') return;
+            this.isResizing = true;
+            this.bringToFront(el);
+            e.preventDefault();
+
+            const startWidth = el.offsetWidth;
+            const startHeight = el.offsetHeight;
+            const startX = e.clientX;
+            const startY = e.clientY;
+
+            const onMouseMove = (e) => {
+                if (!this.isResizing) return;
+                const dw = e.clientX - startX;
+                const dh = e.clientY - startY;
+                el.style.width = `${startWidth + dw}px`;
+                el.style.height = `${startHeight + dh}px`;
+            };
+
+            const onMouseUp = () => {
+                this.isResizing = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            };
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        }
+
+        toggleMaximize(el) {
+            if (el.dataset.maximized === 'true') {
+                el.style.top = el.dataset.prevTop || '100px';
+                el.style.left = el.dataset.prevLeft || '50px';
+                el.style.width = el.dataset.prevWidth || '600px';
+                el.style.height = el.dataset.prevHeight || '400px';
+                el.dataset.maximized = 'false';
+            } else {
+                el.dataset.prevTop = el.style.top;
+                el.dataset.prevLeft = el.style.left;
+                el.dataset.prevWidth = el.style.width;
+                el.dataset.prevHeight = el.style.height;
+                
+                el.style.top = '0';
+                el.style.left = '0';
+                el.style.width = '100vw';
+                el.style.height = '100vh';
+                el.dataset.maximized = 'true';
+            }
+        }
+    }
+
+    const winMgr = new WindowManager();
+    winMgr.initWindow('terminal-window');
+    winMgr.initWindow('ai-chat-window');
+
     const terminalOverlay = document.getElementById('terminal-overlay');
+    const terminalWindow = document.getElementById('terminal-window');
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
-    const closeTerminalBtn = document.getElementById('close-terminal');
 
     const toggleTerminal = (show) => {
-        if (!terminalOverlay) return;
-        const shouldShow = (typeof show === 'boolean') ? show : (terminalOverlay.style.display !== 'flex');
-        terminalOverlay.style.display = shouldShow ? 'flex' : 'none';
+        if (!terminalOverlay || !terminalWindow) return;
+        const shouldShow = (typeof show === 'boolean') ? show : (terminalWindow.style.display !== 'flex');
+        
+        terminalOverlay.style.display = shouldShow ? 'block' : 'none';
+        terminalWindow.style.display = shouldShow ? 'flex' : 'none';
+
         if (shouldShow) {
+            winMgr.bringToFront(terminalWindow);
             terminalInput.value = '';
             terminalInput.focus();
             
-            // Show a random fortune on open
-            const quote = getFortune();
-            const logEntry = document.createElement('div');
-            logEntry.className = 'cmd-logs';
-            logEntry.innerHTML = `<div class="cmd-response"><i>${quote}</i></div>`;
-            terminalOutput.appendChild(logEntry);
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            // Show a random fortune on open if output is empty
+            if (terminalOutput.children.length === 0) {
+                const quote = getFortune();
+                const logEntry = document.createElement('div');
+                logEntry.className = 'cmd-logs';
+                logEntry.innerHTML = `<div class="cmd-response"><i>${quote}</i></div>`;
+                terminalOutput.appendChild(logEntry);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
         }
     };
-
-    if (closeTerminalBtn) closeTerminalBtn.addEventListener('click', () => toggleTerminal(false));
-    if (terminalOverlay) terminalOverlay.addEventListener('click', (e) => { if (e.target === terminalOverlay) toggleTerminal(false); });
 
     document.addEventListener('keydown', (e) => {
         const key = e.key.toLowerCase();
@@ -916,7 +1083,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     fetchLichessRating();
-});
 
 // --- PWA Install Logic ---
 let deferredPrompt;
@@ -1057,6 +1223,7 @@ const AIChat = {
             const isOpening = windowEl.style.display !== 'flex';
             windowEl.style.display = isOpening ? 'flex' : 'none';
             if (isOpening) {
+                winMgr.bringToFront(windowEl);
                 if (messagesContainer.children.length === 0) {
                     const welcome = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].ai_chat_welcome : "Hi!";
                     addMessage(welcome, 'bot');
@@ -1087,3 +1254,4 @@ const AIChat = {
 
 // Initialize the Chatbot
 AIChat.init();
+});

@@ -683,32 +683,108 @@ a:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
+  background: transparent;
+  z-index: 9000;
+  display: none;
+  pointer-events: none; /* Let clicks pass through when not interacting with windows */
+}
+
+#terminal-overlay.active {
+  display: block;
+}
+
+.window {
+  position: fixed;
+  background: var(--bg-main, #f0f0f0);
+  border: 2px solid var(--border-main, #c0c0c0);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto; /* Enable clicks on the window itself */
+  min-width: 280px;
+  min-height: 200px;
+}
+
+.window.focused {
+  z-index: 9500;
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
+}
+
+.window-header {
+  background: var(--border-main, #c0c0c0);
+  color: var(--color-main, #000);
+  padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+  user-select: none;
+  border-bottom: 1px solid var(--section-border, #999);
+}
+
+.window-header:active {
+  cursor: grabbing;
+}
+
+.window-title {
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.window-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.win-btn {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #888;
+  background: #eee;
+  color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(2px);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.win-btn:hover {
+  background: #fff;
+}
+
+.win-btn.close:hover {
+  background: #ff5f56;
+  color: #fff;
+}
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  background: linear-gradient(135deg, transparent 50%, var(--section-border) 50%, var(--section-border) 65%, transparent 65%, transparent 80%, var(--section-border) 80%);
+  z-index: 10;
 }
 
 .terminal-window {
-  width: 90%;
-  /* Responsive default */
-  max-width: 800px;
-  height: 60vh;
-  background-color: #0c0c0c;
-  /* Deep black */
-  border: 1px solid #333;
-  border-radius: 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 15px;
+  width: 600px;
+  height: 400px;
+  top: 100px;
+  left: 50px;
+  background-color: #0c0c0c !important;
+  border-color: #333 !important;
   color: #0f0;
-  /* Retro Green */
-  overflow: hidden;
-  animation: slideIn 0.3s ease-out forwards;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 @media (max-width: 600px) {
@@ -745,33 +821,13 @@ a:hover {
 }
 
 .terminal-header {
-  background: #1a1a1a;
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #333;
-  user-select: none;
+  background: #1a1a1a !important;
+  color: #ccc !important;
+  border-bottom: 1px solid #333 !important;
 }
 
-.terminal-title {
-  font-size: 13px;
-  color: #ccc;
-}
-
-#close-terminal {
-  background: none;
-  border: none;
+.terminal-close {
   color: #ff5f56;
-  /* Mac-like red close button color */
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 4px;
-}
-
-#close-terminal:hover {
-  color: #ff3b30;
 }
 
 #terminal-output {
@@ -1132,26 +1188,12 @@ a:hover {
 
 
 #ai-chat-window {
-  position: fixed;
-  bottom: 90px;
-  right: 28px;
+  top: 150px;
+  left: 450px;
   width: 380px;
-  max-width: 90vw;
   height: 520px;
-  max-height: 70vh;
-  background: var(--bg-main, #fff);
-  border: 2px solid var(--border-main, #ccc);
   display: none;
-  flex-direction: column;
-  z-index: 3000;
-  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  animation: chatPop 0.2s ease-out;
-}
-
-@keyframes chatPop {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  z-index: 9000;
 }
 
 
