@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const pageLoadTime = Date.now();
+
     // --- Sound Engine ---
     class SoundEngine {
         constructor() {
@@ -742,6 +744,189 @@ document.addEventListener("DOMContentLoaded", () => {
         contactFlow.data = { name: '', email: '', message: '' };
     };
 
+    const startSnake = () => {
+        const existing = document.getElementById('snake-overlay');
+        if (existing) existing.remove();
+
+        const CELL = 20, COLS = 20, ROWS = 20;
+        const W = COLS * CELL, H = ROWS * CELL;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'snake-overlay';
+        overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+
+        const titleEl = document.createElement('div');
+        titleEl.style.cssText = 'color:#27c93f;font-family:monospace;font-size:18px;font-weight:bold;margin-bottom:8px;letter-spacing:3px;';
+        titleEl.textContent = 'S N A K E';
+
+        const scoreEl = document.createElement('div');
+        scoreEl.style.cssText = 'color:#0f0;font-family:monospace;font-size:13px;margin-bottom:8px;';
+        scoreEl.textContent = 'Score: 0';
+
+        const canvas = document.createElement('canvas');
+        canvas.width = W;
+        canvas.height = H;
+        canvas.style.cssText = 'border:2px solid #27c93f;box-shadow:0 0 20px rgba(39,201,63,0.3);';
+
+        const hintEl = document.createElement('div');
+        hintEl.style.cssText = 'color:#444;font-family:monospace;font-size:11px;margin-top:8px;';
+        hintEl.textContent = '↑ ↓ ← →  move  |  Q / Esc  quit';
+
+        overlay.appendChild(titleEl);
+        overlay.appendChild(scoreEl);
+        overlay.appendChild(canvas);
+        overlay.appendChild(hintEl);
+        document.body.appendChild(overlay);
+
+        const ctx = canvas.getContext('2d');
+        let snake, dir, nextDir, food, score, gameOver, started, loop;
+
+        const spawnFood = () => {
+            let pos;
+            do { pos = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) }; }
+            while (snake.some(s => s.x === pos.x && s.y === pos.y));
+            return pos;
+        };
+
+        const init = () => {
+            snake = [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }];
+            dir = { x: 1, y: 0 };
+            nextDir = { x: 1, y: 0 };
+            food = spawnFood();
+            score = 0;
+            gameOver = false;
+            started = false;
+        };
+
+        const update = () => {
+            if (!started || gameOver) return;
+            dir = nextDir;
+            const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+            if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS || snake.some(s => s.x === head.x && s.y === head.y)) {
+                gameOver = true;
+                const hs = Math.max(score, parseInt(localStorage.getItem('snakeHighScore') || '0'));
+                localStorage.setItem('snakeHighScore', hs);
+                sound.playError();
+                draw();
+                return;
+            }
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                score++;
+                food = spawnFood();
+                sound.playBeep();
+            } else {
+                snake.pop();
+            }
+            const hs = parseInt(localStorage.getItem('snakeHighScore') || '0');
+            scoreEl.textContent = `Score: ${score}  |  Best: ${Math.max(score, hs)}`;
+            draw();
+        };
+
+        const draw = () => {
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, W, H);
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 0.5;
+            for (let x = 0; x <= COLS; x++) { ctx.beginPath(); ctx.moveTo(x * CELL, 0); ctx.lineTo(x * CELL, H); ctx.stroke(); }
+            for (let y = 0; y <= ROWS; y++) { ctx.beginPath(); ctx.moveTo(0, y * CELL); ctx.lineTo(W, y * CELL); ctx.stroke(); }
+
+            ctx.fillStyle = '#ff4444';
+            ctx.shadowColor = '#ff4444';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, CELL / 2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            snake.forEach((s, i) => {
+                const ratio = i / Math.max(snake.length - 1, 1);
+                ctx.fillStyle = i === 0 ? '#00ff41' : `hsl(120, 100%, ${50 - ratio * 20}%)`;
+                ctx.shadowColor = i < 3 ? '#00ff41' : 'transparent';
+                ctx.shadowBlur = i < 3 ? 6 : 0;
+                ctx.fillRect(s.x * CELL + 1, s.y * CELL + 1, CELL - 2, CELL - 2);
+            });
+            ctx.shadowBlur = 0;
+
+            if (!started) {
+                ctx.fillStyle = 'rgba(0,0,0,0.55)';
+                ctx.fillRect(0, 0, W, H);
+                ctx.fillStyle = '#27c93f';
+                ctx.font = 'bold 15px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('Press any arrow key to start', W / 2, H / 2);
+            }
+
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0,0,0,0.75)';
+                ctx.fillRect(0, 0, W, H);
+                ctx.fillStyle = '#ff4444';
+                ctx.font = 'bold 22px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('GAME OVER', W / 2, H / 2 - 28);
+                ctx.fillStyle = '#27c93f';
+                ctx.font = '14px monospace';
+                ctx.fillText(`Score: ${score}`, W / 2, H / 2 + 2);
+                const hs = parseInt(localStorage.getItem('snakeHighScore') || '0');
+                if (score > 0 && score >= hs) {
+                    ctx.fillStyle = '#ffbd2e';
+                    ctx.font = '13px monospace';
+                    ctx.fillText('New High Score!', W / 2, H / 2 + 24);
+                }
+                ctx.fillStyle = '#555';
+                ctx.font = '11px monospace';
+                ctx.fillText('Arrow key to restart  |  Q / Esc to quit', W / 2, H / 2 + 52);
+            }
+        };
+
+        const quit = () => {
+            if (loop) clearInterval(loop);
+            document.removeEventListener('keydown', snakeKeyHandler);
+            overlay.remove();
+        };
+
+        const snakeKeyHandler = (e) => {
+            const key = e.key;
+            if (key === 'q' || key === 'Q' || key === 'Escape') { quit(); return; }
+            if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(key)) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!started || gameOver) {
+                if (loop) clearInterval(loop);
+                init();
+                started = true;
+                loop = setInterval(update, 130);
+                return;
+            }
+
+            if (key === 'ArrowUp' && dir.y !== 1) nextDir = { x: 0, y: -1 };
+            else if (key === 'ArrowDown' && dir.y !== -1) nextDir = { x: 0, y: 1 };
+            else if (key === 'ArrowLeft' && dir.x !== 1) nextDir = { x: -1, y: 0 };
+            else if (key === 'ArrowRight' && dir.x !== -1) nextDir = { x: 1, y: 0 };
+        };
+
+        document.addEventListener('keydown', snakeKeyHandler);
+
+        let touchStartX, touchStartY;
+        canvas.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; });
+        canvas.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (!started || gameOver) { if (loop) clearInterval(loop); init(); started = true; loop = setInterval(update, 130); return; }
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 20 && dir.x !== -1) nextDir = { x: 1, y: 0 };
+                else if (dx < -20 && dir.x !== 1) nextDir = { x: -1, y: 0 };
+            } else {
+                if (dy > 20 && dir.y !== -1) nextDir = { x: 0, y: 1 };
+                else if (dy < -20 && dir.y !== 1) nextDir = { x: 0, y: -1 };
+            }
+        });
+
+        init();
+        draw();
+    };
+
     const commands = {
         help: {
             desc: 'List available commands',
@@ -820,11 +1005,49 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         neofetch: {
-            desc: 'Display system information summary',
+            desc: 'Display system information',
             exec: () => {
-                const role = translations[currentLang]?.role_main || "Software Engineer";
-                const langLine = currentLang === 'pt' ? 'Língua: Português' : 'Language: English';
-                return `<pre style="color: var(--link); line-height: 1.2; font-size: 11px;">\n       .---.\n      /     \\\n      |() ()|   <b>João Pedro Feitosa</b>\n       \\  ^  /    -------------------\n        |||||     <b>OS</b>: PortfolioOS v2.0\n        |||||     <b>Role</b>: ${role}\n                  <b>Stack</b>: React, TS, Node, AI\n                  <b>${langLine}</b>\n                  <b>Location</b>: Brazil (Remote)\n</pre>`.trim();
+                const theme = document.documentElement.getAttribute('data-theme') || 'light';
+                const uptimeSec = Math.floor((Date.now() - pageLoadTime) / 1000);
+                const uptimeStr = uptimeSec < 60 ? `${uptimeSec}s` : `${Math.floor(uptimeSec / 60)}m ${uptimeSec % 60}s`;
+                const ua = navigator.userAgent;
+                const browser = ua.includes('Firefox') ? 'Firefox' : ua.includes('Edg') ? 'Edge' : ua.includes('Chrome') ? 'Chrome' : ua.includes('Safari') ? 'Safari' : 'Unknown';
+                const resolution = `${window.screen.width}x${window.screen.height}`;
+                const lbl = 'color:var(--link);font-weight:bold;';
+                const palette = ['#ff5f56','#ffbd2e','#27c93f','#2196f3','#9c27b0','#ff9800','#00bcd4','#607d8b'];
+                const blocks = palette.map(c => `<span style="background:${c};color:${c};border-radius:2px;"> ██ </span>`).join('');
+
+                const artLines = [
+                    '     .------.',
+                    '    / o    o \\',
+                    '   |   \\__/  |',
+                    '    \\        /',
+                    "     '------'",
+                    '     |      |',
+                    '    /        \\',
+                ].join('\n');
+
+                const infoLines = [
+                    `<span style="${lbl}">visitor</span>@<span style="${lbl}">pedroffeitosa</span>`,
+                    '─────────────────────────────',
+                    `<span style="${lbl}">OS</span>:         PortfolioOS v2.0`,
+                    `<span style="${lbl}">Host</span>:       pedroffeitosa.github.io`,
+                    `<span style="${lbl}">Uptime</span>:     ${uptimeStr}`,
+                    `<span style="${lbl}">Theme</span>:      ${theme}`,
+                    `<span style="${lbl}">Language</span>:   ${currentLang === 'pt' ? 'Português' : 'English'}`,
+                    `<span style="${lbl}">Browser</span>:    ${browser}`,
+                    `<span style="${lbl}">Resolution</span>: ${resolution}`,
+                    `<span style="${lbl}">Stack</span>:      React · TS · Node · AI`,
+                    '',
+                    blocks,
+                ].join('\n');
+
+                return [
+                    '<div style="display:flex;gap:20px;align-items:flex-start;font-size:12px;">',
+                    `<pre style="color:#27c93f;line-height:1.6;margin:0;">${artLines}</pre>`,
+                    `<div style="white-space:pre-wrap;line-height:1.6;">${infoLines}</div>`,
+                    '</div>'
+                ].join('');
             }
         },
         ask: {
@@ -842,6 +1065,17 @@ document.addEventListener("DOMContentLoaded", () => {
         fortune: {
             desc: 'Display a random technical quote or easter egg',
             exec: () => `<i>${getFortune()}</i>`
+        },
+        snake: {
+            desc: 'Play Snake game (arrow keys to move, Q/Esc to quit)',
+            exec: () => { startSnake(); return null; }
+        },
+        history: {
+            desc: 'Show command history',
+            exec: () => {
+                if (commandHistory.length === 0) return currentLang === 'pt' ? 'Nenhum comando no histórico.' : 'No commands in history.';
+                return commandHistory.map((cmd, i) => `  ${String(i + 1).padStart(3)}  ${cmd}`).join('\n');
+            }
         }
     };
 
@@ -975,6 +1209,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         historyIndex = -1;
                         terminalInput.value = tempDraft;
                     }
+                }
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                const partial = terminalInput.value.split(' ')[0].toLowerCase();
+                if (!partial) return;
+                const matches = Object.keys(commands).filter(cmd => cmd.startsWith(partial));
+                if (matches.length === 1) {
+                    terminalInput.value = matches[0];
+                } else if (matches.length > 1) {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'cmd-logs';
+                    const respLine = document.createElement('div');
+                    respLine.className = 'cmd-response';
+                    respLine.textContent = matches.join('   ');
+                    logEntry.appendChild(respLine);
+                    terminalOutput.appendChild(logEntry);
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
                 }
             }
         });
