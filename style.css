@@ -1378,7 +1378,18 @@ a:hover {
 
 /* --- Custom Cursor (pointer devices only) --- */
 @media (pointer: fine) {
-  * { cursor: none !important; }
+  [data-cursor="fancy"] * { cursor: none !important; }
+  [data-cursor="crosshair"] * { cursor: crosshair !important; }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+
+  [data-cursor="fancy"] .cursor-dot,
+  [data-cursor="fancy"] .cursor-ring {
+    display: block;
+  }
 
   .cursor-dot {
     position: fixed;

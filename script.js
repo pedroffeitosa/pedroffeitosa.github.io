@@ -995,6 +995,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         },
         themes: { desc: 'List available themes', exec: () => 'Available themes: light, dark, matrix, cyberpunk, amber' },
+        cursor: {
+            desc: 'Set cursor style: default, crosshair, fancy',
+            exec: (args) => {
+                if (!window.matchMedia('(pointer: fine)').matches)
+                    return currentLang === 'pt' ? 'Cursor customizado não disponível em dispositivos touch.' : 'Custom cursor not available on touch devices.';
+                const modes = ['default', 'crosshair', 'fancy'];
+                const current = document.documentElement.getAttribute('data-cursor') || 'default';
+                if (!args || args.length === 0)
+                    return `${currentLang === 'pt' ? 'Cursor atual' : 'Current'}: <b>${current}</b>\n${currentLang === 'pt' ? 'Disponíveis' : 'Available'}: ${modes.join(', ')}\nUsage: cursor &lt;mode&gt;`;
+                const mode = args[0].toLowerCase();
+                if (!modes.includes(mode)) return `Invalid mode. Try: ${modes.join(', ')}`;
+                document.documentElement.setAttribute('data-cursor', mode);
+                localStorage.setItem('cursorMode', mode);
+                sound.playToggle();
+                return `Cursor set to: <b>${mode}</b>`;
+            }
+        },
         cat: {
             desc: 'Spawn a cat walker',
             exec: () => {
@@ -1540,6 +1557,9 @@ if (window.matchMedia('(pointer: fine)').matches) {
     };
 
     addCursorHover('a, button, [role="button"], .stack-item, .lang-option, .exp-toggle-btn');
+
+    const savedCursor = localStorage.getItem('cursorMode') || 'default';
+    document.documentElement.setAttribute('data-cursor', savedCursor);
 }
 
 // Initialize the Chatbot
