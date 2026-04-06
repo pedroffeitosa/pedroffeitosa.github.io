@@ -1503,6 +1503,45 @@ const AIChat = {
     }
 };
 
+// --- Custom Cursor ---
+if (window.matchMedia('(pointer: fine)').matches) {
+    const curDot = document.createElement('div');
+    curDot.className = 'cursor-dot';
+    const curRing = document.createElement('div');
+    curRing.className = 'cursor-ring';
+    document.body.appendChild(curDot);
+    document.body.appendChild(curRing);
+
+    let mx = -100, my = -100, rx = -100, ry = -100;
+
+    document.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        curDot.style.left = mx + 'px';
+        curDot.style.top = my + 'px';
+    });
+
+    (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        curRing.style.left = rx + 'px';
+        curRing.style.top = ry + 'px';
+        requestAnimationFrame(animRing);
+    })();
+
+    document.addEventListener('mouseleave', () => { curDot.classList.add('cur-hidden'); curRing.classList.add('cur-hidden'); });
+    document.addEventListener('mouseenter', () => { curDot.classList.remove('cur-hidden'); curRing.classList.remove('cur-hidden'); });
+
+    const addCursorHover = (selector) => {
+        document.querySelectorAll(selector).forEach(el => {
+            el.addEventListener('mouseenter', () => { curDot.classList.add('cur-hover'); curRing.classList.add('cur-hover'); });
+            el.addEventListener('mouseleave', () => { curDot.classList.remove('cur-hover'); curRing.classList.remove('cur-hover'); });
+        });
+    };
+
+    addCursorHover('a, button, [role="button"], .stack-item, .lang-option, .exp-toggle-btn');
+}
+
 // Initialize the Chatbot
 AIChat.init();
 });
