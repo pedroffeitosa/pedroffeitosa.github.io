@@ -514,9 +514,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeShortcutModal) closeShortcutModal.addEventListener('click', () => toggleModal(false));
 
     const scrollBtn = document.getElementById("scroll-top-btn");
+    const scrollProgress = document.getElementById("scroll-progress");
     window.addEventListener("scroll", () => {
-        if (!scrollBtn) return;
-        scrollBtn.style.display = window.scrollY > 180 ? "flex" : "none";
+        if (scrollBtn) scrollBtn.style.display = window.scrollY > 180 ? "flex" : "none";
+        if (scrollProgress) {
+            const total = document.documentElement.scrollHeight - window.innerHeight;
+            scrollProgress.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0%';
+        }
     });
 
     if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));

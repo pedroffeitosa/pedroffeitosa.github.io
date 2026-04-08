@@ -56,6 +56,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* --- Scroll Progress Bar --- */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--link);
+  z-index: 9999;
+  transition: background 0.3s;
+}
+
 body {
   /* Monospace font is key to the Notepad look */
   font-family: "Consolas", "Courier New", monospace;
