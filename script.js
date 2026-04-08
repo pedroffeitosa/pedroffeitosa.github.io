@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnEn = document.getElementById("btn-en");
     const btnPt = document.getElementById("btn-pt");
     let currentLang = localStorage.getItem("lang") || (navigator.language.startsWith("pt") ? "pt" : "en");
+    let roleFirstLoad = true;
 
     const translations = {
         en: {
@@ -401,6 +402,28 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 btnEn.classList.remove("active");
                 btnPt.classList.add("active");
+            }
+        }
+
+        const roleEl = document.getElementById('role-text');
+        if (roleEl && typeof translations[lang] !== 'undefined') {
+            const fullText = translations[lang].role_main;
+            if (fullText) {
+                const delay = roleFirstLoad ? 400 : 0;
+                roleFirstLoad = false;
+                roleEl.classList.remove('typing-cursor');
+                roleEl.textContent = '';
+                roleEl.classList.add('typing-cursor');
+                let i = 0;
+                const type = () => {
+                    if (i < fullText.length) {
+                        roleEl.textContent += fullText[i++];
+                        setTimeout(type, 40 + Math.random() * 30);
+                    } else {
+                        setTimeout(() => roleEl.classList.remove('typing-cursor'), 1200);
+                    }
+                };
+                setTimeout(type, delay);
             }
         }
     };

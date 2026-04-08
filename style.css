@@ -56,6 +56,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* --- Typing Effect Cursor --- */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.typing-cursor::after {
+  content: '▋';
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.8s step-end infinite;
+  color: var(--link);
+}
+
 /* --- Scroll Progress Bar --- */
 #scroll-progress {
   position: fixed;
