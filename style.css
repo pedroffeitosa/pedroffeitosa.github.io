@@ -696,10 +696,39 @@ a:hover {
 
 .exp-details.open {
   max-height: 500px;
-  /* Arbitrary large height */
   opacity: 1;
   transform: translateY(0);
   margin-top: 10px;
+}
+
+@keyframes expItemIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.exp-details li {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.exp-details.open li {
+  animation: expItemIn 0.28s ease forwards;
+}
+
+.exp-details.open li:nth-child(1) { animation-delay: 0.12s; }
+.exp-details.open li:nth-child(2) { animation-delay: 0.20s; }
+.exp-details.open li:nth-child(3) { animation-delay: 0.28s; }
+.exp-details.open li:nth-child(4) { animation-delay: 0.36s; }
+.exp-details.open li:nth-child(5) { animation-delay: 0.44s; }
+
+.exp-toggle-btn {
+  transition: background 0.2s, color 0.2s, border-color 0.2s !important;
+}
+
+.exp-toggle-btn[aria-expanded="true"] {
+  background: var(--link) !important;
+  color: var(--bg-main) !important;
+  border-color: var(--link) !important;
 }
 
 /* --- Terminal Overlay Styles --- */
