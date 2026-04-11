@@ -717,6 +717,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const terminalInput = document.getElementById('terminal-input');
     const terminalOutput = document.getElementById('terminal-output');
 
+    const getTerminalTime = () => {
+        const now = new Date();
+        return `[${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}]`;
+    };
+
+    const terminalTimeEl = document.getElementById('terminal-time');
+    if (terminalTimeEl) {
+        terminalTimeEl.textContent = getTerminalTime();
+        setInterval(() => { terminalTimeEl.textContent = getTerminalTime(); }, 60000);
+    }
+
     const toggleTerminal = (show) => {
         if (!terminalOverlay || !terminalWindow) return;
         const shouldShow = (typeof show === 'boolean') ? show : (terminalWindow.style.display !== 'flex');
@@ -1148,7 +1159,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logEntry.className = 'cmd-logs';
         const cmdLine = document.createElement('div');
         cmdLine.className = 'cmd-command';
-        cmdLine.innerHTML = `<span class="prompt"><span class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$ </span><span>${trimmed}</span>`;
+        cmdLine.innerHTML = `<span class="prompt"><span class="prompt-time">${getTerminalTime()}</span><span class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$ </span><span>${trimmed}</span>`;
         logEntry.appendChild(cmdLine);
         if (commands[cmdName]) {
             const response = commands[cmdName].exec(parts.slice(1));

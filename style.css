@@ -944,6 +944,12 @@ a:hover {
   font-weight: bold;
 }
 
+.prompt-time {
+  color: #888;
+  font-weight: normal;
+  margin-right: 6px;
+}
+
 #terminal-input {
   flex: 1;
   background: transparent;
