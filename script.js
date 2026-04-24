@@ -1171,11 +1171,68 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             sound.playBeep();
         } else {
-            const errorLine = document.createElement('div');
-            errorLine.className = 'cmd-response cmd-error';
-            errorLine.textContent = `Command not found: ${cmdName}. Type 'help' for options.`;
-            logEntry.appendChild(errorLine);
-            sound.playError();
+            const easterEggs = {
+                sudo:     () => 'Permission denied. Nice try. 😏',
+                vim:      () => 'Opening vim...\n\nJust kidding. You\'d never get out.',
+                nano:     () => 'nano is fine. But have you tried vim?\n(No cursor movement. You have been warned.)',
+                emacs:    () => 'An operating system disguised as a text editor.',
+                ls:       () => 'drwxr-xr-x  curiosity/\ndrwxr-xr-x  ambition/\n-rw-r--r--  coffee.txt\n-rw-r--r--  bugs_to_fix.log\n-rw-r--r--  .hidden_dreams',
+                pwd:      () => '/home/visitor/pedroffeitosa.github.io',
+                cd:       () => 'There are no directories here. Just vibes.',
+                ping:     (a) => `PING ${a[0] || 'unknown'}: Request timeout. (He's probably coding.)`,
+                python:   () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
+                python3:  () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
+                node:     () => 'Welcome to Node.js v22.0.0\n> ',
+                make:     () => "make: target 'me a sandwich' not found.",
+                top:      () => 'PID   USER     CPU%  CMD\n  1   visitor   99%  overthinking\n  2   visitor    1%  working',
+                uptime:   () => { const s = Math.floor((Date.now() - pageLoadTime) / 1000); return `up ${s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'} — no crashes yet.`; },
+                reboot:   () => 'Rebooting... just kidding. Refresh the page yourself.',
+                shutdown: () => 'Shutdown aborted: too much left to build.',
+                docker:   () => 'Error: Cannot connect to the Docker daemon.\n(There is no Docker here. Only HTML and dreams.)',
+                npm:      (a) => a[0] === 'install' ? 'added 847 packages, 23 vulnerabilities found.\nRun `npm audit fix` to pretend you fixed them.' : 'npm: command not found in this dimension.',
+                yarn:     (a) => a[0] === 'add' ? `[1/4] Resolving packages...\n[2/4] Fetching packages...\n[3/4] Linking dependencies...\n[4/4] Building fresh packages... done.` : 'yarn: command not found in this dimension.',
+                ssh:      (a) => `ssh: connect to host ${a[0] || 'localhost'} port 22: Connection refused.`,
+                curl:     () => 'curl: (7) Failed to connect: no personality found at endpoint.',
+                wget:     () => 'Downloading talent... ████████████ 100%\nInstalling... failed. Not enough RAM.',
+                grep:     () => 'No patterns found (or maybe you\'re the pattern).',
+                ps:       () => 'PID  CMD\n  1  dreams\n  2  ambition\n  3  caffeine.service',
+                touch:    (a) => a[0] ? `touched ${a[0]}. It blushed.` : 'Usage: touch <file>',
+                mv:       () => 'Cannot move things. Everything is where it belongs.',
+                cp:       () => 'Cannot copy. This portfolio is one of a kind.',
+                man:      (a) => a[0] ? `No manual entry for ${a[0]}. Have you tried Stack Overflow?` : 'What manual? Just wing it.',
+                kill:     () => 'kill: no process to kill. Your vibe is fine.',
+                chmod:    () => 'chmod: permission already perfect.',
+                brew:     () => 'brew: installing dependencies... just kidding, this is a browser.',
+                code:     () => 'Opening VS Code... (please stand by, 47 extensions loading)',
+            };
+
+            let eggResponse = null;
+            if (cmdName === 'rm' && parts.includes('-rf')) {
+                eggResponse = '💥 Filesystem obliterated. Just kidding. Everything is fine.';
+            } else if (cmdName === 'git') {
+                const sub = parts[1];
+                if (sub === 'blame') eggResponse = "It was me. It's always me. Sorry.";
+                else if (sub === 'commit') eggResponse = '[main 1a2b3c4] "fix: final fix for real this time (again)"';
+                else if (sub === 'push' && parts.includes('--force')) eggResponse = '⚠️  force push to main? Bold. Brave. Wrong.';
+                else if (sub === 'status') eggResponse = 'On branch main\nYour branch is ahead of origin/main by ∞ commits.\n\nnothing to commit, portfolio is clean.';
+                else eggResponse = "fatal: not a git repository (or the commits are vibes)";
+            } else if (easterEggs[cmdName]) {
+                eggResponse = easterEggs[cmdName](parts.slice(1));
+            }
+
+            if (eggResponse !== null) {
+                const respLine = document.createElement('div');
+                respLine.className = 'cmd-response';
+                respLine.innerHTML = eggResponse.replace(/\n/g, '<br>');
+                logEntry.appendChild(respLine);
+                sound.playBeep();
+            } else {
+                const errorLine = document.createElement('div');
+                errorLine.className = 'cmd-response cmd-error';
+                errorLine.textContent = `Command not found: ${cmdName}. Type 'help' for options.`;
+                logEntry.appendChild(errorLine);
+                sound.playError();
+            }
         }
         terminalOutput.appendChild(logEntry);
         terminalOutput.scrollTop = terminalOutput.scrollHeight;
