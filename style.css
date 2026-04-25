@@ -82,6 +82,64 @@ html {
   transition: background 0.3s;
 }
 
+/* --- Section Dot Nav --- */
+#section-nav {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 800;
+}
+
+.section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-main);
+  border: none;
+  display: block;
+  position: relative;
+  transition: background 0.25s, transform 0.25s;
+  opacity: 0.5;
+}
+
+.section-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  font-family: inherit;
+  color: var(--color-main);
+  background: var(--bg-main);
+  border: 1px solid var(--border-main);
+  padding: 2px 7px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+}
+
+.section-dot:hover::after,
+.section-dot.active::after {
+  opacity: 1;
+}
+
+.section-dot:hover,
+.section-dot.active {
+  background: var(--link);
+  opacity: 1;
+  transform: scale(1.35);
+}
+
+@media (max-width: 640px) {
+  #section-nav { display: none; }
+}
+
 body {
   /* Monospace font is key to the Notepad look */
   font-family: "Consolas", "Courier New", monospace;

@@ -548,6 +548,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
+    // --- Section Dot Nav ---
+    const sectionDots = document.querySelectorAll('.section-dot');
+    if (sectionDots.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const dot = document.querySelector(`.section-dot[href="#${entry.target.id}"]`);
+                if (dot) dot.classList.toggle('active', entry.isIntersecting);
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.section[id]').forEach(section => observer.observe(section));
+
+        sectionDots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(dot.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    }
+
     // --- Window Manager ---
     class WindowManager {
         constructor() {

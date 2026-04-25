@@ -30,6 +30,13 @@
 
 <body>
   <div id="scroll-progress"></div>
+  <nav id="section-nav" aria-label="Page sections">
+    <a href="#career"     class="section-dot" data-label="Career"     aria-label="Go to Career"></a>
+    <a href="#stack"      class="section-dot" data-label="Stack"      aria-label="Go to Stack"></a>
+    <a href="#experience" class="section-dot" data-label="Experience" aria-label="Go to Experience"></a>
+    <a href="#projects"   class="section-dot" data-label="Projects"   aria-label="Go to Projects"></a>
+    <a href="#connect"    class="section-dot" data-label="Connect"    aria-label="Go to Connect"></a>
+  </nav>
   <div class="container">
     <div class="header-container">
       <!-- Row 1: Name and Controls -->
@@ -131,7 +138,7 @@
 
 
 
-    <div class="section">
+    <div class="section" id="career">
       <h2 data-i18n="career_title">// Career</h2>
       <p data-i18n="career_text">
         Software Engineer with extensive experience in high-performance
@@ -140,7 +147,7 @@
       </p>
     </div>
 
-    <div class="section">
+    <div class="section" id="stack">
       <h2 data-i18n="stack_title">// Main Stack & Expertise</h2>
       <div>
         <span class="stack-item" data-tooltip="5+ years · Main frontend framework">React</span>
@@ -151,7 +158,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="experience">
       <h2 data-i18n="experience_title">// Experience</h2>
       <div>
         <!-- Revelo -->
@@ -512,7 +519,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="projects">
       <h2 data-i18n="projects_title">// Featured Projects</h2>
 
       <h3 data-i18n="proj_ameo_title">1. AmeoPet - Pet Care Management</h3>
@@ -537,7 +544,7 @@
       </p>
     </div>
 
-    <div class="section">
+    <div class="section" id="connect">
       <h2 data-i18n="connect_title">// Connect & Status</h2>
       <p>
         <strong data-i18n="connect_current">Currently at:</strong>
