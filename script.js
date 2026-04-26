@@ -1253,6 +1253,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 errorLine.textContent = `Command not found: ${cmdName}. Type 'help' for options.`;
                 logEntry.appendChild(errorLine);
                 sound.playError();
+                const termWin = document.querySelector('.terminal-window');
+                if (termWin) {
+                    termWin.classList.add('shake');
+                    termWin.addEventListener('animationend', () => termWin.classList.remove('shake'), { once: true });
+                }
             }
         }
         terminalOutput.appendChild(logEntry);
