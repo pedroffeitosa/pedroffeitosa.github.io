@@ -58,8 +58,15 @@ html {
 
 /* --- Typing Effect Cursor --- */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 .typing-cursor::after {
@@ -137,7 +144,9 @@ html {
 }
 
 @media (max-width: 640px) {
-  #section-nav { display: none; }
+  #section-nav {
+    display: none;
+  }
 }
 
 body {
@@ -784,8 +793,15 @@ a:hover {
 }
 
 @keyframes expItemIn {
-  from { opacity: 0; transform: translateX(-8px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .exp-details li {
@@ -797,11 +813,25 @@ a:hover {
   animation: expItemIn 0.28s ease forwards;
 }
 
-.exp-details.open li:nth-child(1) { animation-delay: 0.12s; }
-.exp-details.open li:nth-child(2) { animation-delay: 0.20s; }
-.exp-details.open li:nth-child(3) { animation-delay: 0.28s; }
-.exp-details.open li:nth-child(4) { animation-delay: 0.36s; }
-.exp-details.open li:nth-child(5) { animation-delay: 0.44s; }
+.exp-details.open li:nth-child(1) {
+  animation-delay: 0.12s;
+}
+
+.exp-details.open li:nth-child(2) {
+  animation-delay: 0.20s;
+}
+
+.exp-details.open li:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.exp-details.open li:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+.exp-details.open li:nth-child(5) {
+  animation-delay: 0.44s;
+}
 
 .exp-toggle-btn {
   transition: background 0.2s, color 0.2s, border-color 0.2s !important;
@@ -823,7 +853,8 @@ a:hover {
   background: transparent;
   z-index: 9000;
   display: none;
-  pointer-events: none; /* Let clicks pass through when not interacting with windows */
+  pointer-events: none;
+  /* Let clicks pass through when not interacting with windows */
 }
 
 #terminal-overlay.active {
@@ -834,18 +865,19 @@ a:hover {
   position: fixed;
   background: var(--bg-main, #f0f0f0);
   border: 2px solid var(--border-main, #c0c0c0);
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
   display: none;
   flex-direction: column;
   overflow: hidden;
-  pointer-events: auto; /* Enable clicks on the window itself */
+  pointer-events: auto;
+  /* Enable clicks on the window itself */
   min-width: 280px;
   min-height: 200px;
 }
 
 .window.focused {
   z-index: 9500;
-  box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 .window-header {
@@ -976,11 +1008,27 @@ a:hover {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-6px); }
-  40%       { transform: translateX(6px); }
-  60%       { transform: translateX(-4px); }
-  80%       { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-6px);
+  }
+
+  40% {
+    transform: translateX(6px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .terminal-window.shake {
@@ -1453,7 +1501,7 @@ a:hover {
 
 #chat-input:focus {
   border-color: var(--color-main);
-  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.1);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1);
 }
 
 
@@ -1507,19 +1555,35 @@ a:hover {
 }
 
 
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes dotBlink {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 @media (max-width: 600px) {
   #ai-chat-trigger {
     bottom: 24px;
-    right: 28px; /* On mobile, we might want it closer or hidden if scroll-top is shown */
+    right: 28px;
+    /* On mobile, we might want it closer or hidden if scroll-top is shown */
   }
+
   #ai-chat-window {
     bottom: 0;
     right: 0;
@@ -1533,8 +1597,13 @@ a:hover {
 
 /* --- Custom Cursor (pointer devices only) --- */
 @media (pointer: fine) {
-  [data-cursor="fancy"] * { cursor: none !important; }
-  [data-cursor="crosshair"] * { cursor: crosshair !important; }
+  [data-cursor="fancy"] * {
+    cursor: none !important;
+  }
+
+  [data-cursor="crosshair"] * {
+    cursor: crosshair !important;
+  }
 
   .cursor-dot,
   .cursor-ring {

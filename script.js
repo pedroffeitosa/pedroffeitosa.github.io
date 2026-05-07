@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const translations = {
         en: {
             meta_description: "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
-            system_status: "SYSTEM_ACTIVE",            role_main: "Software Engineer & LLM Trainer",
+            system_status: "SYSTEM_ACTIVE", role_main: "Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
             terminal_tooltip: "Open Terminal (Ctrl+B / `)",
             career_title: "// Career",
@@ -643,7 +643,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.windows.forEach(w => w.classList.remove('focused'));
             el.classList.add('focused');
             this.activeWindow = el;
-            
+
             this.zIndexBase += 2;
             el.style.zIndex = this.zIndexBase;
         }
@@ -719,7 +719,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 el.dataset.prevLeft = el.style.left;
                 el.dataset.prevWidth = el.style.width;
                 el.dataset.prevHeight = el.style.height;
-                
+
                 el.style.top = '0';
                 el.style.left = '0';
                 el.style.width = '100vw';
@@ -748,11 +748,46 @@ document.addEventListener("DOMContentLoaded", () => {
         terminalTimeEl.textContent = getTerminalTime();
         setInterval(() => { terminalTimeEl.textContent = getTerminalTime(); }, 60000);
     }
+    
+    let hasBooted = false;
+    const bootLogs = [
+        "BOOTING PortfolioOS v2.0...",
+        "Checking system integrity... OK",
+        "Loading modules: [SoundEngine, WindowManager, AIChat]... DONE",
+        "Establishing secure connection to @pedroffeitosa...",
+        `Last login: ${new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24 * 7).toLocaleString()} from 127.0.0.1`,
+        ""
+    ];
+
+    const showBootSequence = () => {
+        let i = 0;
+        const addLog = () => {
+            if (i < bootLogs.length) {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'cmd-logs';
+                logEntry.innerHTML = `<div class="cmd-response">${bootLogs[i]}</div>`;
+                terminalOutput.appendChild(logEntry);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                i++;
+                if (sound && sound.enabled) sound.playKeystroke();
+                setTimeout(addLog, 40 + Math.random() * 100);
+            } else {
+                hasBooted = true;
+                const quote = getFortune();
+                const logEntry = document.createElement('div');
+                logEntry.className = 'cmd-logs';
+                logEntry.innerHTML = `<div class="cmd-response"><i>${quote}</i></div>`;
+                terminalOutput.appendChild(logEntry);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        };
+        addLog();
+    };
 
     const toggleTerminal = (show) => {
         if (!terminalOverlay || !terminalWindow) return;
         const shouldShow = (typeof show === 'boolean') ? show : (terminalWindow.style.display !== 'flex');
-        
+
         terminalOverlay.style.display = shouldShow ? 'block' : 'none';
         terminalWindow.style.display = shouldShow ? 'flex' : 'none';
 
@@ -761,8 +796,9 @@ document.addEventListener("DOMContentLoaded", () => {
             terminalInput.value = '';
             terminalInput.focus();
             
-            // Show a random fortune on open if output is empty
-            if (terminalOutput.children.length === 0) {
+            if (!hasBooted && terminalOutput.children.length === 0) {
+                showBootSequence();
+            } else if (terminalOutput.children.length === 0) {
                 const quote = getFortune();
                 const logEntry = document.createElement('div');
                 logEntry.className = 'cmd-logs';
@@ -1090,7 +1126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const browser = ua.includes('Firefox') ? 'Firefox' : ua.includes('Edg') ? 'Edge' : ua.includes('Chrome') ? 'Chrome' : ua.includes('Safari') ? 'Safari' : 'Unknown';
                 const resolution = `${window.screen.width}x${window.screen.height}`;
                 const lbl = 'color:var(--link);font-weight:bold;';
-                const palette = ['#ff5f56','#ffbd2e','#27c93f','#2196f3','#9c27b0','#ff9800','#00bcd4','#607d8b'];
+                const palette = ['#ff5f56', '#ffbd2e', '#27c93f', '#2196f3', '#9c27b0', '#ff9800', '#00bcd4', '#607d8b'];
                 const blocks = palette.map(c => `<span style="background:${c};color:${c};border-radius:2px;"> ██ </span>`).join('');
 
                 const artLines = [
@@ -1193,38 +1229,38 @@ document.addEventListener("DOMContentLoaded", () => {
             sound.playBeep();
         } else {
             const easterEggs = {
-                sudo:     () => 'Permission denied. Nice try. 😏',
-                vim:      () => 'Opening vim...\n\nJust kidding. You\'d never get out.',
-                nano:     () => 'nano is fine. But have you tried vim?\n(No cursor movement. You have been warned.)',
-                emacs:    () => 'An operating system disguised as a text editor.',
-                ls:       () => 'drwxr-xr-x  curiosity/\ndrwxr-xr-x  ambition/\n-rw-r--r--  coffee.txt\n-rw-r--r--  bugs_to_fix.log\n-rw-r--r--  .hidden_dreams',
-                pwd:      () => '/home/visitor/pedroffeitosa.github.io',
-                cd:       () => 'There are no directories here. Just vibes.',
-                ping:     (a) => `PING ${a[0] || 'unknown'}: Request timeout. (He's probably coding.)`,
-                python:   () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
-                python3:  () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
-                node:     () => 'Welcome to Node.js v22.0.0\n> ',
-                make:     () => "make: target 'me a sandwich' not found.",
-                top:      () => 'PID   USER     CPU%  CMD\n  1   visitor   99%  overthinking\n  2   visitor    1%  working',
-                uptime:   () => { const s = Math.floor((Date.now() - pageLoadTime) / 1000); return `up ${s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'} — no crashes yet.`; },
-                reboot:   () => 'Rebooting... just kidding. Refresh the page yourself.',
+                sudo: () => 'Permission denied. Nice try. 😏',
+                vim: () => 'Opening vim...\n\nJust kidding. You\'d never get out.',
+                nano: () => 'nano is fine. But have you tried vim?\n(No cursor movement. You have been warned.)',
+                emacs: () => 'An operating system disguised as a text editor.',
+                ls: () => 'drwxr-xr-x  curiosity/\ndrwxr-xr-x  ambition/\n-rw-r--r--  coffee.txt\n-rw-r--r--  bugs_to_fix.log\n-rw-r--r--  .hidden_dreams',
+                pwd: () => '/home/visitor/pedroffeitosa.github.io',
+                cd: () => 'There are no directories here. Just vibes.',
+                ping: (a) => `PING ${a[0] || 'unknown'}: Request timeout. (He's probably coding.)`,
+                python: () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
+                python3: () => '>>> print("Hello from the portfolio!")\nHello from the portfolio!\n>>>',
+                node: () => 'Welcome to Node.js v22.0.0\n> ',
+                make: () => "make: target 'me a sandwich' not found.",
+                top: () => 'PID   USER     CPU%  CMD\n  1   visitor   99%  overthinking\n  2   visitor    1%  working',
+                uptime: () => { const s = Math.floor((Date.now() - pageLoadTime) / 1000); return `up ${s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'} — no crashes yet.`; },
+                reboot: () => 'Rebooting... just kidding. Refresh the page yourself.',
                 shutdown: () => 'Shutdown aborted: too much left to build.',
-                docker:   () => 'Error: Cannot connect to the Docker daemon.\n(There is no Docker here. Only HTML and dreams.)',
-                npm:      (a) => a[0] === 'install' ? 'added 847 packages, 23 vulnerabilities found.\nRun `npm audit fix` to pretend you fixed them.' : 'npm: command not found in this dimension.',
-                yarn:     (a) => a[0] === 'add' ? `[1/4] Resolving packages...\n[2/4] Fetching packages...\n[3/4] Linking dependencies...\n[4/4] Building fresh packages... done.` : 'yarn: command not found in this dimension.',
-                ssh:      (a) => `ssh: connect to host ${a[0] || 'localhost'} port 22: Connection refused.`,
-                curl:     () => 'curl: (7) Failed to connect: no personality found at endpoint.',
-                wget:     () => 'Downloading talent... ████████████ 100%\nInstalling... failed. Not enough RAM.',
-                grep:     () => 'No patterns found (or maybe you\'re the pattern).',
-                ps:       () => 'PID  CMD\n  1  dreams\n  2  ambition\n  3  caffeine.service',
-                touch:    (a) => a[0] ? `touched ${a[0]}. It blushed.` : 'Usage: touch <file>',
-                mv:       () => 'Cannot move things. Everything is where it belongs.',
-                cp:       () => 'Cannot copy. This portfolio is one of a kind.',
-                man:      (a) => a[0] ? `No manual entry for ${a[0]}. Have you tried Stack Overflow?` : 'What manual? Just wing it.',
-                kill:     () => 'kill: no process to kill. Your vibe is fine.',
-                chmod:    () => 'chmod: permission already perfect.',
-                brew:     () => 'brew: installing dependencies... just kidding, this is a browser.',
-                code:     () => 'Opening VS Code... (please stand by, 47 extensions loading)',
+                docker: () => 'Error: Cannot connect to the Docker daemon.\n(There is no Docker here. Only HTML and dreams.)',
+                npm: (a) => a[0] === 'install' ? 'added 847 packages, 23 vulnerabilities found.\nRun `npm audit fix` to pretend you fixed them.' : 'npm: command not found in this dimension.',
+                yarn: (a) => a[0] === 'add' ? `[1/4] Resolving packages...\n[2/4] Fetching packages...\n[3/4] Linking dependencies...\n[4/4] Building fresh packages... done.` : 'yarn: command not found in this dimension.',
+                ssh: (a) => `ssh: connect to host ${a[0] || 'localhost'} port 22: Connection refused.`,
+                curl: () => 'curl: (7) Failed to connect: no personality found at endpoint.',
+                wget: () => 'Downloading talent... ████████████ 100%\nInstalling... failed. Not enough RAM.',
+                grep: () => 'No patterns found (or maybe you\'re the pattern).',
+                ps: () => 'PID  CMD\n  1  dreams\n  2  ambition\n  3  caffeine.service',
+                touch: (a) => a[0] ? `touched ${a[0]}. It blushed.` : 'Usage: touch <file>',
+                mv: () => 'Cannot move things. Everything is where it belongs.',
+                cp: () => 'Cannot copy. This portfolio is one of a kind.',
+                man: (a) => a[0] ? `No manual entry for ${a[0]}. Have you tried Stack Overflow?` : 'What manual? Just wing it.',
+                kill: () => 'kill: no process to kill. Your vibe is fine.',
+                chmod: () => 'chmod: permission already perfect.',
+                brew: () => 'brew: installing dependencies... just kidding, this is a browser.',
+                code: () => 'Opening VS Code... (please stand by, 47 extensions loading)',
             };
 
             let eggResponse = null;
@@ -1322,7 +1358,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
             if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') sound.playKeystroke();
-            
+
             if (e.key === 'Enter') {
                 processCommand(terminalInput.value);
                 terminalInput.value = '';
@@ -1473,216 +1509,216 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fetchLichessRating();
 
-// --- PWA Install Logic ---
-let deferredPrompt;
-const pwaPrompt = document.getElementById('pwa-install-prompt');
-const pwaInstallBtn = document.getElementById('pwa-install');
-const pwaCancelBtn = document.getElementById('pwa-cancel');
-const pwaMessage = document.getElementById('pwa-prompt-message');
+    // --- PWA Install Logic ---
+    let deferredPrompt;
+    const pwaPrompt = document.getElementById('pwa-install-prompt');
+    const pwaInstallBtn = document.getElementById('pwa-install');
+    const pwaCancelBtn = document.getElementById('pwa-cancel');
+    const pwaMessage = document.getElementById('pwa-prompt-message');
 
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
-if (!isStandalone) {
-    if (isIOS) {
-        // Show iOS instructions after 3 seconds
-        setTimeout(() => {
+    if (!isStandalone) {
+        if (isIOS) {
+            // Show iOS instructions after 3 seconds
+            setTimeout(() => {
+                const hasDismissed = localStorage.getItem('pwaPromptDismissed');
+                if (!hasDismissed && pwaPrompt && pwaMessage) {
+                    pwaMessage.innerText = translations[currentLang].pwa_ios_msg;
+                    if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+                    pwaPrompt.classList.remove('pwa-prompt-hidden');
+                }
+            }, 3000);
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+
             const hasDismissed = localStorage.getItem('pwaPromptDismissed');
-            if (!hasDismissed && pwaPrompt && pwaMessage) {
-                pwaMessage.innerText = translations[currentLang].pwa_ios_msg;
-                if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+            if (!hasDismissed && pwaPrompt) {
                 pwaPrompt.classList.remove('pwa-prompt-hidden');
             }
-        }, 3000);
+        });
     }
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        
-        const hasDismissed = localStorage.getItem('pwaPromptDismissed');
-        if (!hasDismissed && pwaPrompt) {
-            pwaPrompt.classList.remove('pwa-prompt-hidden');
-        }
-    });
-}
+    if (pwaInstallBtn) {
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            pwaPrompt.classList.add('pwa-prompt-hidden');
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            deferredPrompt = null;
+        });
+    }
 
-if (pwaInstallBtn) {
-    pwaInstallBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        pwaPrompt.classList.add('pwa-prompt-hidden');
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User response to the install prompt: ${outcome}`);
-        deferredPrompt = null;
-    });
-}
+    if (pwaCancelBtn) {
+        pwaCancelBtn.addEventListener('click', () => {
+            if (pwaPrompt) pwaPrompt.classList.add('pwa-prompt-hidden');
+            localStorage.setItem('pwaPromptDismissed', 'true');
+        });
+    }
 
-if (pwaCancelBtn) {
-    pwaCancelBtn.addEventListener('click', () => {
-        if (pwaPrompt) pwaPrompt.classList.add('pwa-prompt-hidden');
-        localStorage.setItem('pwaPromptDismissed', 'true');
-    });
-}
+    // --- Service Worker Registration ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('SW Registered!', reg))
+                .catch(err => console.log('SW Registration failed:', err));
+        });
+    }
 
-// --- Service Worker Registration ---
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => console.log('SW Registered!', reg))
-            .catch(err => console.log('SW Registration failed:', err));
-    });
-}
-
-// --- AI Chatbot Implementation ---
-const AIChat = {
-    kb: {
-        en: {
-            who: "João is a Software Engineer & LLM Trainer specialized in React, Node.js, and AI. He's currently at Revelo.",
-            skills: "João excels in React, TypeScript, Node.js, Tailwind, Algorithms Solving, AWS, and AI/LLM Training (RLHF).",
-            experience: "João has worked at companies like Revelo, Turing, Dilis Studio, IH Store, and AbInBev. He's an expert in e-commerce and AI-driven platforms.",
-            projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
-            chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
-            contact: "You can reach João via email at jppfeitosa@gmail.com or on LinkedIn at /in/pedroffeitosa.",
-            hobbies: "Besides coding and chess, João enjoy exploring AI tech and contributing to open-source.",
-            default: "I'm not exactly sure about that. Try asking about 'experience', 'skills', or 'projects'!"
-        },
-        pt: {
-            who: "João é um Engenheiro de Software e Treinador de LLM especializado em React, Node.js e IA. Atualmente está na Revelo.",
-            skills: "João domina React, TypeScript, Node.js, Tailwind, Resolução de Algoritmos, AWS e Treinamento de AI/LLM (RLHF).",
-            experience: "João trabalhou em empresas como Revelo, Turing, Dilis Studio, IH Store e AbInBev. É especialista em e-commerce e plataformas baseadas em IA.",
-            projects: "Projetos de destaque incluem AmeoPet (Pet Care), MCPWeather (Protocolo Customizado) e um Motor de Xadrez em Ruby.",
-            chess: "João adora xadrez! O rating blitz dele no Lichess é 1900+ (veja o valor atualizado no widget!).",
-            contact: "Você pode falar com o João pelo e-mail jppfeitosa@gmail.com ou pelo LinkedIn em /in/pedroffeitosa.",
-            hobbies: "Além de programar e jogar xadrez, o João gosta de explorar tecnologias de IA e contribuir para open-source.",
-            default: "Não tenho certeza sobre isso. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!"
-        }
-    },
-
-    generateResponse: function(input) {
-        const text = input.toLowerCase();
-        const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
-        const data = this.kb[lang];
-
-        if (text.includes("quem") || text.includes("who") || text.includes("joao") || text.includes("joão")) return data.who;
-        if (text.includes("skill") || text.includes("habilidade") || text.includes("stack") || text.includes("tecnologi")) return data.skills;
-        if (text.includes("exp") || text.includes("carreira") || text.includes("trabalho") || text.includes("work") || text.includes("career")) return data.experience;
-        if (text.includes("proj") || text.includes("feito")) return data.projects;
-        if (text.includes("chess") || text.includes("xadrez") || text.includes("rating")) return data.chess;
-        if (text.includes("contato") || text.includes("contact") || text.includes("email") || text.includes("falar")) return data.contact;
-        if (text.includes("hobby") || text.includes("gosta")) return data.hobbies;
-
-        return data.default;
-    },
-
-    init: function() {
-        const trigger = document.getElementById('ai-chat-trigger');
-        const windowEl = document.getElementById('ai-chat-window');
-        const closeBtn = document.getElementById('close-chat');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        const messagesContainer = document.getElementById('chat-messages');
-        const typingIndicator = document.querySelector('.typing-wrapper');
-
-        if (!trigger || !windowEl) return;
-
-        const addMessage = (text, sender) => {
-            const msgEl = document.createElement('div');
-            msgEl.className = `message ${sender}`;
-            msgEl.innerText = text;
-            messagesContainer.appendChild(msgEl);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        };
-
-        const showBotResponse = (question) => {
-            typingIndicator.style.display = 'block';
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            setTimeout(() => {
-                typingIndicator.style.display = 'none';
-                const response = this.generateResponse(question);
-                addMessage(response, 'bot');
-                if (typeof sound !== 'undefined') sound.playBeep();
-            }, 800 + Math.random() * 1000);
-        };
-
-        trigger.addEventListener('click', () => {
-            const isOpening = windowEl.style.display !== 'flex';
-            windowEl.style.display = isOpening ? 'flex' : 'none';
-            if (isOpening) {
-                winMgr.bringToFront(windowEl);
-                if (messagesContainer.children.length === 0) {
-                    const welcome = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].ai_chat_welcome : "Hi!";
-                    addMessage(welcome, 'bot');
-                }
-                chatInput.focus();
+    // --- AI Chatbot Implementation ---
+    const AIChat = {
+        kb: {
+            en: {
+                who: "João is a Software Engineer & LLM Trainer specialized in React, Node.js, and AI. He's currently at Revelo.",
+                skills: "João excels in React, TypeScript, Node.js, Tailwind, Algorithms Solving, AWS, and AI/LLM Training (RLHF).",
+                experience: "João has worked at companies like Revelo, Turing, Dilis Studio, IH Store, and AbInBev. He's an expert in e-commerce and AI-driven platforms.",
+                projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
+                chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
+                contact: "You can reach João via email at jppfeitosa@gmail.com or on LinkedIn at /in/pedroffeitosa.",
+                hobbies: "Besides coding and chess, João enjoy exploring AI tech and contributing to open-source.",
+                default: "I'm not exactly sure about that. Try asking about 'experience', 'skills', or 'projects'!"
+            },
+            pt: {
+                who: "João é um Engenheiro de Software e Treinador de LLM especializado em React, Node.js e IA. Atualmente está na Revelo.",
+                skills: "João domina React, TypeScript, Node.js, Tailwind, Resolução de Algoritmos, AWS e Treinamento de AI/LLM (RLHF).",
+                experience: "João trabalhou em empresas como Revelo, Turing, Dilis Studio, IH Store e AbInBev. É especialista em e-commerce e plataformas baseadas em IA.",
+                projects: "Projetos de destaque incluem AmeoPet (Pet Care), MCPWeather (Protocolo Customizado) e um Motor de Xadrez em Ruby.",
+                chess: "João adora xadrez! O rating blitz dele no Lichess é 1900+ (veja o valor atualizado no widget!).",
+                contact: "Você pode falar com o João pelo e-mail jppfeitosa@gmail.com ou pelo LinkedIn em /in/pedroffeitosa.",
+                hobbies: "Além de programar e jogar xadrez, o João gosta de explorar tecnologias de IA e contribuir para open-source.",
+                default: "Não tenho certeza sobre isso. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!"
             }
-            if (typeof sound !== 'undefined') sound.playToggle();
-        });
+        },
 
-        closeBtn.addEventListener('click', () => {
-            windowEl.style.display = 'none';
-            if (typeof sound !== 'undefined') sound.playToggle();
-        });
+        generateResponse: function (input) {
+            const text = input.toLowerCase();
+            const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
+            const data = this.kb[lang];
 
-        chatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text) return;
+            if (text.includes("quem") || text.includes("who") || text.includes("joao") || text.includes("joão")) return data.who;
+            if (text.includes("skill") || text.includes("habilidade") || text.includes("stack") || text.includes("tecnologi")) return data.skills;
+            if (text.includes("exp") || text.includes("carreira") || text.includes("trabalho") || text.includes("work") || text.includes("career")) return data.experience;
+            if (text.includes("proj") || text.includes("feito")) return data.projects;
+            if (text.includes("chess") || text.includes("xadrez") || text.includes("rating")) return data.chess;
+            if (text.includes("contato") || text.includes("contact") || text.includes("email") || text.includes("falar")) return data.contact;
+            if (text.includes("hobby") || text.includes("gosta")) return data.hobbies;
 
-            addMessage(text, 'user');
-            chatInput.value = '';
-            if (typeof sound !== 'undefined') sound.playKeystroke();
+            return data.default;
+        },
 
-            showBotResponse(text);
-        });
-    }
-};
+        init: function () {
+            const trigger = document.getElementById('ai-chat-trigger');
+            const windowEl = document.getElementById('ai-chat-window');
+            const closeBtn = document.getElementById('close-chat');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const messagesContainer = document.getElementById('chat-messages');
+            const typingIndicator = document.querySelector('.typing-wrapper');
 
-// --- Custom Cursor ---
-if (window.matchMedia('(pointer: fine)').matches) {
-    const curDot = document.createElement('div');
-    curDot.className = 'cursor-dot';
-    const curRing = document.createElement('div');
-    curRing.className = 'cursor-ring';
-    document.body.appendChild(curDot);
-    document.body.appendChild(curRing);
+            if (!trigger || !windowEl) return;
 
-    let mx = -100, my = -100, rx = -100, ry = -100;
+            const addMessage = (text, sender) => {
+                const msgEl = document.createElement('div');
+                msgEl.className = `message ${sender}`;
+                msgEl.innerText = text;
+                messagesContainer.appendChild(msgEl);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            };
 
-    document.addEventListener('mousemove', (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        curDot.style.left = mx + 'px';
-        curDot.style.top = my + 'px';
-    });
+            const showBotResponse = (question) => {
+                typingIndicator.style.display = 'block';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    (function animRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        curRing.style.left = rx + 'px';
-        curRing.style.top = ry + 'px';
-        requestAnimationFrame(animRing);
-    })();
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    const response = this.generateResponse(question);
+                    addMessage(response, 'bot');
+                    if (typeof sound !== 'undefined') sound.playBeep();
+                }, 800 + Math.random() * 1000);
+            };
 
-    document.addEventListener('mouseleave', () => { curDot.classList.add('cur-hidden'); curRing.classList.add('cur-hidden'); });
-    document.addEventListener('mouseenter', () => { curDot.classList.remove('cur-hidden'); curRing.classList.remove('cur-hidden'); });
+            trigger.addEventListener('click', () => {
+                const isOpening = windowEl.style.display !== 'flex';
+                windowEl.style.display = isOpening ? 'flex' : 'none';
+                if (isOpening) {
+                    winMgr.bringToFront(windowEl);
+                    if (messagesContainer.children.length === 0) {
+                        const welcome = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].ai_chat_welcome : "Hi!";
+                        addMessage(welcome, 'bot');
+                    }
+                    chatInput.focus();
+                }
+                if (typeof sound !== 'undefined') sound.playToggle();
+            });
 
-    const addCursorHover = (selector) => {
-        document.querySelectorAll(selector).forEach(el => {
-            el.addEventListener('mouseenter', () => { curDot.classList.add('cur-hover'); curRing.classList.add('cur-hover'); });
-            el.addEventListener('mouseleave', () => { curDot.classList.remove('cur-hover'); curRing.classList.remove('cur-hover'); });
-        });
+            closeBtn.addEventListener('click', () => {
+                windowEl.style.display = 'none';
+                if (typeof sound !== 'undefined') sound.playToggle();
+            });
+
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = chatInput.value.trim();
+                if (!text) return;
+
+                addMessage(text, 'user');
+                chatInput.value = '';
+                if (typeof sound !== 'undefined') sound.playKeystroke();
+
+                showBotResponse(text);
+            });
+        }
     };
 
-    addCursorHover('a, button, [role="button"], .stack-item, .lang-option, .exp-toggle-btn');
+    // --- Custom Cursor ---
+    if (window.matchMedia('(pointer: fine)').matches) {
+        const curDot = document.createElement('div');
+        curDot.className = 'cursor-dot';
+        const curRing = document.createElement('div');
+        curRing.className = 'cursor-ring';
+        document.body.appendChild(curDot);
+        document.body.appendChild(curRing);
 
-    const savedCursor = localStorage.getItem('cursorMode') || 'default';
-    document.documentElement.setAttribute('data-cursor', savedCursor);
-}
+        let mx = -100, my = -100, rx = -100, ry = -100;
 
-// Initialize the Chatbot
-AIChat.init();
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            curDot.style.left = mx + 'px';
+            curDot.style.top = my + 'px';
+        });
+
+        (function animRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            curRing.style.left = rx + 'px';
+            curRing.style.top = ry + 'px';
+            requestAnimationFrame(animRing);
+        })();
+
+        document.addEventListener('mouseleave', () => { curDot.classList.add('cur-hidden'); curRing.classList.add('cur-hidden'); });
+        document.addEventListener('mouseenter', () => { curDot.classList.remove('cur-hidden'); curRing.classList.remove('cur-hidden'); });
+
+        const addCursorHover = (selector) => {
+            document.querySelectorAll(selector).forEach(el => {
+                el.addEventListener('mouseenter', () => { curDot.classList.add('cur-hover'); curRing.classList.add('cur-hover'); });
+                el.addEventListener('mouseleave', () => { curDot.classList.remove('cur-hover'); curRing.classList.remove('cur-hover'); });
+            });
+        };
+
+        addCursorHover('a, button, [role="button"], .stack-item, .lang-option, .exp-toggle-btn');
+
+        const savedCursor = localStorage.getItem('cursorMode') || 'default';
+        document.documentElement.setAttribute('data-cursor', savedCursor);
+    }
+
+    // Initialize the Chatbot
+    AIChat.init();
 });
