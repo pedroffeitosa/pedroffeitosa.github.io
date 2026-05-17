@@ -31,7 +31,7 @@
   --section-border: #00FF00;
   --link: #00FF00;
   --link-hover: #ccffcc;
-  font-family: "Courier New", monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace;
 }
 
 [data-theme="cyberpunk"] {
@@ -151,7 +151,7 @@ html {
 
 body {
   /* Monospace font is key to the Notepad look */
-  font-family: "Consolas", "Courier New", monospace;
+  font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
   background-color: var(--bg-main);
   color: var(--color-main);
   max-width: 800px;
@@ -358,7 +358,7 @@ a:hover {
 
 #lang-selector {
   gap: 4px;
-  font-family: 'Consolas', monospace;
+  font-family: "JetBrains Mono", 'Consolas', monospace;
   font-size: 14px;
 }
 
@@ -974,7 +974,7 @@ a:hover {
   background-color: #0c0c0c !important;
   border-color: #333 !important;
   color: #0f0;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "JetBrains Mono", 'Courier New', Courier, monospace;
 }
 
 @media (max-width: 600px) {
