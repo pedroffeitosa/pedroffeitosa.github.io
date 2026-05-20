@@ -11,13 +11,10 @@
   <link rel="canonical" href="https://pedroffeitosa.github.io/" />
   <meta name="robots" content="index, follow" />
   
-  <!-- Modern Monospace Typography (Optimized & Non-blocking) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <!-- Modern Monospace Typography (Optimized & Local) -->
+  <link rel="preload" href="fonts/jetbrains-mono-regular.woff2" as="font" type="font/woff2" crossorigin />
   
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.min.css" />
 
   <!-- SEO & Social Media Meta Tags -->
   <meta property="og:title" content="Pedro Feitosa - Software Engineer" />
@@ -144,9 +141,9 @@
 
           <!-- Language Toggle -->
           <div id="lang-selector">
-            <span id="btn-en" class="lang-option" role="button" tabindex="0">EN</span>
+            <span id="btn-en" class="lang-option" role="button" tabindex="0" data-i18n="lang_en_label" data-i18n-target="aria-label" aria-label="Switch language to English">EN</span>
             <span class="separator" style="opacity: 0.5">/</span>
-            <span id="btn-pt" class="lang-option" role="button" tabindex="0">PT</span>
+            <span id="btn-pt" class="lang-option" role="button" tabindex="0" data-i18n="lang_pt_label" data-i18n-target="aria-label" aria-label="Switch language to Portuguese">PT</span>
           </div>
 
 
@@ -194,11 +191,11 @@
         <!-- Projects & CV Links wrapper (Vertical, Right-aligned) -->
         <div class="cv-links">
           <!-- CV Link FIRST -->
-          <a href="https://drive.google.com/file/d/1QRuwjjuPu2RaUEDsjYvOK7udW0NahsK4/view?usp=sharing" target="_blank"
+          <a href="https://drive.google.com/file/d/1QRuwjjuPu2RaUEDsjYvOK7udW0NahsK4/view?usp=sharing" target="_blank" rel="noopener noreferrer"
             data-i18n="cv_link">View / Download CV</a>
 
           <!-- Projects Link SECOND -->
-          <a href="https://pedroffeitosa.vercel.app/" target="_blank" data-i18n="check_projects">Check some projects</a>
+          <a href="https://pedroffeitosa.vercel.app/" target="_blank" rel="noopener noreferrer" data-i18n="check_projects">Check some projects</a>
 
           <!-- Chess Rating Widget -->
           <div id="chess-widget"
@@ -250,7 +247,7 @@
             <span class="exp-location" data-i18n="exp_revelo_location">, Miami, FL, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_revelo_date">Mar 2026 - Present</span>
-          <button class="exp-toggle-btn" data-target="exp-revelo" style="
+          <button class="exp-toggle-btn" data-target="exp-revelo" aria-expanded="false" aria-controls="exp-revelo" aria-label="Toggle Revelo experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -282,7 +279,7 @@
             <span class="exp-location" data-i18n="exp_turing_location">, Palo Alto, CA, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_turing_date">Sep 2025 - Mar 2026</span>
-          <button class="exp-toggle-btn" data-target="exp-turing" style="
+          <button class="exp-toggle-btn" data-target="exp-turing" aria-expanded="false" aria-controls="exp-turing" aria-label="Toggle Turing experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -325,7 +322,7 @@
             <span class="exp-location" data-i18n="exp_pave_location">, Campina Grande, PB, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_pave_date">Jun 2024 - Sep 2025</span>
-          <button class="exp-toggle-btn" data-target="exp-pave" style="
+          <button class="exp-toggle-btn" data-target="exp-pave" aria-expanded="false" aria-controls="exp-pave" aria-label="Toggle Dilis Studio experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -372,7 +369,7 @@
             <span class="exp-location" data-i18n="exp_inside_location">, Campina Grande, PB, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_inside_date">Jun 2024 - Oct 2025</span>
-          <button class="exp-toggle-btn" data-target="exp-insidehome" style="
+          <button class="exp-toggle-btn" data-target="exp-insidehome" aria-expanded="false" aria-controls="exp-insidehome" aria-label="Toggle IH Store experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -415,7 +412,7 @@
             <span class="exp-location" data-i18n="exp_wave_location">, Belo Horizonte, MG, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_wave_date">Feb 2024 - May 2024</span>
-          <button class="exp-toggle-btn" data-target="exp-wave" style="
+          <button class="exp-toggle-btn" data-target="exp-wave" aria-expanded="false" aria-controls="exp-wave" aria-label="Toggle Wave Commerce experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -455,7 +452,7 @@
             <span class="exp-location" data-i18n="exp_integralys_location">, São Paulo, SP, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_integralys_date">Nov 2023 - Jan 2024</span>
-          <button class="exp-toggle-btn" data-target="exp-integralys" style="
+          <button class="exp-toggle-btn" data-target="exp-integralys" aria-expanded="false" aria-controls="exp-integralys" aria-label="Toggle Integralys experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -494,7 +491,7 @@
             <span class="exp-location" data-i18n="exp_tec4u_location">, São Paulo, SP, Remote</span>
           </div>
           <span class="exp-date" data-i18n="exp_tec4u_date">Aug 2023 - Oct 2023</span>
-          <button class="exp-toggle-btn" data-target="exp-tec4u" style="
+          <button class="exp-toggle-btn" data-target="exp-tec4u" aria-expanded="false" aria-controls="exp-tec4u" aria-label="Toggle TEC4U experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -532,7 +529,7 @@
             <span class="exp-location" data-i18n="exp_triilha_location">, João Pessoa, PB</span>
           </div>
           <span class="exp-date" data-i18n="exp_triilha_date">Apr 2022 - Jul 2023</span>
-          <button class="exp-toggle-btn" data-target="exp-triilha" style="
+          <button class="exp-toggle-btn" data-target="exp-triilha" aria-expanded="false" aria-controls="exp-triilha" aria-label="Toggle Triilha experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -568,7 +565,7 @@
             <span class="exp-location" data-i18n="exp_abinbev_location">, Campina Grande, PB</span>
           </div>
           <span class="exp-date" data-i18n="exp_abinbev_date">Jan 2020 - Apr 2021</span>
-          <button class="exp-toggle-btn" data-target="exp-abinbev" style="
+          <button class="exp-toggle-btn" data-target="exp-abinbev" aria-expanded="false" aria-controls="exp-abinbev" aria-label="Toggle AbInBev experience details" style="
                 margin-left: 8px;
                 font-family: inherit;
                 font-size: 14px;
@@ -629,9 +626,9 @@
 
       <p class="footer-links">
         GitHub:
-        <a href="https://github.com/pedroffeitosa" target="_blank">pedroffeitosa</a><br />
+        <a href="https://github.com/pedroffeitosa" target="_blank" rel="noopener noreferrer">pedroffeitosa</a><br />
         LinkedIn:
-        <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank">in/pedroffeitosa</a><br />
+        <a href="https://www.linkedin.com/in/pedroffeitosa/" target="_blank" rel="noopener noreferrer">in/pedroffeitosa</a><br />
         Email:
         <span class="email-container">
           <a href="mailto:jppfeitosa@gmail.com">jppfeitosa@gmail.com</a>
@@ -720,7 +717,7 @@
       </ul>
       <div style="
             font-size: 13px;
-            color: #888;
+            color: #555;
             margin-top: 1em;
             text-align: center;
           " data-i18n="modal_footer">
@@ -786,7 +783,7 @@
       <div class="terminal-input-area">
         <span class="prompt"><span class="prompt-time" id="terminal-time"></span><span
             class="prompt-user">visitor</span><span class="prompt-host">@pedroffeitosa</span>:~$</span>
-        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" />
+        <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal command input" />
       </div>
       <div class="resize-handle"></div>
     </div>
@@ -852,7 +849,7 @@
     </div>
     <form class="chat-input-area" id="chat-form">
       <input type="text" id="chat-input" placeholder="Ask something..." autocomplete="off"
-        data-i18n="ai_chat_placeholder" data-i18n-target="placeholder" />
+        data-i18n="ai_chat_placeholder" data-i18n-target="placeholder" aria-label="Ask João's AI Assistant" />
       <button type="submit" id="send-chat" aria-label="Send Message">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round">
@@ -864,7 +861,7 @@
     <div class="resize-handle"></div>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="script.min.js" defer></script>
 </body>
 
 </html>

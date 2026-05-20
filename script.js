@@ -114,6 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const translations = {
         en: {
+            lang_en_label: "Switch language to English",
+            lang_pt_label: "Switch language to Portuguese",
             meta_description: "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer. Specialized in React, Node.js, and AI.",
             system_status: "SYSTEM_ACTIVE", role_main: "Software Engineer & LLM Trainer",
             check_projects: "Check some projects",
@@ -244,6 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ]
         },
         pt: {
+            lang_en_label: "Mudar idioma para Inglês",
+            lang_pt_label: "Mudar idioma para Português",
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software & Treinador de LLM. Especialista em React, Node.js e IA.",
             system_status: "SISTEMA_ATIVO",
             role_main: "Engenheiro de Software & Treinador de LLM",
@@ -544,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const total = document.documentElement.scrollHeight - window.innerHeight;
             scrollProgress.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0%';
         }
-    });
+    }, { passive: true });
 
     if (scrollBtn) scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
@@ -1507,7 +1511,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    fetchLichessRating();
+    // Delay Lichess API fetch until after page load (non-blocking)
+    window.addEventListener('load', () => {
+        setTimeout(fetchLichessRating, 2000);
+    });
 
     // --- PWA Install Logic ---
     let deferredPrompt;
