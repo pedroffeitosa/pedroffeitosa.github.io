@@ -129,12 +129,12 @@ html {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--border-main);
+  background: var(--color-main);
   border: none;
   display: block;
   position: relative;
   transition: background 0.25s, transform 0.25s;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .section-dot::after {
@@ -247,8 +247,15 @@ a:hover {
 /* Language Toggle Styles */
 .lang-option {
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.7;
   transition: opacity 0.2s, font-weight 0.2s;
+  padding: 12px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
 }
 
 .lang-option:hover {
@@ -308,7 +315,14 @@ a:hover {
 
 
 .exp-toggle-btn {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s, color 0.2s, border-color 0.2s !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .exp-toggle-btn:hover {
@@ -375,9 +389,14 @@ a:hover {
   border: none;
   padding: 0;
   cursor: pointer;
-  outline: none;
   display: flex;
   align-items: center;
+}
+
+#header-controls button {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
 }
 
 #lang-selector {
@@ -956,15 +975,15 @@ a:hover {
 }
 
 .win-btn {
-  width: 18px;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   border: 1px solid #888;
   background: #eee;
   color: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -1173,7 +1192,9 @@ a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.email-container:hover #copy-email-btn {
+.email-container:hover #copy-email-btn,
+.email-container:focus-within #copy-email-btn,
+#copy-email-btn:focus-visible {
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
@@ -1312,6 +1333,7 @@ a:hover {
 .pwa-prompt-hidden {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
   transform: translateX(-50%) translateY(100px) !important;
 }
 
@@ -1700,4 +1722,34 @@ a:hover {
   .cursor-ring.cur-hidden {
     opacity: 0;
   }
+}
+
+/* --- Beautiful keyboard focus visible rings (A11y compliance) --- */
+:focus-visible {
+  outline: 2px solid var(--link) !important;
+  outline-offset: 4px !important;
+  border-radius: 4px !important;
+}
+
+.section-dot:focus-visible {
+  outline: 2px solid var(--link) !important;
+  outline-offset: 6px !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--link) !important;
+}
+
+[data-theme="matrix"] :focus-visible {
+  outline: 2px solid var(--color-main) !important;
+}
+
+[data-theme="cyberpunk"] :focus-visible {
+  outline: 2px solid var(--link) !important;
+}
+
+[data-theme="amber"] :focus-visible {
+  outline: 2px solid var(--link) !important;
 }
