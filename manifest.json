@@ -1,7 +1,7 @@
 {
-  "name": "João Pedro Feitosa - Portfolio",
+  "name": "João Pedro - Portfolio",
   "short_name": "JP Portfolio",
-  "description": "Portfolio of João Pedro Feitosa - Software Engineer & LLM Trainer.",
+  "description": "Portfolio of João Pedro - Software Engineer & LLM Trainer.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#181818",

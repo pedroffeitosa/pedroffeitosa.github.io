@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
         terminalTimeEl.textContent = getTerminalTime();
         setInterval(() => { terminalTimeEl.textContent = getTerminalTime(); }, 60000);
     }
-    
+
     let hasBooted = false;
     const bootLogs = [
         "BOOTING PortfolioOS v2.0...",
@@ -799,7 +799,7 @@ document.addEventListener("DOMContentLoaded", () => {
             winMgr.bringToFront(terminalWindow);
             terminalInput.value = '';
             terminalInput.focus();
-            
+
             if (!hasBooted && terminalOutput.children.length === 0) {
                 showBootSequence();
             } else if (terminalOutput.children.length === 0) {
@@ -1589,7 +1589,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
                 chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
                 contact: "You can reach João via email at jppfeitosa@gmail.com or on LinkedIn at /in/pedroffeitosa.",
-                hobbies: "Besides coding and chess, João enjoy exploring AI tech and contributing to open-source.",
+                hobbies: "Besides coding and chess, João enjoys exploring AI tech and contributing to open-source.",
                 default: "I'm not exactly sure about that. Try asking about 'experience', 'skills', or 'projects'!"
             },
             pt: {

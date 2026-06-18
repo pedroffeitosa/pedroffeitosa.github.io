@@ -20,6 +20,23 @@ try {
   execSync(`npx -y terser "${jsSrc}" -o "${jsDest}" --compress --mangle`, { stdio: 'inherit' });
   console.log('JS Minification Completed!');
 
+  // 3. Inline CSS in index.html
+  console.log('Inlining minified CSS into index.html...');
+  const htmlPath = path.join(__dirname, 'index.html');
+  let htmlContent = fs.readFileSync(htmlPath, 'utf8');
+  
+  const cssContent = fs.readFileSync(cssDest, 'utf8');
+  const styleTag = `<!-- STYLE_PLACEHOLDER --><style id="main-style">${cssContent}</style><!-- /STYLE_PLACEHOLDER -->`;
+  
+  const placeholderRegex = /<!-- STYLE_PLACEHOLDER -->[\s\S]*?<!-- \/STYLE_PLACEHOLDER -->/;
+  if (placeholderRegex.test(htmlContent)) {
+    htmlContent = htmlContent.replace(placeholderRegex, styleTag);
+    fs.writeFileSync(htmlPath, htmlContent, 'utf8');
+    console.log('CSS successfully inlined!');
+  } else {
+    console.warn('Warning: STYLE_PLACEHOLDER comment not found in index.html. CSS not inlined.');
+  }
+
   console.log('--- Build Pipeline Completed Successfully! ---');
   
   // Print sizes

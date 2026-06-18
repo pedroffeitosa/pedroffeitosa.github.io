@@ -1,12 +1,8 @@
-const CACHE_NAME = 'portfolio-cache-v1';
+const CACHE_NAME = 'portfolio-cache-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './style.min.css',
   './script.min.js',
-  './fonts/jetbrains-mono-regular.woff2',
-  './fonts/jetbrains-mono-italic.woff2',
-  './fonts/jetbrains-mono-bold.woff2',
   './icon-192.png',
   './icon-512.png',
   './manifest.json'
