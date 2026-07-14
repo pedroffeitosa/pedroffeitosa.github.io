@@ -725,7 +725,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const winMgr = new WindowManager();
     winMgr.initWindow('terminal-window');
-    winMgr.initWindow('ai-chat-window');
 
     const terminalOverlay = document.getElementById('terminal-overlay');
     const terminalWindow = document.getElementById('terminal-window');
@@ -747,7 +746,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const bootLogs = [
         "BOOTING PortfolioOS v2.0...",
         "Checking system integrity... OK",
-        "Loading modules: [SoundEngine, WindowManager, AIChat]... DONE",
+        "Loading modules: [SoundEngine, WindowManager]... DONE",
         "Establishing secure connection to @pedroffeitosa...",
         `Last login: ${new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24 * 7).toLocaleString()} from 127.0.0.1`,
         ""
@@ -1156,18 +1155,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ].join('');
             }
         },
-        ask: {
-            desc: 'Ask the AI Assistant a question',
-            exec: (args) => {
-                if (!args || args.length === 0) return 'Usage: ask <your question>';
-                const question = args.join(' ');
-                if (typeof AIChat !== 'undefined') {
-                    const response = AIChat.generateResponse(question);
-                    return `<b>AI Assistant:</b> ${response}`;
-                }
-                return 'AI Assistant is initializing...';
-            }
-        },
         fortune: {
             desc: 'Display a random technical quote or easter egg',
             exec: () => `<i>${getFortune()}</i>`
@@ -1519,110 +1506,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- AI Chatbot Implementation ---
-    const AIChat = {
-        kb: {
-            en: {
-                who: "João is a Software Engineer & LLM Trainer specialized in React, Node.js, and AI. He's currently at Revelo.",
-                skills: "João excels in React, TypeScript, Node.js, Tailwind, Algorithms Solving, AWS, and AI/LLM Training (RLHF).",
-                experience: "João has worked at companies like Revelo, Turing, Dilis Studio, IH Store, and AbInBev. He's an expert in e-commerce and AI-driven platforms.",
-                projects: "Notable projects include AmeoPet (Pet Care), MCPWeather (Custom Protocol), and a Ruby Chess Engine.",
-                chess: "João is a chess enthusiast! His Lichess blitz rating is around 1900+ (check the widget for the live value!).",
-                contact: "You can reach João via email at jppfeitosa@gmail.com or on LinkedIn at /in/pedroffeitosa.",
-                hobbies: "Besides coding and chess, João enjoys exploring AI tech and contributing to open-source.",
-                default: "I'm not exactly sure about that. Try asking about 'experience', 'skills', or 'projects'!"
-            },
-            pt: {
-                who: "João é um Engenheiro de Software e Treinador de LLM especializado em React, Node.js e IA. Atualmente está na Revelo.",
-                skills: "João domina React, TypeScript, Node.js, Tailwind, Resolução de Algoritmos, AWS e Treinamento de AI/LLM (RLHF).",
-                experience: "João trabalhou em empresas como Revelo, Turing, Dilis Studio, IH Store e AbInBev. É especialista em e-commerce e plataformas baseadas em IA.",
-                projects: "Projetos de destaque incluem AmeoPet (Pet Care), MCPWeather (Protocolo Customizado) e um Motor de Xadrez em Ruby.",
-                chess: "João adora xadrez! O rating blitz dele no Lichess é 1900+ (veja o valor atualizado no widget!).",
-                contact: "Você pode falar com o João pelo e-mail jppfeitosa@gmail.com ou pelo LinkedIn em /in/pedroffeitosa.",
-                hobbies: "Além de programar e jogar xadrez, o João gosta de explorar tecnologias de IA e contribuir para open-source.",
-                default: "Não tenho certeza sobre isso. Tente perguntar sobre 'experiência', 'habilidades' ou 'projetos'!"
-            }
-        },
-
-        generateResponse: function (input) {
-            const text = input.toLowerCase();
-            const lang = (typeof currentLang !== 'undefined') ? currentLang : 'en';
-            const data = this.kb[lang];
-
-            if (text.includes("quem") || text.includes("who") || text.includes("joao") || text.includes("joão")) return data.who;
-            if (text.includes("skill") || text.includes("habilidade") || text.includes("stack") || text.includes("tecnologi")) return data.skills;
-            if (text.includes("exp") || text.includes("carreira") || text.includes("trabalho") || text.includes("work") || text.includes("career")) return data.experience;
-            if (text.includes("proj") || text.includes("feito")) return data.projects;
-            if (text.includes("chess") || text.includes("xadrez") || text.includes("rating")) return data.chess;
-            if (text.includes("contato") || text.includes("contact") || text.includes("email") || text.includes("falar")) return data.contact;
-            if (text.includes("hobby") || text.includes("gosta")) return data.hobbies;
-
-            return data.default;
-        },
-
-        init: function () {
-            const trigger = document.getElementById('ai-chat-trigger');
-            const windowEl = document.getElementById('ai-chat-window');
-            const closeBtn = document.getElementById('close-chat');
-            const chatForm = document.getElementById('chat-form');
-            const chatInput = document.getElementById('chat-input');
-            const messagesContainer = document.getElementById('chat-messages');
-            const typingIndicator = document.querySelector('.typing-wrapper');
-
-            if (!trigger || !windowEl) return;
-
-            const addMessage = (text, sender) => {
-                const msgEl = document.createElement('div');
-                msgEl.className = `message ${sender}`;
-                msgEl.innerText = text;
-                messagesContainer.appendChild(msgEl);
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            };
-
-            const showBotResponse = (question) => {
-                typingIndicator.style.display = 'block';
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    const response = this.generateResponse(question);
-                    addMessage(response, 'bot');
-                    if (typeof sound !== 'undefined') sound.playBeep();
-                }, 800 + Math.random() * 1000);
-            };
-
-            trigger.addEventListener('click', () => {
-                const isOpening = windowEl.style.display !== 'flex';
-                windowEl.style.display = isOpening ? 'flex' : 'none';
-                if (isOpening) {
-                    winMgr.bringToFront(windowEl);
-                    if (messagesContainer.children.length === 0) {
-                        const welcome = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang].ai_chat_welcome : "Hi!";
-                        addMessage(welcome, 'bot');
-                    }
-                    chatInput.focus();
-                }
-                if (typeof sound !== 'undefined') sound.playToggle();
-            });
-
-            closeBtn.addEventListener('click', () => {
-                windowEl.style.display = 'none';
-                if (typeof sound !== 'undefined') sound.playToggle();
-            });
-
-            chatForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const text = chatInput.value.trim();
-                if (!text) return;
-
-                addMessage(text, 'user');
-                chatInput.value = '';
-                if (typeof sound !== 'undefined') sound.playKeystroke();
-
-                showBotResponse(text);
-            });
-        }
-    };
 
     // --- Custom Cursor ---
     if (window.matchMedia('(pointer: fine)').matches) {
@@ -1666,6 +1549,4 @@ document.addEventListener("DOMContentLoaded", () => {
         document.documentElement.setAttribute('data-cursor', savedCursor);
     }
 
-    // Initialize the Chatbot
-    AIChat.init();
 });
