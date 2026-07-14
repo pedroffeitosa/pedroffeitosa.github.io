@@ -220,11 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
             contact_success: "Message sent successfully! I'll get back to you soon.",
             contact_error: "Error sending message. Please try again or use direct email.",
             contact_cancelled: "Contact flow cancelled.",
-            pwa_install_title: "Install App",
-            pwa_install_desc: "Add to home screen for quick access.",
-            pwa_cancel: "Not now",
-            pwa_install_btn: "Install",
-            pwa_ios_msg: "Tap the 'Share' icon and then 'Add to Home Screen'.",
             ai_chat_title: "João's AI Assistant",
             ai_chat_placeholder: "Ask something...",
             ai_chat_welcome: "Hi! I'm João's virtual assistant. Ask me about his skills, experience, projects, or even his chess rating!",
@@ -353,11 +348,6 @@ document.addEventListener("DOMContentLoaded", () => {
             contact_success: "Mensagem enviada com sucesso! Responderei em breve.",
             contact_error: "Erro ao enviar mensagem. Tente novamente ou use o e-mail direto.",
             contact_cancelled: "Envio de contato cancelado.",
-            pwa_install_title: "Instalar App",
-            pwa_install_desc: "Adicione à tela de início para acesso rápido.",
-            pwa_cancel: "Agora não",
-            pwa_install_btn: "Instalar",
-            pwa_ios_msg: "Toque no ícone de 'Compartilhar' e depois em 'Adicionar à Tela de Início'.",
             ai_chat_title: "Assistente IA do João",
             ai_chat_placeholder: "Pergunte algo...",
             ai_chat_welcome: "Olá! Sou o assistente virtual do João. Pergunte-me sobre suas habilidades, experiência, projetos ou até seu rating de xadrez!",
@@ -1516,66 +1506,16 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(fetchLichessRating, 2000);
     });
 
-    // --- PWA Install Logic ---
-    let deferredPrompt;
-    const pwaPrompt = document.getElementById('pwa-install-prompt');
-    const pwaInstallBtn = document.getElementById('pwa-install');
-    const pwaCancelBtn = document.getElementById('pwa-cancel');
-    const pwaMessage = document.getElementById('pwa-prompt-message');
-
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    if (!isStandalone) {
-        if (isIOS) {
-            // Show iOS instructions after 3 seconds
-            setTimeout(() => {
-                const hasDismissed = localStorage.getItem('pwaPromptDismissed');
-                if (!hasDismissed && pwaPrompt && pwaMessage) {
-                    pwaMessage.innerText = translations[currentLang].pwa_ios_msg;
-                    if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
-                    pwaPrompt.classList.remove('pwa-prompt-hidden');
-                }
-            }, 3000);
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
-            e.preventDefault();
-            // Stash the event so it can be triggered later.
-            deferredPrompt = e;
-
-            const hasDismissed = localStorage.getItem('pwaPromptDismissed');
-            if (!hasDismissed && pwaPrompt) {
-                pwaPrompt.classList.remove('pwa-prompt-hidden');
-            }
-        });
-    }
-
-    if (pwaInstallBtn) {
-        pwaInstallBtn.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            pwaPrompt.classList.add('pwa-prompt-hidden');
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response to the install prompt: ${outcome}`);
-            deferredPrompt = null;
-        });
-    }
-
-    if (pwaCancelBtn) {
-        pwaCancelBtn.addEventListener('click', () => {
-            if (pwaPrompt) pwaPrompt.classList.add('pwa-prompt-hidden');
-            localStorage.setItem('pwaPromptDismissed', 'true');
-        });
-    }
-
-    // --- Service Worker Registration ---
+    // --- Service Worker Unregistration ---
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('SW Registered!', reg))
-                .catch(err => console.log('SW Registration failed:', err));
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (const registration of registrations) {
+                registration.unregister()
+                    .then(success => {
+                        if (success) console.log('SW Unregistered successfully!');
+                    })
+                    .catch(err => console.log('SW Unregistration failed:', err));
+            }
         });
     }
 
