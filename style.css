@@ -92,41 +92,42 @@ html {
 /* --- Section Dot Nav --- */
 #section-nav {
   position: fixed;
-  right: 18px;
+  right: -2px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
   z-index: 800;
 }
 
 .section-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-main);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  display: block;
+  background: transparent;
   position: relative;
-  transition: background 0.25s, transform 0.25s;
+  transition: opacity 0.25s;
   opacity: 0.6;
+  cursor: pointer;
 }
 
 .section-dot::before {
   content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 48px;
-  height: 48px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-main);
+  transition: background 0.25s, transform 0.25s;
 }
 
 .section-dot::after {
   content: attr(data-label);
   position: absolute;
-  right: 16px;
+  right: 36px;
   top: 50%;
   transform: translateY(-50%);
   font-size: 11px;
@@ -148,8 +149,12 @@ html {
 
 .section-dot:hover,
 .section-dot.active {
-  background: var(--link);
   opacity: 1;
+}
+
+.section-dot:hover::before,
+.section-dot.active::before {
+  background: var(--link);
   transform: scale(1.35);
 }
 
@@ -1372,7 +1377,7 @@ a:hover {
 
 .section-dot:focus-visible {
   outline: 2px solid var(--link) !important;
-  outline-offset: 6px !important;
+  outline-offset: -14px !important;
   border-radius: 50% !important;
   opacity: 1 !important;
 }

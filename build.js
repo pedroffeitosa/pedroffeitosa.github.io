@@ -31,11 +31,25 @@ try {
   const placeholderRegex = /<!-- STYLE_PLACEHOLDER -->[\s\S]*?<!-- \/STYLE_PLACEHOLDER -->/;
   if (placeholderRegex.test(htmlContent)) {
     htmlContent = htmlContent.replace(placeholderRegex, styleTag);
-    fs.writeFileSync(htmlPath, htmlContent, 'utf8');
     console.log('CSS successfully inlined!');
   } else {
     console.warn('Warning: STYLE_PLACEHOLDER comment not found in index.html. CSS not inlined.');
   }
+
+  // 4. Inline JS in index.html
+  console.log('Inlining minified JS into index.html...');
+  const jsContent = fs.readFileSync(jsDest, 'utf8');
+  const scriptTag = `<!-- SCRIPT_PLACEHOLDER --><script id="main-script">${jsContent}</script><!-- /SCRIPT_PLACEHOLDER -->`;
+  
+  const scriptPlaceholderRegex = /<!-- SCRIPT_PLACEHOLDER -->[\s\S]*?<!-- \/SCRIPT_PLACEHOLDER -->/;
+  if (scriptPlaceholderRegex.test(htmlContent)) {
+    htmlContent = htmlContent.replace(scriptPlaceholderRegex, scriptTag);
+    console.log('JS successfully inlined!');
+  } else {
+    console.warn('Warning: SCRIPT_PLACEHOLDER comment not found in index.html. JS not inlined.');
+  }
+
+  fs.writeFileSync(htmlPath, htmlContent, 'utf8');
 
   console.log('--- Build Pipeline Completed Successfully! ---');
   
