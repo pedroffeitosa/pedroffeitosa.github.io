@@ -30,7 +30,7 @@ try {
   
   const placeholderRegex = /<!-- STYLE_PLACEHOLDER -->[\s\S]*?<!-- \/STYLE_PLACEHOLDER -->/;
   if (placeholderRegex.test(htmlContent)) {
-    htmlContent = htmlContent.replace(placeholderRegex, styleTag);
+    htmlContent = htmlContent.replace(placeholderRegex, () => styleTag);
     console.log('CSS successfully inlined!');
   } else {
     console.warn('Warning: STYLE_PLACEHOLDER comment not found in index.html. CSS not inlined.');
@@ -43,7 +43,7 @@ try {
   
   const scriptPlaceholderRegex = /<!-- SCRIPT_PLACEHOLDER -->[\s\S]*?<!-- \/SCRIPT_PLACEHOLDER -->/;
   if (scriptPlaceholderRegex.test(htmlContent)) {
-    htmlContent = htmlContent.replace(scriptPlaceholderRegex, scriptTag);
+    htmlContent = htmlContent.replace(scriptPlaceholderRegex, () => scriptTag);
     console.log('JS successfully inlined!');
   } else {
     console.warn('Warning: SCRIPT_PLACEHOLDER comment not found in index.html. JS not inlined.');
