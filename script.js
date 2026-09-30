@@ -1408,7 +1408,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Chess Rating Logic ---
     const CHESS_CACHE_KEY = "lichess_rating_data";
-    const CHESS_CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutes
+    const CHESS_CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour
 
     const updateChessUI = (rating) => {
         const ratingEl = document.getElementById("chess-rating-val");
