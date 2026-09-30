@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             lang_pt_label: "Switch language to Portuguese",
             meta_description: "Portfolio of João Pedro Feitosa - Full Stack Software Engineer. TypeScript, React, Node.js, Python, and AI products.",
             system_status: "SYSTEM_ACTIVE", role_main: "Full Stack Software Engineer",
-            check_projects: "Check some projects",
+            check_projects: "Projects",
             terminal_tooltip: "Open Terminal (Ctrl+B / `)",
             career_title: "// Career",
             career_text: "Full stack software engineer with 5+ years building production web applications in TypeScript, React, Node.js, and Python. At Turing I build the frontend of a human-in-the-loop platform that produces LLM training data, and I build and run Corrija+, an AI grading SaaS for teachers, end to end. Previously led e-commerce builds for clients at PaveCX.",
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_zepa_desc: "OS simulator for CS students: a TypeScript virtual machine with a custom assembler, scheduler, paged virtual memory, and file system.",
             connect_current_val: "Turing (Software Engineer) · Revelo (LLM Trainer, part-time)",
 
-            cv_link: "View / Download CV",
+            cv_link: "Resume",
             copy_btn: "Copy",
             copied_msg: "Copied!",
             modal_title: "Keyboard Shortcuts & Tips",
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proj_zepa_desc: "Simulador de sistema operacional para estudantes de Computação: máquina virtual em TypeScript com assembler próprio, escalonador, memória virtual paginada e sistema de arquivos.",
             connect_current_val: "Turing (Engenheiro de Software) · Revelo (Treinador de LLM, meio período)",
 
-            cv_link: "Ver / Baixar CV",
+            cv_link: "CV",
             copy_btn: "Copiar",
             copied_msg: "Copiado!",
             modal_title: "Atalhos de Teclado & Dicas",
