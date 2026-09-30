@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             projects_title: "// Featured Projects",
             connect_title: "// Connect & Status",
             chess_rating: "Chess Blitz Rating",
-            chess_pawn: "♟",
+            chess_pawn: "♞",
             connect_current: "Currently at:",
             exp_turing_role_main: "Software Engineer",
             exp_turing_location: ", Remote",
@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
             projects_title: "// Projetos em Destaque",
             connect_title: "// Contato & Status",
             chess_rating: "Rating de Xadrez Blitz",
-            chess_pawn: "♟",
+            chess_pawn: "♞",
             connect_current: "Atualmente na:",
             exp_turing_role_main: "Engenheiro de Software",
             exp_turing_location: ", Remoto",
@@ -1408,7 +1408,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Chess Rating Logic ---
     const CHESS_CACHE_KEY = "lichess_rating_data";
-    const CHESS_CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
+    const CHESS_CACHE_EXPIRY = 10 * 60 * 1000; // 10 minutes
 
     const updateChessUI = (rating) => {
         const ratingEl = document.getElementById("chess-rating-val");
@@ -1420,17 +1420,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const fetchLichessRating = async () => {
-        const cached = localStorage.getItem(CHESS_CACHE_KEY);
-        if (cached) {
-            const { rating, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp < CHESS_CACHE_EXPIRY) {
-                updateChessUI(rating);
-                return;
-            }
+        // Show the cached rating right away, then refresh it from Lichess
+        let cached = null;
+        try { cached = JSON.parse(localStorage.getItem(CHESS_CACHE_KEY)); } catch (e) { }
+        if (cached && cached.rating) {
+            updateChessUI(cached.rating);
+            if (Date.now() - cached.timestamp < CHESS_CACHE_EXPIRY) return;
         }
 
         try {
-            const response = await fetch("https://lichess.org/api/user/Pedxr0");
+            const response = await fetch("https://lichess.org/api/user/Pedxr0", { cache: "no-store" });
             if (response.ok) {
                 const data = await response.json();
                 const rating = data.perfs.blitz.rating;
