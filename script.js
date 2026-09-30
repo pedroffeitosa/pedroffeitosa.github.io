@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
             meta_description: "Portfólio de João Pedro Feitosa - Engenheiro de Software Full Stack. TypeScript, React, Node.js, Python e produtos com IA.",
             system_status: "SISTEMA_ATIVO",
             role_main: "Engenheiro de Software Full Stack",
-            check_projects: "Ver alguns projetos",
+            check_projects: "Projetos",
             terminal_tooltip: "Abrir Terminal (Ctrl+B / `)",
             career_title: "// Carreira",
             career_text: "Engenheiro de software full stack com mais de 5 anos construindo aplicações web em produção com TypeScript, React, Node.js e Python. Na Turing, construo o frontend de uma plataforma human-in-the-loop que produz dados de treinamento de LLMs, e construo e mantenho sozinho o Corrija+, um SaaS de correção com IA para professores. Antes, liderei projetos de e-commerce para clientes na PaveCX.",
